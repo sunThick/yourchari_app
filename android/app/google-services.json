@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644207087062",
+    "project_id": "y-chari",
+    "storage_bucket": "y-chari.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644207087062:android:bbb81538de0e0516e76877",
+        "android_client_info": {
+          "package_name": "com.example.yourchari_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644207087062-n3oo4ibon2hv5b5g3l8r2vsa4ah2o79s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHKqKOMHiFY-PphOnUKprbwRWKPJEq9dM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644207087062-n3oo4ibon2hv5b5g3l8r2vsa4ah2o79s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
