@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           bottom: const TabBar(
             isScrollable: true,
             tabs: <Widget>[
-              Tab(text: 'all'),
+              Tab(text: 'al'),
               Tab(text: 'single'),
               Tab(text: 'MTB'),
               Tab(text: 'touring'),
