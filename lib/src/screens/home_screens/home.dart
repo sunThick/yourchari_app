@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'category_chari.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           ),
           bottom: const TabBar(
             isScrollable: true,
-            tabs: <Widget>[
+            tabs: [
               Tab(text: 'all'),
               Tab(text: 'single'),
               Tab(text: 'MTB'),
@@ -31,30 +33,14 @@ class HomeScreen extends StatelessWidget {
         ),
         body: const TabBarView(
           children: <Widget>[
-            Center(
-              child: Text('all', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('single', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('MTB', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('touring', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('road', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('mini', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('mamachari', style: TextStyle(fontSize: 32.0)),
-            ),
-            Center(
-              child: Text('others', style: TextStyle(fontSize: 32.0)),
-            ),
+            CategoryChari(category: 'all'),
+            CategoryChari(category: 'single'),
+            CategoryChari(category: 'MTB'),
+            CategoryChari(category: 'touring'),
+            CategoryChari(category: 'road'),
+            CategoryChari(category: 'mini'),
+            CategoryChari(category: 'mamachari'),
+            CategoryChari(category: 'others'),
           ],
         ),
       ),

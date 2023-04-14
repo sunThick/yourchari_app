@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Chari {
+  String category;
   String id;
   String brand;
   String frame;
@@ -9,7 +10,8 @@ class Chari {
   Timestamp? updatedDate;
 
   Chari(
-      {required this.id,
+      {required this.category,
+      required this.id,
       required this.brand,
       required this.frame,
       this.detail,

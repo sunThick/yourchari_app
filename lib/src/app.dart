@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/account.dart';
 import 'screens/search.dart';
-import 'screens/home.dart';
+import 'screens/home_screens/home.dart';
 import 'screens/news.dart';
 
 class MyApp extends StatelessWidget {
@@ -28,10 +28,10 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final _screens = [
-    HomeScreen(),
-    SearchScreen(),
-    NewsScreen(),
-    AccountScreen()
+    const HomeScreen(),
+    const SearchScreen(),
+    const NewsScreen(),
+    const AccountScreen()
   ];
 
   int _selectedIndex = 0;
