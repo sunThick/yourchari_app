@@ -17,6 +17,14 @@ class HomeScreen extends StatelessWidget {
             fit: BoxFit.contain,
             height: 35,
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline),
+              onPressed: () {
+                
+              },
+            ),
+          ],
           bottom: const TabBar(
             isScrollable: true,
             tabs: [
