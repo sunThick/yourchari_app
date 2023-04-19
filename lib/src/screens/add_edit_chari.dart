@@ -1,22 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/chari.dart';
+
 class AddEditChariPage extends StatefulWidget {
-  const AddEditChariPage({super.key});
+  final Chari? currentChari;
+  const AddEditChariPage({Key? key, this.currentChari}) : super(key: key);
 
   @override
   State<AddEditChariPage> createState() => _AddEditChariPageState();
 }
 
 class _AddEditChariPageState extends State<AddEditChariPage> {
-  TextEditingController categoryController = TextEditingController();
   TextEditingController brandController = TextEditingController();
   TextEditingController frameController = TextEditingController();
   TextEditingController detailController = TextEditingController();
-  TextEditingController createDateController = TextEditingController();
 
-  String? isSelectedCategory = 'single';
+  String isSelectedCategory = 'single';
 
+// 新規投稿
   Future<void> createChari() async {
     final chariCollection = FirebaseFirestore.instance.collection('chari');
     await chariCollection.add({
@@ -28,10 +30,36 @@ class _AddEditChariPageState extends State<AddEditChariPage> {
     });
   }
 
+// 更新
+  Future<void> updateChari() async {
+    final doc = FirebaseFirestore.instance
+        .collection('chari')
+        .doc(widget.currentChari!.id);
+    await doc.update({
+      'category': isSelectedCategory,
+      'brand': brandController.text,
+      'frame': frameController.text,
+      'detail': detailController.text,
+      'updatedDate': Timestamp.now()
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.currentChari != null) {
+      brandController.text = widget.currentChari!.brand;
+      frameController.text = widget.currentChari!.frame;
+      detailController.text = widget.currentChari!.detail!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('new chari')),
+      appBar: AppBar(
+          title:
+              Text(widget.currentChari == null ? 'new chari' : 'edit chari')),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,30 +71,28 @@ class _AddEditChariPageState extends State<AddEditChariPage> {
             const SizedBox(
               height: 1,
             ),
-            Container(
-              child: DropdownButton(
-                items: <String>[
-                  'single',
-                  'MTB',
-                  'touring',
-                  'road',
-                  'mini',
-                  'mamachari',
-                  'others'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    isSelectedCategory = value;
-                  });
-                },
-                value: isSelectedCategory,
-                borderRadius: BorderRadius.circular(10),
-              ),
+            DropdownButton(
+              items: <String>[
+                'single',
+                'MTB',
+                'touring',
+                'road',
+                'mini',
+                'mamachari',
+                'others'
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  isSelectedCategory = value!;
+                });
+              },
+              value: isSelectedCategory,
+              borderRadius: BorderRadius.circular(10),
             ),
             const SizedBox(
               height: 10,
@@ -124,13 +150,14 @@ class _AddEditChariPageState extends State<AddEditChariPage> {
               alignment: Alignment.center,
               child: ElevatedButton(
                 onPressed: () async {
-                  await createChari();
-                  if (!mounted) {
-                    return;
+                  if (widget.currentChari == null) {
+                    await createChari();
+                  } else {
+                    await updateChari();
                   }
                   Navigator.pop(context);
                 },
-                child: Text('post'),
+                child: Text(widget.currentChari == null ? 'post' : 'update'),
               ),
             )
           ],
