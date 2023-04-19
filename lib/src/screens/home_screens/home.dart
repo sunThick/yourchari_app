@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../add_edit_chari.dart';
 import 'category_chari.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,7 +22,10 @@ class HomeScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
               onPressed: () {
-                
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddEditChariPage()));
               },
             ),
           ],
