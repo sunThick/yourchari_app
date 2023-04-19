@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../models/chari.dart';
+import 'chari_detail.dart';
 
 class CategoryChari extends StatefulWidget {
   final String category;
@@ -12,7 +13,6 @@ class CategoryChari extends StatefulWidget {
 class _CategoryChariState extends State<CategoryChari> {
   @override
   Widget build(BuildContext context) {
-
     // 即時関数でallの場合は全て表示、カテゴリーの場合はカテゴリーに絞る
     final chariCollection = () {
       if (widget.category == 'all') {
@@ -52,6 +52,14 @@ class _CategoryChariState extends State<CategoryChari> {
             );
             return ListTile(
               title: Text(fetchChari.brand),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChariDetailPage(
+                              fetchChari,
+                            )));
+              },
             );
           },
         );
