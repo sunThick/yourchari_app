@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'auth_screens/login.dart';
 import 'screens/account.dart';
 import 'screens/search.dart';
 import 'screens/home_screens/home.dart';
@@ -11,12 +13,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: const MyStatefulWidget(),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blueGrey,
+        ),
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: Image.asset('assets/images/homeLogo.png',
+                      fit: BoxFit.contain, height: 35));
+            }
+            if (snapshot.hasData) {
+              return const MyStatefulWidget();
+            }
+            return const UserLogin();
+          },
+        ));
   }
 }
 
