@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../models/chari.dart';
-import '../add_edit_chari.dart';
+import 'add_edit_chari.dart';
 
 class ChariDetailPage extends StatelessWidget {
   final Chari chari;

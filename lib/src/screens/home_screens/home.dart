@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../add_edit_chari.dart';
+import 'add_edit_chari.dart';
 import 'category_chari.dart';
 
 class HomeScreen extends StatelessWidget {
