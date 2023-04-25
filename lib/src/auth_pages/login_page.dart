@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yourchari_app/src/app.dart';
-import 'package:yourchari_app/src/auth_screens/sign_up.dart';
+import 'package:yourchari_app/src/auth_pages/signup_page.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({Key? key}) : super(key: key);

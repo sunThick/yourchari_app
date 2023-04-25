@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../auth_screens/login.dart';
+import '../../auth_pages/login_page.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({Key? key}) : super(key: key);

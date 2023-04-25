@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'auth_screens/login.dart';
-import 'screens/account_screens/account.dart';
-import 'screens/serach_screens/search.dart';
-import 'screens/home_screens/home.dart';
-import 'screens/news_screens/news.dart';
+import 'auth_pages/login_page.dart';
+import 'pages/account_pages/account_page.dart';
+import 'pages/search_pages/search_page.dart';
+import 'pages/home_pages/home_page.dart';
+import 'pages/news_pages/news_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
