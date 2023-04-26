@@ -88,7 +88,7 @@ class _AddEditChariPageState extends State<AddEditChariPage> {
               }).toList(),
               onChanged: (value) {
                 setState(() {
-                  isSelectedCategory = value!;
+                  // isSelectedCategory = value!;
                 });
               },
               value: isSelectedCategory,
