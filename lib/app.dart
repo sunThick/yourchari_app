@@ -43,6 +43,19 @@ class MyHomePage extends ConsumerWidget {
     final LoginModel loginModel = ref.watch(loginProvider);
     final HomeBottomNavigationBarModel homeBottomNavigationBarModel =
         ref.watch(homeBottomNavigationBarProvider);
+    List<Widget> _screens = [
+      FloatingActionButton(
+        onPressed: () => loginModel.logout(context: context),
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      const HomeScreen(),
+      const SearchScreen(),
+      ProfileScreen(
+        mainModel: mainModel,
+        userImageURL: '',
+      ),
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text('yourchari'),
@@ -51,27 +64,7 @@ class MyHomePage extends ConsumerWidget {
           ? const Center(
               child: Text('loading'),
             )
-          : PageView(
-              controller: homeBottomNavigationBarModel.pageController,
-              onPageChanged: (index) =>
-                  homeBottomNavigationBarModel.onPageChanged(index: index),
-              // childrenの個数はElementsの数
-              children: [
-                // 注意：ページじゃないのでScaffold
-                FloatingActionButton(
-                  onPressed: () => loginModel.logout(context: context),
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.add),
-                ),
-
-                const HomeScreen(),
-                const SearchScreen(),
-                ProfileScreen(
-                  mainModel: mainModel,
-                  userImageURL: '',
-                ),
-              ],
-            ),
+          : _screens[homeBottomNavigationBarModel.currentIndex],
       bottomNavigationBar: HomeBottomNavigationBar(
           homeBottomNavigationBarModel: homeBottomNavigationBarModel),
     );
