@@ -57,6 +57,7 @@ class LoginModel extends ChangeNotifier {
 
   Future<void> logout({required BuildContext context}) async {
     await FirebaseAuth.instance.signOut();
+    // currentUserがnullになる
     currentUser = FirebaseAuth.instance.currentUser;
     
     notifyListeners();
