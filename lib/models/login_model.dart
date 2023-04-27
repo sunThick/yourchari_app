@@ -59,7 +59,7 @@ class LoginModel extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
     // currentUserがnullになる
     currentUser = FirebaseAuth.instance.currentUser;
-    
+
     notifyListeners();
   }
 

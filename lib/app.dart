@@ -65,8 +65,10 @@ class MyHomePage extends ConsumerWidget {
               child: Text('loading'),
             )
           : _screens[homeBottomNavigationBarModel.currentIndex],
-      bottomNavigationBar: HomeBottomNavigationBar(
-          homeBottomNavigationBarModel: homeBottomNavigationBarModel),
+      bottomNavigationBar: SafeArea(
+        child: HomeBottomNavigationBar(
+            homeBottomNavigationBarModel: homeBottomNavigationBarModel),
+      ),
     );
   }
 }
