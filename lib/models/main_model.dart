@@ -21,12 +21,13 @@ class MainModel extends ChangeNotifier {
   Future<void> init() async {
     startLoading();
     currentUser = FirebaseAuth.instance.currentUser;
+    notifyListeners();
     //上記のdocumentsnapshotでデータを参照、取得
     currentUserDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser!.uid)
         .get();
-    //classの形にして呼び出せるようにする
+    //classの形にして呼び出せるようにする  firestoreUser.____
     firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     endLoading();
   }

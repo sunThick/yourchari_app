@@ -1,4 +1,5 @@
 // flutter
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // packages
@@ -55,11 +56,9 @@ class LoginModel extends ChangeNotifier {
     }
   }
 
-  Future<void> logout({required BuildContext context}) async {
+  Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
-    // currentUserがnullになる
     currentUser = FirebaseAuth.instance.currentUser;
-
     notifyListeners();
   }
 

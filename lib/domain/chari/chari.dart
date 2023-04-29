@@ -4,7 +4,7 @@ part 'chari.freezed.dart';
 part 'chari.g.dart';
 
 @freezed
-abstract class Chari with _$Chari {
+class Chari with _$Chari {
   const factory Chari({
     required String brand,
     required String frame,
