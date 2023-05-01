@@ -21,10 +21,15 @@ Chari _$ChariFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chari {
   String get brand => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
   String get frame => throw _privateConstructorUsedError;
-  String? get caption => throw _privateConstructorUsedError;
-  String get createdAt => throw _privateConstructorUsedError;
-  String? get updatedAt => throw _privateConstructorUsedError;
+  List<String> get imageURL => throw _privateConstructorUsedError;
+  int get likeCount => throw _privateConstructorUsedError;
+  String get postId => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
+  String get caption => throw _privateConstructorUsedError;
+  dynamic get createdAt => throw _privateConstructorUsedError;
+  dynamic get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,10 +43,15 @@ abstract class $ChariCopyWith<$Res> {
   @useResult
   $Res call(
       {String brand,
+      String category,
       String frame,
-      String? caption,
-      String createdAt,
-      String? updatedAt});
+      List<String> imageURL,
+      int likeCount,
+      String postId,
+      String uid,
+      String caption,
+      dynamic createdAt,
+      dynamic updatedAt});
 }
 
 /// @nodoc
@@ -58,9 +68,14 @@ class _$ChariCopyWithImpl<$Res, $Val extends Chari>
   @override
   $Res call({
     Object? brand = null,
+    Object? category = null,
     Object? frame = null,
-    Object? caption = freezed,
-    Object? createdAt = null,
+    Object? imageURL = null,
+    Object? likeCount = null,
+    Object? postId = null,
+    Object? uid = null,
+    Object? caption = null,
+    Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -68,22 +83,42 @@ class _$ChariCopyWithImpl<$Res, $Val extends Chari>
           ? _value.brand
           : brand // ignore: cast_nullable_to_non_nullable
               as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
       frame: null == frame
           ? _value.frame
           : frame // ignore: cast_nullable_to_non_nullable
               as String,
-      caption: freezed == caption
+      imageURL: null == imageURL
+          ? _value.imageURL
+          : imageURL // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      likeCount: null == likeCount
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      caption: null == caption
           ? _value.caption
           : caption // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: null == createdAt
+              as String,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
     ) as $Val);
   }
 }
@@ -96,10 +131,15 @@ abstract class _$$_ChariCopyWith<$Res> implements $ChariCopyWith<$Res> {
   @useResult
   $Res call(
       {String brand,
+      String category,
       String frame,
-      String? caption,
-      String createdAt,
-      String? updatedAt});
+      List<String> imageURL,
+      int likeCount,
+      String postId,
+      String uid,
+      String caption,
+      dynamic createdAt,
+      dynamic updatedAt});
 }
 
 /// @nodoc
@@ -112,9 +152,14 @@ class __$$_ChariCopyWithImpl<$Res> extends _$ChariCopyWithImpl<$Res, _$_Chari>
   @override
   $Res call({
     Object? brand = null,
+    Object? category = null,
     Object? frame = null,
-    Object? caption = freezed,
-    Object? createdAt = null,
+    Object? imageURL = null,
+    Object? likeCount = null,
+    Object? postId = null,
+    Object? uid = null,
+    Object? caption = null,
+    Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$_Chari(
@@ -122,22 +167,42 @@ class __$$_ChariCopyWithImpl<$Res> extends _$ChariCopyWithImpl<$Res, _$_Chari>
           ? _value.brand
           : brand // ignore: cast_nullable_to_non_nullable
               as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
       frame: null == frame
           ? _value.frame
           : frame // ignore: cast_nullable_to_non_nullable
               as String,
-      caption: freezed == caption
+      imageURL: null == imageURL
+          ? _value._imageURL
+          : imageURL // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      likeCount: null == likeCount
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      caption: null == caption
           ? _value.caption
           : caption // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: null == createdAt
+              as String,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
     ));
   }
 }
@@ -147,10 +212,16 @@ class __$$_ChariCopyWithImpl<$Res> extends _$ChariCopyWithImpl<$Res, _$_Chari>
 class _$_Chari implements _Chari {
   const _$_Chari(
       {required this.brand,
+      required this.category,
       required this.frame,
-      this.caption,
+      required final List<String> imageURL,
+      required this.likeCount,
+      required this.postId,
+      required this.uid,
+      required this.caption,
       required this.createdAt,
-      this.updatedAt});
+      required this.updatedAt})
+      : _imageURL = imageURL;
 
   factory _$_Chari.fromJson(Map<String, dynamic> json) =>
       _$$_ChariFromJson(json);
@@ -158,17 +229,33 @@ class _$_Chari implements _Chari {
   @override
   final String brand;
   @override
+  final String category;
+  @override
   final String frame;
+  final List<String> _imageURL;
   @override
-  final String? caption;
+  List<String> get imageURL {
+    if (_imageURL is EqualUnmodifiableListView) return _imageURL;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_imageURL);
+  }
+
   @override
-  final String createdAt;
+  final int likeCount;
   @override
-  final String? updatedAt;
+  final String postId;
+  @override
+  final String uid;
+  @override
+  final String caption;
+  @override
+  final dynamic createdAt;
+  @override
+  final dynamic updatedAt;
 
   @override
   String toString() {
-    return 'Chari(brand: $brand, frame: $frame, caption: $caption, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Chari(brand: $brand, category: $category, frame: $frame, imageURL: $imageURL, likeCount: $likeCount, postId: $postId, uid: $uid, caption: $caption, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -177,18 +264,33 @@ class _$_Chari implements _Chari {
         (other.runtimeType == runtimeType &&
             other is _$_Chari &&
             (identical(other.brand, brand) || other.brand == brand) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.frame, frame) || other.frame == frame) &&
+            const DeepCollectionEquality().equals(other._imageURL, _imageURL) &&
+            (identical(other.likeCount, likeCount) ||
+                other.likeCount == likeCount) &&
+            (identical(other.postId, postId) || other.postId == postId) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.caption, caption) || other.caption == caption) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, brand, frame, caption, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      brand,
+      category,
+      frame,
+      const DeepCollectionEquality().hash(_imageURL),
+      likeCount,
+      postId,
+      uid,
+      caption,
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(updatedAt));
 
   @JsonKey(ignore: true)
   @override
@@ -207,23 +309,38 @@ class _$_Chari implements _Chari {
 abstract class _Chari implements Chari {
   const factory _Chari(
       {required final String brand,
+      required final String category,
       required final String frame,
-      final String? caption,
-      required final String createdAt,
-      final String? updatedAt}) = _$_Chari;
+      required final List<String> imageURL,
+      required final int likeCount,
+      required final String postId,
+      required final String uid,
+      required final String caption,
+      required final dynamic createdAt,
+      required final dynamic updatedAt}) = _$_Chari;
 
   factory _Chari.fromJson(Map<String, dynamic> json) = _$_Chari.fromJson;
 
   @override
   String get brand;
   @override
+  String get category;
+  @override
   String get frame;
   @override
-  String? get caption;
+  List<String> get imageURL;
   @override
-  String get createdAt;
+  int get likeCount;
   @override
-  String? get updatedAt;
+  String get postId;
+  @override
+  String get uid;
+  @override
+  String get caption;
+  @override
+  dynamic get createdAt;
+  @override
+  dynamic get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_ChariCopyWith<_$_Chari> get copyWith =>

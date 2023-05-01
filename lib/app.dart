@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/constants/routes.dart';
 import 'package:yourchari_app/views/auth/login_page.dart';
 import 'package:yourchari_app/views/main/home_screen.dart';
 import 'package:yourchari_app/views/main/profile_screen.dart';
@@ -45,7 +46,7 @@ class MyHomePage extends ConsumerWidget {
         ref.watch(homeBottomNavigationBarProvider);
     List<Widget> _screens = [
       FloatingActionButton(
-        onPressed: () => loginModel.logout(),
+        onPressed: () => toCreateChariPage(context: context),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

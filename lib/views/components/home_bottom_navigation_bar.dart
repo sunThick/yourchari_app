@@ -21,4 +21,4 @@ class HomeBottomNavigationBar extends StatelessWidget {
             homeBottomNavigationBarModel.onTabTapped(index: index),
         elevation: 0.0);
   }
-}
+} 
