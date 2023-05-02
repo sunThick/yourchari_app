@@ -2,7 +2,6 @@
 // package
 import 'dart:io';
 
-
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -21,10 +20,10 @@ Future<XFile?> returnXFile() async {
 Future<File?> returnCroppedFile({required XFile? xFile}) async {
   final instance = ImageCropper();
   final File? result = await instance.cropImage(
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
       sourcePath: xFile!.path,
       aspectRatioPresets: [CropAspectRatioPreset.square],
-      androidUiSettings: const AndroidUiSettings(
-          initAspectRatio: CropAspectRatioPreset.square, lockAspectRatio: true),
+      androidUiSettings: const AndroidUiSettings(),
       iosUiSettings: const IOSUiSettings());
   return result;
 }

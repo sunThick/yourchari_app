@@ -26,6 +26,29 @@ class CreateChariModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  final chariCollection = FirebaseFirestore.instance.collection('chari');
+
+  Future<void> createChari(
+      {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc}) async {
+    final chariCollection = FirebaseFirestore.instance.collection('chari');
+    final Timestamp now = Timestamp.now();
+    final String activeUid = currentUserDoc.id;
+    final String postId = returnUuidV4();
+    final Chari chari = Chari(
+        category: category,
+        brand: brandEditingController.text,
+        frame: frameEditingController.text,
+        imageURL: [],
+        likeCount: 0,
+        postId: postId,
+        uid: activeUid,
+        caption: frameEditingController.text,
+        createdAt: now,
+        updatedAt: Timestamp.now());
+
+    await chariCollection.doc(postId).set(chari.toJson());
+  }
+
   Future<void> createPost(
       {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc}) async {
     final Timestamp now = Timestamp.now();
@@ -47,6 +70,5 @@ class CreateChariModel extends ChangeNotifier {
         .doc(postId)
         .set(chari.toJson());
     print(chari);
-
   }
 }

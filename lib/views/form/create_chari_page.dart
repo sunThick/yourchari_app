@@ -105,7 +105,7 @@ class CreateChariPage extends ConsumerWidget {
             alignment: Alignment.center,
             child: ElevatedButton(
               onPressed: () async {
-                createChariModel.createPost(
+                createChariModel.createChari(
                     currentUserDoc: mainModel.currentUserDoc);
               },
               child: const Text('post'),

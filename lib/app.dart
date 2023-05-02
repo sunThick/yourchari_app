@@ -5,6 +5,7 @@ import 'package:yourchari_app/constants/routes.dart';
 import 'package:yourchari_app/views/auth/login_page.dart';
 import 'package:yourchari_app/views/main/home_screen.dart';
 import 'package:yourchari_app/views/main/profile_screen.dart';
+import 'package:yourchari_app/views/main/news_screen.dart';
 import 'package:yourchari_app/views/main/search_screen.dart';
 
 import 'views/components/home_bottom_navigation_bar.dart';
@@ -45,13 +46,10 @@ class MyHomePage extends ConsumerWidget {
     final HomeBottomNavigationBarModel homeBottomNavigationBarModel =
         ref.watch(homeBottomNavigationBarProvider);
     List<Widget> _screens = [
-      FloatingActionButton(
-        onPressed: () => toCreateChariPage(context: context),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+     
       HomeScreen(mainModel: mainModel),
       SearchScreen(),
+      NewsScreen(),
       ProfileScreen(
         mainModel: mainModel,
       ),

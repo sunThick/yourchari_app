@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../constants/routes.dart';
 // constants
 
 class SearchScreen extends ConsumerWidget {
@@ -10,6 +12,9 @@ class SearchScreen extends ConsumerWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Text('search');
+    return FloatingActionButton(
+      onPressed: () => toCreateChariPage(context: context),
+      child: Icon(Icons.add),
+    );
   }
 }
