@@ -41,7 +41,7 @@ class ProfileModel extends ChangeNotifier {
     // ユーザーのuidを取得
     final String uid = currentUserDoc.id;
     // xfileを元にc編集されたcroppedFileを取得
-    croppedFile = await returnCroppedFile(xFile: xFile);
+    croppedFile = await returnCroppedFile(xFile: xFile, ratioX: 1, ratioY: 1);
     //写真編集の画面でキャンセルの場合はretun
     if (croppedFile == null) {
       return;

@@ -17,10 +17,13 @@ Future<XFile?> returnXFile() async {
 }
 
 // xfileからcropeedfileを作成
-Future<File?> returnCroppedFile({required XFile? xFile}) async {
+Future<File?> returnCroppedFile(
+    {required XFile? xFile,
+    required double ratioX,
+    required double ratioY}) async {
   final instance = ImageCropper();
   final File? result = await instance.cropImage(
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      aspectRatio: CropAspectRatio(ratioX: ratioX, ratioY: ratioY),
       sourcePath: xFile!.path,
       aspectRatioPresets: [CropAspectRatioPreset.square],
       androidUiSettings: const AndroidUiSettings(),
