@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/main_model.dart';
 
 import '../../domain/chari/chari.dart';
 import '../../models/main/home_model.dart';

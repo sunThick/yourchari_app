@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/domain/chari/chari.dart';
 
 import '../constants/string.dart';
-import 'main_model.dart';
 
 final createChariProvider =
     ChangeNotifierProvider(((ref) => CreateChariModel()));

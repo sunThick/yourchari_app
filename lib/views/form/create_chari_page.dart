@@ -10,7 +10,7 @@ class CreateChariPage extends ConsumerWidget {
     MainModel mainModel = MainModel();
     final CreateChariModel createChariModel = ref.watch(createChariProvider);
     //formcontroller
-    final isSelectedCategory = createChariModel.category;
+    // final isSelectedCategory = createChariModel.category;
     return Scaffold(
       appBar: AppBar(
         title: const Text('New chari'),
