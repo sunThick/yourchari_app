@@ -34,7 +34,7 @@ class ProfileScreen extends ConsumerWidget {
                 ),
         ),
         ElevatedButton(
-          onPressed: () async => await profileModel.uploadUserImage(
+          onPressed: () async => await profileModel.uploadImage(
               currentUserDoc: mainModel.currentUserDoc),
           child: const Text('edit photo'),
         )

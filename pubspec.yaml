@@ -31,7 +31,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.0
   flash: ^2.0.3+1
   uuid: ^3.0.5
-  image_picker: ^0.8.4+11
+  image_picker: ^0.8.7+4
   flutter_svg: ^2.0.5
   firebase_storage: ^11.1.1
   firebase_crashlytics: ^3.1.0

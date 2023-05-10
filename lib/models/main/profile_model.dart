@@ -30,7 +30,7 @@ class ProfileModel extends ChangeNotifier {
     return storageRef.getDownloadURL();
   }
 
-  Future<void> uploadUserImage(
+  Future<void> uploadImage(
       {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc}) async {
     // デバイスから画像を取得
     final XFile? xFile = await returnXFile();

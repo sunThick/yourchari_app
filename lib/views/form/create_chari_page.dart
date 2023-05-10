@@ -18,9 +18,33 @@ class CreateChariPage extends ConsumerWidget {
       body: Center(
           child: Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
+          ElevatedButton(
+              onPressed: () async {
+                await createChariModel.selectImages();
+              },
+              child: const Text('images')),
+          createChariModel.croppedFile != null
+              ? SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: createChariModel.images.length,
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                          height: 100,
+                          child: Image.file(createChariModel.images[index]));
+                    },
+                    // shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                  ),
+                )
+              // ? SizedBox(
+              //     height: 100,
+              //     child: Image.file(createChariModel.croppedFile!),
+              // )
+              : const SizedBox(
+                  height: 100,
+                ),
           const Text('category'),
           DropdownButton(
               items: [
