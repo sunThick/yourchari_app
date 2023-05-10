@@ -31,8 +31,10 @@ class CreateChariPage extends ConsumerWidget {
                     itemCount: createChariModel.images.length,
                     itemBuilder: (context, index) {
                       return SizedBox(
-                          height: 100,
-                          child: Image.file(createChariModel.images[index]));
+                        height: 100,
+                        child: Image.file(createChariModel.images[index]),
+                        
+                      );
                     },
                     // shrinkWrap: true,
                     // physics: NeverScrollableScrollPhysics(),
