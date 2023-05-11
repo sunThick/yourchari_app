@@ -2,16 +2,20 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/models/login_model.dart';
 
 // constants
 
 class NewsScreen extends ConsumerWidget {
-  const NewsScreen({Key? key}) : super(key: key);
-
+  NewsScreen({Key? key}) : super(key: key);
+  LoginModel loginModel = LoginModel();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-        // children: [ElevatedButton(onPressed: , child: child)],
-        );
+    return Center(
+      child: ElevatedButton(
+        onPressed: () => loginModel.logout(),
+        child: Text('tomato'),
+      ),
+    );
   }
 }

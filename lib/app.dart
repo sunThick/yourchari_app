@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'yourchari',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.grey,
       ),
       home: onceUser == null ? const LoginPage() : const MyHomePage(),
     );
@@ -43,7 +43,6 @@ class MyHomePage extends ConsumerWidget {
     final HomeBottomNavigationBarModel homeBottomNavigationBarModel =
         ref.watch(homeBottomNavigationBarProvider);
     List<Widget> screens = [
-     
       HomeScreen(mainModel: mainModel),
       SearchScreen(),
       NewsScreen(),
@@ -52,9 +51,9 @@ class MyHomePage extends ConsumerWidget {
       ),
     ];
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('yourchari'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('yourchari'),
+      // ),
       body: mainModel.isLoading
           ? const Center(
               child: Text('loading'),

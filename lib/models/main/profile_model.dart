@@ -8,12 +8,13 @@ import 'package:yourchari_app/constants/othes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yourchari_app/constants/string.dart';
+import 'package:yourchari_app/models/main_model.dart';
 
 final profileProvider = ChangeNotifierProvider(((ref) => ProfileModel()));
 
 class ProfileModel extends ChangeNotifier {
   File? croppedFile;
-
+  MainModel mainModel = MainModel();
   Future<String> uploadImageAndGetURL(
       {required String uid, required File file}) async {
     //uuid

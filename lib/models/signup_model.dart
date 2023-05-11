@@ -13,23 +13,23 @@ final signupProvider = ChangeNotifierProvider((ref) => SignupModel());
 class SignupModel extends ChangeNotifier {
   User? currentUser;
   // auth
+  String userName = "";
   String email = "";
   String password = "";
   String userImageURL = "";
   bool isObscure = true;
-  
 
   Future<void> createFirestoreUser(
       {required BuildContext context, required String uid}) async {
     final Timestamp now = Timestamp.now();
     final FirestoreUser firestoreUser = FirestoreUser(
-        createdAt: now,
-        email: email,
-        uid: uid,
-        updatedAt: now,
-        userImageURL: userImageURL,
-        userName: "Alice",
-        );
+      createdAt: now,
+      email: email,
+      uid: uid,
+      updatedAt: now,
+      userImageURL: userImageURL,
+      userName: userName,
+    );
     final Map<String, dynamic> userData = firestoreUser.toJson();
     await FirebaseFirestore.instance.collection("users").doc(uid).set(userData);
     ScaffoldMessenger.of(context)

@@ -6,7 +6,7 @@ import '../models/main_model.dart';
 import '../app.dart';
 import '../views/auth/login_page.dart';
 import '../views/auth/signup_page.dart';
-import '../views/main/home/chari_detail_page.dart';
+import '../views/main/home/detail_chari_page.dart';
 
 void toMyApp({required BuildContext context}) => Navigator.push(
     context, MaterialPageRoute(builder: (context) => const MyApp()));

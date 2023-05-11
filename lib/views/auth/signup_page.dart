@@ -11,6 +11,8 @@ class SignupPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final SignupModel signupModel = ref.watch(signupProvider);
+    final TextEditingController userNameEditingController =
+        TextEditingController(text: signupModel.userName);
     final TextEditingController emailEditingController =
         TextEditingController(text: signupModel.email);
     final TextEditingController passwordEditingController =
@@ -29,6 +31,15 @@ class SignupPage extends ConsumerWidget {
               ),
               const SizedBox(
                 height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: userNameEditingController,
+                  onChanged: (text) => signupModel.userName = text,
+                  decoration: const InputDecoration(labelText: "username"),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

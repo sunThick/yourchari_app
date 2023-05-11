@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/chari_detail_model.dart';
+
 
 import '../../../domain/chari/chari.dart';
 
@@ -10,7 +10,6 @@ class ChariDetailPage extends ConsumerWidget {
   final Chari chari;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ChariDetailModel chariDetailModel = ref.watch(chariDetailProvider);
 
     return Scaffold(
         appBar: AppBar(
