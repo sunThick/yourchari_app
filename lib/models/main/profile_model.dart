@@ -57,4 +57,31 @@ class ProfileModel extends ChangeNotifier {
     });
     notifyListeners();
   }
+
+  ProfileModel() {
+    init();
+  }
+
+  List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = [];
+  Future<void> init() async {
+    startLoading();
+    final qshot = await FirebaseFirestore.instance
+        .collection('chari')
+        .where('uid', isEqualTo: mainModel.currentUser!.uid)
+        // .orderBy("createdAt", descending: true)
+        .get();
+    chariDocs = qshot.docs;
+    endLoading();
+  }
+
+  bool isLoading = false;
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 }

@@ -18,10 +18,11 @@ class HomeModel extends ChangeNotifier {
         // .collection('users')
         // .doc(currentUser!.uid)
         .collection('chari')
+        // .where('uid', isEqualTo: mainModel.firestoreUser.uid)
         .orderBy("createdAt", descending: true)
-        .limit(30)
         .get();
     chariDocs = qshot.docs;
+    print(chariDocs.length);
     endLoading();
   }
 

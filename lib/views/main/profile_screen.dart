@@ -8,6 +8,8 @@ import 'package:yourchari_app/views/components/default_user_image.dart';
 import 'package:yourchari_app/models/main_model.dart';
 import 'package:yourchari_app/models/main/profile_model.dart';
 
+import '../../domain/chari/chari.dart';
+
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key, required this.mainModel}) : super(key: key);
   final MainModel mainModel;
@@ -15,87 +17,90 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfileModel profileModel = ref.watch(profileProvider);
     const double coverHeight = 150;
-    const double profileHeight = 144;
+    const double profileHeight = 100;
     const bottom = profileHeight / 2;
     const top = coverHeight - profileHeight / 2;
     return Scaffold(
         body: Column(
       children: [
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.zero,
+        Container(
+          margin: const EdgeInsets.only(bottom: bottom),
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: bottom),
-                    child: Container(
-                        color: Colors.grey,
-                        child: mainModel.firestoreUser.userImageURL.isNotEmpty
-                            ? Image.network(
-                                mainModel.firestoreUser.userImageURL,
-                                width: double.infinity,
-                                height: coverHeight,
-                                fit: BoxFit.cover,
-                              )
-                            : Container(
-                                color: Colors.grey,
-                                width: double.infinity,
-                                height: coverHeight,
-                              )),
-                  ),
-                  Positioned(
-                    top: top,
-                    child: Container(
-                      // croppedfileがなければcloudstorageのファイルを表示
-                      child: profileModel.croppedFile != null
-                          ? CircleAvatar(
-                              radius: profileHeight / 2,
-                              backgroundImage:
-                                  Image.file(profileModel.croppedFile!).image,
-                            )
-                          : Container(
-                              // croppedfileがなければcloudstorageのファイルを表示
-                              child: mainModel
-                                      .firestoreUser.userImageURL.isEmpty
-                                  ? const CircleAvatar(
-                                      radius: profileHeight / 2,
-                                      child: Icon(Icons.person))
-                                  : CircleAvatar(
-                                      radius: profileHeight / 2,
-                                      backgroundImage: NetworkImage(mainModel
-                                          .firestoreUser.userImageURL)),
-                            ),
-                    ),
-                  ),
-                ],
-              ),
-              // ElevatedButton(
-              //   onPressed: () async => await profileModel.uploadImage(
-              //       currentUserDoc: mainModel.currentUserDoc),
-              //   child: const Text('edit photo'),
-              // ),
-              const SizedBox(height: 8),
-
-              Center(
-                child: Text(
-                  mainModel.firestoreUser.userName,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w500),
+              Container(
+                  color: Colors.grey,
+                  child: mainModel.firestoreUser.userImageURL.isNotEmpty
+                      ? Image.network(
+                          mainModel.firestoreUser.userImageURL,
+                          width: double.infinity,
+                          height: coverHeight,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(
+                          color: Colors.grey,
+                          width: double.infinity,
+                          height: coverHeight,
+                        )),
+              Positioned(
+                top: top,
+                child: Container(
+                  // croppedfileがなければcloudstorageのファイルを表示
+                  child: profileModel.croppedFile != null
+                      ? CircleAvatar(
+                          radius: profileHeight / 2,
+                          backgroundImage:
+                              Image.file(profileModel.croppedFile!).image,
+                        )
+                      : Container(
+                          // croppedfileがなければcloudstorageのファイルを表示
+                          child: mainModel.firestoreUser.userImageURL.isEmpty
+                              ? const CircleAvatar(
+                                  radius: profileHeight / 2,
+                                  child: Icon(Icons.person))
+                              : CircleAvatar(
+                                  radius: profileHeight / 2,
+                                  backgroundImage: NetworkImage(
+                                      mainModel.firestoreUser.userImageURL)),
+                        ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildButton(text: 'chari', value: 3),
-                  buildButton(text: 'follwing', value: 4),
-                  buildButton(text: 'follwers', value: 12)
-                ],
-              ),
-              const Divider(color: Colors.black),
             ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        Center(
+          child: Text(
+            mainModel.firestoreUser.userName,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildButton(text: 'chari', value: profileModel.chariDocs.length),
+            buildButton(text: 'follwing', value: 4),
+            buildButton(text: 'follwers', value: 12)
+          ],
+        ),
+        const Divider(color: Colors.black),
+        Expanded(
+          child: ListView.builder(
+            itemCount: profileModel.chariDocs.length, // moviesの長さだけ表示
+            itemBuilder: (BuildContext context, int index) {
+              final doc = profileModel.chariDocs[index];
+              final Chari chari = Chari.fromJson(doc.data()!);
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                    child: Image.network(
+                  (chari.imageURL[0]),
+                )),
+              );
+            },
           ),
         ),
       ],

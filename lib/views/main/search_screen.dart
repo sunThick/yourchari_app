@@ -13,7 +13,6 @@ class SearchScreen extends ConsumerWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ProfileModel profileModel = ProfileModel();
     return Column(
       children: [
         FloatingActionButton(
