@@ -15,4 +15,6 @@ class FirestoreUser with _$FirestoreUser {
   }) = _FirestoreUser;
   factory FirestoreUser.fromJson(Map<String, dynamic> json) =>
       _$FirestoreUserFromJson(json);
+
+  // int get followerCount => null;
 }

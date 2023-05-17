@@ -18,6 +18,8 @@ class MainModel extends ChangeNotifier {
     init();
   }
 
+  get followingUids => null;
+
   Future<void> init() async {
     startLoading();
     currentUser = FirebaseAuth.instance.currentUser;

@@ -43,7 +43,7 @@ class MyHomePage extends ConsumerWidget {
     final HomeBottomNavigationBarModel homeBottomNavigationBarModel =
         ref.watch(homeBottomNavigationBarProvider);
     List<Widget> screens = [
-      HomeScreen(mainModel: mainModel),
+      HomeScreen(mainmodel: mainModel,),
       SearchScreen(),
       NewsScreen(),
       ProfileScreen(

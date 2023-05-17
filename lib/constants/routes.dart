@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/domain/chari/chari.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
+import 'package:yourchari_app/views/passive_user_profile_page.dart';
 
 import '../models/main_model.dart';
 import '../app.dart';
@@ -22,10 +24,16 @@ void toLoginPage(
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
 
-void toChariDetailPage({required BuildContext context, required Chari chari}) =>
+void toChariDetailPage({required BuildContext context, required Chari chari, required FirestoreUser passiveUser}) =>
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ChariDetailPage(
                   chari: chari,
+                  passiveUser: passiveUser,
                 )));
+
+void toPassiveUserPage({required BuildContext context}) => Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => PassiveUserProfilePage()));
