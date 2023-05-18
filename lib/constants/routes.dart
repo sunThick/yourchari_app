@@ -24,16 +24,16 @@ void toLoginPage(
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
 
-void toChariDetailPage({required BuildContext context, required Chari chari, required FirestoreUser passiveUser}) =>
+void toChariDetailPage({required BuildContext context, required String chariUid}) =>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ChariDetailPage(
-                  chari: chari,
-                  passiveUser: passiveUser,
+            builder: (context) => ChariDetailPage(chariUid: chariUid,
                 )));
 
 void toPassiveUserPage({required BuildContext context}) => Navigator.push(
     context,
     MaterialPageRoute(
         builder: (context) => PassiveUserProfilePage()));
+
+

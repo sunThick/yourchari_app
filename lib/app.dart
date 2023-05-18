@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     // この変数を1回きり
     final User? onceUser = FirebaseAuth.instance.currentUser;
 
-    print(onceUser);
+    // print(onceUser);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'yourchari',

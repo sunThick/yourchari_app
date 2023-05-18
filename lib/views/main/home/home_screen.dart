@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/models/main_model.dart';
-
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../constants/routes.dart';
 import '../../../domain/chari/chari.dart';
 import '../../../models/main/home_model.dart';
@@ -20,6 +20,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final HomeModel homeModel = ref.watch(homeProvider);
+    print(homeModel);
     final chariDocs = homeModel.chariDocs;
     final userDocs = homeModel.userDocs;
     return Scaffold(
@@ -30,10 +31,12 @@ class HomeScreen extends ConsumerWidget {
         ),
         backgroundColor: Colors.white,
       ),
-      body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
+      body: MasonryGridView.count(
+          crossAxisCount: 2,
+          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //   crossAxisCount: 2,
+          //   mainAxisExtent: 250,
+          // ),
           itemCount: homeModel.chariDocs.length,
           itemBuilder: (BuildContext context, int index) {
             final chariDoc = chariDocs[index];
@@ -43,20 +46,32 @@ class HomeScreen extends ConsumerWidget {
                 FirestoreUser.fromJson(userDoc.data()!);
             return InkWell(
               onTap: () {
-                toChariDetailPage(
-                    context: context, chari: chari, passiveUser: passiveUser);
+                toChariDetailPage(context: context, chariUid: chari.postId);
               },
               child: Card(
+                clipBehavior: Clip.antiAlias,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
                   children: [
-                    Text(passiveUser.userName),
-                    Center(
-                        child: Image.network(
-                      (chari.imageURL[0]),
-                    )),
+                    ListTile(
+                      // leading: passiveUser.userImageURL.isEmpty
+                      //     ? const CircleAvatar(child: Icon(Icons.person))
+                      //     : CircleAvatar(
+                      //         backgroundImage:
+                      //             NetworkImage(passiveUser.userImageURL)),
+                      title: Text(chari.brand),
+                      subtitle: Text(
+                        chari.frame,
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ),
+                    // Image.network(
+                    //   (chari.imageURL[0]),
+                    //   height: 150,
+                    //   fit: BoxFit.fill,
+                    // ),
                   ],
                 ),
               ),
