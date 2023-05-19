@@ -10,7 +10,8 @@ import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 
 final chariProviderFamily =
 // tupleを用いて自転車のpostIdからChariとFirestoreUserをreturn
-    FutureProvider.autoDispose.family<Tuple2<Chari, FirestoreUser>, String>(((ref, uid) async {
+    FutureProvider.autoDispose
+        .family<Tuple2<Chari, FirestoreUser>, String>(((ref, uid) async {
   final chariDoc =
       await FirebaseFirestore.instance.collection('chari').doc(uid).get();
   final chari = Chari.fromJson(chariDoc.data()!);

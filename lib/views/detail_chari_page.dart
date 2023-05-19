@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/models/chari_detail_model.dart';
 import '/constants/routes.dart' as routes;
 
-import '../../../domain/chari/chari.dart';
-import '../../../domain/firestore_user/firestore_user.dart';
+import '../domain/chari/chari.dart';
+import '../domain/firestore_user/firestore_user.dart';
 
 class ChariDetailPage extends ConsumerWidget {
   const ChariDetailPage({Key? key, required this.chariUid}) : super(key: key);
@@ -13,7 +13,7 @@ class ChariDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(chariProviderFamily(chariUid));
-    final chariDetailModel = ref.watch(chariDetailProvider);
+    final ChariDetailModel chariDetailModel = ref.watch(chariDetailProvider);
 
     return Scaffold(
         body: state.when(
@@ -27,8 +27,9 @@ class ChariDetailPage extends ConsumerWidget {
                       children: [
                         Text(chariDetailModel.i.toString()),
                         ElevatedButton(
-                          onPressed: () => chariDetailModel.tasu(chari: chari),
-                          child: const Text('たす'),
+                          onPressed: () => routes.toPassiveUserPage(
+                              context: context, userId: passiveUser.uid),
+                          child: Text(passiveUser.userName),
                         ),
                         Text(passiveUser.userName)
                       ],

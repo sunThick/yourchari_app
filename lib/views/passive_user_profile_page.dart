@@ -6,21 +6,31 @@ import 'package:yourchari_app/models/passive_user_profile_model.dart';
 import '../domain/firestore_user/firestore_user.dart';
 
 class PassiveUserProfilePage extends ConsumerWidget {
-  const PassiveUserProfilePage({
-    Key? key,
-    // required this.passiveUser,
-    // required this.mainModel,
-  }) : super(key: key);
-  // final FirestoreUser passiveUser;
-  // final MainModel mainModel;
+  const PassiveUserProfilePage({required this.userId, Key? key})
+      : super(key: key);
+  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final PassiveUserProfileModel passiveUserProfileModel =
-    //     ref.watch(passiveUserProfileProvider);
-    // final bool isFollowing = mainModel.followingUids.contains(passiveUser.uid);
-    // final int followerCount = passiveUser.followerCount;
-    // final int plusOneFollowerCount = followerCount + 1;
-    return Scaffold(appBar: AppBar(title: Text('o')));
+    final state = ref.watch(passiveUserProviderFamily(userId));
+    final PassiveUserModel passiveUserModel = ref.watch(passiveUserProvider);
+
+    return Scaffold(
+      body: state.when(
+          data: (passiveUserAndCharis) {
+            final passiveUser = passiveUserAndCharis.item1;
+            final chariDocs = passiveUserAndCharis.item2;
+            return Scaffold(
+              appBar: AppBar(),
+              body: Column(children: [Text(passiveUser.userName)]),
+            );
+          },
+          error: (Object error, StackTrace stackTrace) {},
+          loading: () {
+            return Scaffold(
+              appBar: AppBar(),
+            );
+          }),
+    );
   }
 }

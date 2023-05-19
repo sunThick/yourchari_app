@@ -8,7 +8,7 @@ import '../models/main_model.dart';
 import '../app.dart';
 import '../views/auth/login_page.dart';
 import '../views/auth/signup_page.dart';
-import '../views/main/home/detail_chari_page.dart';
+import '../views/detail_chari_page.dart';
 
 void toMyApp({required BuildContext context}) => Navigator.push(
     context, MaterialPageRoute(builder: (context) => const MyApp()));
@@ -31,9 +31,9 @@ void toChariDetailPage({required BuildContext context, required String chariUid}
             builder: (context) => ChariDetailPage(chariUid: chariUid,
                 )));
 
-void toPassiveUserPage({required BuildContext context}) => Navigator.push(
+void toPassiveUserPage({required BuildContext context, required String userId}) => Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => PassiveUserProfilePage()));
+        builder: (context) => PassiveUserProfilePage(userId: userId,)));
 
 

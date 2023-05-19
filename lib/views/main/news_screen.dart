@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/models/login_model.dart';
 
-// constants
 
 class NewsScreen extends ConsumerWidget {
   NewsScreen({Key? key}) : super(key: key);
