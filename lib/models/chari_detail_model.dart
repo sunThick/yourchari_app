@@ -5,20 +5,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:yourchari_app/domain/chari/chari.dart';
+import 'package:tuple/tuple.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 
 final chariProviderFamily =
-    FutureProvider.autoDispose.family<Chari, String>(((ref, uid) async {
+// tupleを用いて自転車のpostIdからChariとFirestoreUserをreturn
+    FutureProvider.autoDispose.family<Tuple2<Chari, FirestoreUser>, String>(((ref, uid) async {
   final chariDoc =
       await FirebaseFirestore.instance.collection('chari').doc(uid).get();
-  return Chari.fromJson(chariDoc.data()!);
+  final chari = Chari.fromJson(chariDoc.data()!);
+  final userId = chari.uid;
+  final userDoc =
+      await FirebaseFirestore.instance.collection('users').doc(userId).get();
+  final passiveUser = FirestoreUser.fromJson(userDoc.data()!);
+  final chariAndPassiveUser = Tuple2<Chari, FirestoreUser>(chari, passiveUser);
+  return chariAndPassiveUser;
 }));
 
 final chariDetailProvider =
-    ChangeNotifierProvider(((ref) => ChariDetailModel()));
+    ChangeNotifierProvider.autoDispose(((ref) => ChariDetailModel()));
 
 class ChariDetailModel extends ChangeNotifier {
-  // ChariDetailModel() {
+  var i = 0;
 
-  // }
-  
+  void tasu({required Chari chari}) {
+    print(chari.brand);
+    notifyListeners();
+  }
 }

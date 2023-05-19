@@ -14,33 +14,32 @@ class ChariDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(chariProviderFamily(chariUid));
     final chariDetailModel = ref.watch(chariDetailProvider);
-    // print(state);
-    state.when(
-        data: (chari) {
-          return Scaffold(
-            appBar: AppBar(title: Text(chari.brand)),
-          );
-        },
-        error: (Object error, StackTrace stackTrace) {},
-        loading: () {});
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(''),
-        ),
-        body: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                routes.toPassiveUserPage(context: context);
-              },
-              child: Text(''),
-            ),
-            // Center(
-            //     child: Image.network(
-            //   ('s'),
-            // )),
-          ],
-        ));
+        body: state.when(
+            data: (chariAndPassiveUser) {
+              final chari = chariAndPassiveUser.item1;
+              final passiveUser = chariAndPassiveUser.item2;
+              return Scaffold(
+                  appBar: AppBar(title: Text(chari.brand)),
+                  body: Center(
+                    child: Column(
+                      children: [
+                        Text(chariDetailModel.i.toString()),
+                        ElevatedButton(
+                          onPressed: () => chariDetailModel.tasu(chari: chari),
+                          child: const Text('たす'),
+                        ),
+                        Text(passiveUser.userName)
+                      ],
+                    ),
+                  ));
+            },
+            error: (Object error, StackTrace stackTrace) {},
+            loading: () {
+              return Scaffold(
+                appBar: AppBar(),
+              );
+            }));
   }
 }
