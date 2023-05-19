@@ -12,28 +12,18 @@ class ChariDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final tomato = ref.read(chariProviderFamily(chariUid).notifier).;
-    // final chariDoc = chariDetailModel.
-    // final chariDoc = chariDetailModel.chariDoc;
-    // final Chari chari = Chari.fromJson(chariDoc.data()!);
 
     final state = ref.watch(chariProviderFamily(chariUid));
     // print(state);
     state.when(
         data: (data) {
-          final Chari chari = Chari.fromJson(data.data()!);
-          print(chari.brand);
+          final Chari chari = Chari.fromJson(data!);
         },
         error: (Object error, StackTrace stackTrace) {},
         loading: () {});
-    // final Chari chari = Chari.fromJson(state.value())
 
-    // print(state.chariDoc);
-    // final chari = chariDetailModel
-    // ref.watch(tomato).when(
-    //     data: (data) => Text(data.toString()),
-    //     error: (error, stackTrace) => Text(stackTrace.toString()),
-    //     loading: () => const CircularProgressIndicator());
+    // final chaiDoc = chariDetailModel.chariDoc;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(''),
@@ -44,7 +34,7 @@ class ChariDetailPage extends ConsumerWidget {
               onPressed: () {
                 routes.toPassiveUserPage(context: context);
               },
-              child: Text('d'),
+              child: Text(''),
             ),
             // Center(
             //     child: Image.network(
