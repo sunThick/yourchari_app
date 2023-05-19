@@ -6,32 +6,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:yourchari_app/domain/chari/chari.dart';
 
-final chariProviderFamily = FutureProvider.autoDispose
-    .family<Map<String, dynamic>?, String>(((ref, uid) async {
-  return await ChariDetailModel(uid: uid).init(uid: uid);
+final chariProviderFamily =
+    FutureProvider.autoDispose.family<Chari, String>(((ref, uid) async {
+  final chariDoc =
+      await FirebaseFirestore.instance.collection('chari').doc(uid).get();
+  return Chari.fromJson(chariDoc.data()!);
 }));
 
+final chariDetailProvider =
+    ChangeNotifierProvider(((ref) => ChariDetailModel()));
+
 class ChariDetailModel extends ChangeNotifier {
-  ChariDetailModel({required String uid}) {
-    init(uid: uid);
-  }
+  // ChariDetailModel() {
 
-  Future<Map<String, dynamic>?> init({required String uid}) async {
-    startLoading();
-    final chariDoc =
-        await FirebaseFirestore.instance.collection('chari').doc(uid).get();
-    endLoading();
-    return chariDoc.data();
-  }
-
-  bool isLoading = false;
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
-  }
+  // }
+  
 }

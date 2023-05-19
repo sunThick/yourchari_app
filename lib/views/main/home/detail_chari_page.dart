@@ -12,17 +12,17 @@ class ChariDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final state = ref.watch(chariProviderFamily(chariUid));
+    final chariDetailModel = ref.watch(chariDetailProvider);
     // print(state);
     state.when(
-        data: (data) {
-          final Chari chari = Chari.fromJson(data!);
+        data: (chari) {
+          return Scaffold(
+            appBar: AppBar(title: Text(chari.brand)),
+          );
         },
         error: (Object error, StackTrace stackTrace) {},
         loading: () {});
-
-    // final chaiDoc = chariDetailModel.chariDoc;
 
     return Scaffold(
         appBar: AppBar(
