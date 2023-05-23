@@ -29,6 +29,8 @@ class SignupModel extends ChangeNotifier {
       updatedAt: now,
       userImageURL: userImageURL,
       userName: userName,
+      followerCount: 0,
+      followingCount: 0,
     );
     final Map<String, dynamic> userData = firestoreUser.toJson();
     await FirebaseFirestore.instance.collection("users").doc(uid).set(userData);

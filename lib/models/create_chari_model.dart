@@ -12,7 +12,7 @@ import '../constants/othes.dart';
 import '../constants/string.dart';
 
 final createChariProvider =
-    ChangeNotifierProvider(((ref) => CreateChariModel()));
+    ChangeNotifierProvider.autoDispose(((ref) => CreateChariModel()));
 
 class CreateChariModel extends ChangeNotifier {
   String category = "single";
@@ -34,6 +34,11 @@ class CreateChariModel extends ChangeNotifier {
 
   Future<void> selectImages() async {
     // デバイスから画像を取得
+
+    if (images.length >= 5) {
+      return;
+    }
+
     final XFile? xFile = await returnXFile();
     //　写真選択のキャンセルの場合はreturn
     if (xFile == null) {
@@ -80,14 +85,16 @@ class CreateChariModel extends ChangeNotifier {
     // final File imageFile = File(croppedFile!.path);
 
     for (var element in imageFiles) {
-      final String url = await uploadImageAndGetURL(postId: postId, file: element);
+      final String url =
+          await uploadImageAndGetURL(postId: postId, file: element);
       imageURL.add(url);
     }
     await chariCollection.doc(postId).set(chari.toJson());
   }
 
   // 自転車の写真をfirestorageに投稿 && アップロード先のURLを取得。
-  Future<String> uploadImageAndGetURL({required String postId, required File file}) async {
+  Future<String> uploadImageAndGetURL(
+      {required String postId, required File file}) async {
     //uuid
     final String fileName = returnFileName();
 
@@ -101,5 +108,4 @@ class CreateChariModel extends ChangeNotifier {
     // users/uid/ファイル名 のURLを取得
     return storageRef.getDownloadURL();
   }
-
 }

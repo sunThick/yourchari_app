@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/chari_detail_model.dart';
+import 'package:yourchari_app/models/detail_chari_model.dart';
 import '/constants/routes.dart' as routes;
 
 import '../domain/chari/chari.dart';
@@ -25,13 +25,11 @@ class ChariDetailPage extends ConsumerWidget {
                   body: Center(
                     child: Column(
                       children: [
-                        Text(chariDetailModel.i.toString()),
                         ElevatedButton(
                           onPressed: () => routes.toPassiveUserPage(
                               context: context, userId: passiveUser.uid),
                           child: Text(passiveUser.userName),
                         ),
-                        Text(passiveUser.userName)
                       ],
                     ),
                   ));

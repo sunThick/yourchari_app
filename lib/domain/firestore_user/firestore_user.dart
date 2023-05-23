@@ -1,20 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
+ 
 part 'firestore_user.freezed.dart';
 part 'firestore_user.g.dart';
-
+ 
 @freezed
-class FirestoreUser with _$FirestoreUser {
-  const factory FirestoreUser({
-    required dynamic createdAt,
-    required String email,
-    required String userName,
-    required String userImageURL,
-    required String uid,
-    required dynamic updatedAt,
+abstract class FirestoreUser with _$FirestoreUser {
+ const factory FirestoreUser({
+   required dynamic createdAt,
+   required String email,
+   required int followerCount,
+   required int followingCount,
+   required String userName,
+   required String userImageURL,
+   required String uid,
+   required dynamic updatedAt,
   }) = _FirestoreUser;
-  factory FirestoreUser.fromJson(Map<String, dynamic> json) =>
-      _$FirestoreUserFromJson(json);
-
-  // int get followerCount => null;
+ factory FirestoreUser.fromJson(Map<String, dynamic> json) => _$FirestoreUserFromJson(json);
 }

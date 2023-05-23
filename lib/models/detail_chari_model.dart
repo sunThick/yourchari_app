@@ -27,8 +27,6 @@ final chariDetailProvider =
     ChangeNotifierProvider.autoDispose(((ref) => ChariDetailModel()));
 
 class ChariDetailModel extends ChangeNotifier {
-  var i = 0;
-
   void tasu({required Chari chari}) {
     print(chari.brand);
     notifyListeners();

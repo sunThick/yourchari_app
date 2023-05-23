@@ -80,8 +80,8 @@ class ProfileScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildButton(text: 'chari', value: profileModel.chariDocs.length),
-            buildButton(text: 'follwing', value: 4),
-            buildButton(text: 'follwers', value: 12)
+            buildButton(text: 'follwing', value: mainModel.firestoreUser.followingCount),
+            buildButton(text: 'follwers', value: mainModel.firestoreUser.followerCount)
           ],
         ),
         const Divider(color: Colors.black),
@@ -95,10 +95,10 @@ class ProfileScreen extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
-                    child: Image.network(
-                  (chari.imageURL[0]),
-                )),
+                // child: Center(
+                //     child: Image.network(
+                //   (chari.imageURL[0]),
+                // )),
               );
             },
           ),
