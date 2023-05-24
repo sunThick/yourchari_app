@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,30 +14,50 @@ import '../domain/follower/follower.dart';
 import '../domain/following_token/following_token.dart';
 import 'main_model.dart';
 
-final passiveUserProviderFamily =
-// tupleを用いてuserIdからChariとFirestoreUserをreturn
-    FutureProvider.autoDispose.family<
-        Tuple2<FirestoreUser,
-            List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
-        String>(((ref, uid) async {
-  final passiveUserDoc =
-      await FirebaseFirestore.instance.collection('users').doc(uid).get();
-  final passiveUser = FirestoreUser.fromJson(passiveUserDoc.data()!);
-  final qshot = await FirebaseFirestore.instance
+// final passiveUserProviderFamily =
+// // tupleを用いてuserIdからChariとFirestoreUserをreturn
+//     FutureProvider.autoDispose.family<
+//         Tuple2<FirestoreUser,
+//             List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
+//         String>(((ref, uid) async {
+//   final passiveUserDoc =
+//       await FirebaseFirestore.instance.collection('users').doc(uid).get();
+//   final passiveUser = FirestoreUser.fromJson(passiveUserDoc.data()!);
+//   final qshot = await FirebaseFirestore.instance
+//       .collection('chari')
+//       .where('uid', isEqualTo: uid)
+//       .get();
+//   final chariDocs = qshot.docs;
+//   final passiveUserAndCharis = Tuple2(passiveUser, chariDocs);
+//   return passiveUserAndCharis;
+// }));
+
+final passiveUserFamily = StreamProvider.autoDispose.family<
+    Tuple2<FirestoreUser,
+        List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
+    String>(((ref, uid) async* {
+  final userStream =
+      FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
+
+  final passiveUser =
+      userStream.map((event) => FirestoreUser.fromJson(event.data()!));
+
+  await for (final value in passiveUser) {
+    final us = value;
+    final qshot = await FirebaseFirestore.instance
       .collection('chari')
       .where('uid', isEqualTo: uid)
       .get();
-  final chariDocs = qshot.docs;
-  final passiveUserAndCharis = Tuple2(passiveUser, chariDocs);
-  return passiveUserAndCharis;
-
+    final chariDocs = qshot.docs;
+    yield Tuple2(us, chariDocs);
+  }
 }));
 
 final passiveUserProvider =
     ChangeNotifierProvider(((ref) => PassiveUserModel()));
 
 class PassiveUserModel extends ChangeNotifier {
-   bool isFollowed = false;
+  bool isFollowed = false;
 
   Future<void> follow(
       {required MainModel mainModel,

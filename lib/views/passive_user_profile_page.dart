@@ -12,7 +12,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(passiveUserProviderFamily(userId));
+    final state = ref.watch(passiveUserFamily(userId));
     final PassiveUserModel passiveUserModel = ref.watch(passiveUserProvider);
     final MainModel mainModel = ref.watch(mainProvider);
 
@@ -21,15 +21,9 @@ class PassiveUserProfilePage extends ConsumerWidget {
           data: (passiveUserAndCharis) {
             final passiveUser = passiveUserAndCharis.item1;
             final chariDocs = passiveUserAndCharis.item2;
+            final bool isFollowed = passiveUserModel.isFollowed;
             final bool isFollowing =
                 mainModel.followingUids.contains(passiveUser.uid);
-              
-            final bool isFollowed = passiveUserModel.isFollowed;
-            final int followerCount = passiveUser.followerCount;
-            final int plusOneFollowerCount = followerCount + 1;
-
-            // passiveUser.
-
             return Scaffold(
                 appBar: AppBar(),
                 body: Column(
@@ -47,9 +41,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Text(
-                        isFollowing
-                            ? "フォロワー${plusOneFollowerCount.toString()}"
-                            : "フォロワー${followerCount.toString()}",
+                        "フォロー中${passiveUser.followerCount.toString()}",
                         style: const TextStyle(fontSize: 32.0),
                       ),
                     ),
