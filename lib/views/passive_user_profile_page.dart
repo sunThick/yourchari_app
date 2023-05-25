@@ -21,7 +21,6 @@ class PassiveUserProfilePage extends ConsumerWidget {
           data: (passiveUserAndCharis) {
             final passiveUser = passiveUserAndCharis.item1;
             final chariDocs = passiveUserAndCharis.item2;
-            final bool isFollowed = passiveUserModel.isFollowed;
             final bool isFollowing =
                 mainModel.followingUids.contains(passiveUser.uid);
             return Scaffold(
