@@ -2,11 +2,9 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/constants/string.dart';
-import 'package:yourchari_app/views/components/default_user_image.dart';
 // models
 import 'package:yourchari_app/models/main_model.dart';
-import 'package:yourchari_app/models/main/profile_model.dart';
+import 'package:yourchari_app/models/profile_model.dart';
 
 import '../../domain/chari/chari.dart';
 

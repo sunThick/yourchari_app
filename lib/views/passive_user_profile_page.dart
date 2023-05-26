@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/models/main_model.dart';
 import 'package:yourchari_app/models/passive_user_profile_model.dart';
 
-import '../domain/firestore_user/firestore_user.dart';
-
 class PassiveUserProfilePage extends ConsumerWidget {
   const PassiveUserProfilePage({required this.userId, Key? key})
       : super(key: key);

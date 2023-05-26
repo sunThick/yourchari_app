@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-import '../../domain/chari/chari.dart';
+import '../domain/chari/chari.dart';
 
 final homeProvider = ChangeNotifierProvider(((ref) => HomeModel()));
 

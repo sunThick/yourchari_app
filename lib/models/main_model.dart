@@ -69,6 +69,10 @@ class MainModel extends ChangeNotifier {
           final FollowingToken followingToken = FollowingToken.fromJson(tokenMap);
           followingTokens.add(followingToken);
           followingUids.add(followingToken.passiveUid);
+          break;
+        case TokenType.likePost:
+          // TODO: Handle this case.
+          break;
       }
     }
   }

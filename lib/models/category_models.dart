@@ -4,21 +4,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
-import '../domain/firestore_user/firestore_user.dart';
+import '../domain/chari/chari.dart';
 
-final categoryFamily = FutureProvider.family<
-    List<QueryDocumentSnapshot<Map<String, dynamic>>>,
-    int>(((ref, index) async {
-  final chariQshot = await FirebaseFirestore.instance
-      .collection('chari')
-      .where('category', isEqualTo: int)
-      .get();
-  return chariQshot.docs;
-}));
+final categoryFamily = FutureProvider.family<Tuple2<dynamic, dynamic>, String>(
+    ((ref, category) async {
+  if (category == 'all') {
+    final chariQshot =
+        await FirebaseFirestore.instance.collection('chari').get();
+    final chariDocs = chariQshot.docs;
+    final chariUids = chariDocs
+        .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
+        .toList();
 
-final categoryF = FutureProvider.family<String, String>(((ref, category) async {
-  await Future.delayed(const Duration(seconds: 5));
-  return category;
+    final List<dynamic> userDocs = [];
+    for (String uid in chariUids) {
+      final qshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      userDocs.add(qshot);
+    }
+    return Tuple2(chariDocs, userDocs);
+  } else {
+    final chariQshot = await FirebaseFirestore.instance
+        .collection('chari')
+        .where('category', isEqualTo: category)
+        .get();
+    final chariDocs = chariQshot.docs;
+    final chariUids = chariDocs
+        .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
+        .toList();
+
+    final List<dynamic> userDocs = [];
+    for (String uid in chariUids) {
+      final qshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      userDocs.add(qshot);
+    }
+    return Tuple2(chariDocs, userDocs);
+  }
+
+  // chariDocsに対応したuidを配列で取得
 }));
 
 final allChariProvider = FutureProvider(((ref) => AllChariModel()));
