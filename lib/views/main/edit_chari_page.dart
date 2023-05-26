@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-import '../../../domain/chari/chari.dart';
+import '../../domain/chari/chari.dart';
 
 class EditChariPage extends ConsumerWidget {
   const EditChariPage({Key? key, required this.chari}) : super(key: key);
