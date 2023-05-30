@@ -12,6 +12,7 @@ final categoryFamily = FutureProvider.family<Tuple2<dynamic, dynamic>, String>(
     final chariQshot = await FirebaseFirestore.instance
         .collection('chari')
         .orderBy('createdAt', descending: true)
+        .limit(10)
         .get();
     final chariDocs = chariQshot.docs;
     final chariUids = chariDocs
@@ -30,23 +31,20 @@ final categoryFamily = FutureProvider.family<Tuple2<dynamic, dynamic>, String>(
         .collection('chari')
         .where('category', isEqualTo: category)
         .orderBy('createdAt', descending: true)
+        .limit(10)
         .get();
     final chariDocs = chariQshot.docs;
     final chariUids = chariDocs
         .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
         .toList();
-
     final List<dynamic> userDocs = [];
     for (String uid in chariUids) {
       final qshot =
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
       userDocs.add(qshot);
     }
-
     return Tuple2(chariDocs, userDocs);
   }
-
-  // chariDocsに対応したuidを配列で取得
 }));
 
 final categoryChariProvider =
@@ -114,20 +112,36 @@ class CategoryChariModel extends ChangeNotifier {
 
   Future<void> onReload({required String category, required chariDocs}) async {
     startLoading();
-    final qshot = await returnQuery(category: category).get();
+    final qshot = await returnQuery(category: category).limit(10).get();
     chariDocs = qshot.docs;
+    print(qshot.docs.first);
     endLoading();
   }
 
-  Future<void> onLoading(chariDocs, category) async {
+  Future<void> onLoading(chariDocs, userDocs, category) async {
     startLoading();
     refreshController.loadComplete();
     if (chariDocs.isNotEmpty) {
       final qshot = await returnQuery(category: category)
           .startAfterDocument(chariDocs.last)
+          .limit(10)
           .get();
-      for (final chariDoc in qshot.docs) {
+      final oldChariDocs = qshot.docs;
+      final oldChariUids = oldChariDocs
+          .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
+          .toList();
+      List oldUserDocs = [];
+      for (String uid in oldChariUids) {
+        final qshot =
+            await FirebaseFirestore.instance.collection('users').doc(uid).get();
+        oldUserDocs.add(qshot);
+      }
+
+      for (final chariDoc in oldChariDocs) {
         chariDocs.add(chariDoc);
+      }
+      for (final chariDoc in oldUserDocs) {
+        userDocs.add(chariDoc);
       }
     }
     endLoading();
