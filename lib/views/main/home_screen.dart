@@ -6,35 +6,6 @@ import 'package:yourchari_app/models/home_tab_model.dart';
 import '../home_charis_list.dart';
 // constants
 
-// class HomeScreen extends ConsumerWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     // final HomeTabModel homeTabModel = ref.watch(homeTabProvider);
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('タブ画面移動サンプル'),
-//         bottom: const TabBar(
-//           // controller: homeTabModel.tabController,
-//           tabs: <Widget>[
-//             Tab(icon: Icon(Icons.cloud_outlined)),
-//             Tab(icon: Icon(Icons.beach_access_sharp)),
-//             Tab(icon: Icon(Icons.brightness_5_sharp)),
-//           ],
-//         ),
-//       ),
-//       body: TabBarView(
-//         children: <Widget>[
-//           Center(child: Text('くもり', style: TextStyle(fontSize: 50))),
-//           Center(child: Text('雨', style: TextStyle(fontSize: 50))),
-//           Center(child: Text('晴れ', style: TextStyle(fontSize: 50))),
-//         ],
-//       ),
-//     );
-//   }
-
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({
     Key? key,
