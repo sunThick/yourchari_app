@@ -24,16 +24,20 @@ void toLoginPage(
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
 
-void toChariDetailPage({required BuildContext context, required String chariUid}) =>
+void toChariDetailPage(
+        {required BuildContext context, required String chariUid}) =>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ChariDetailPage(chariUid: chariUid,
+            builder: (context) => ChariDetailPage(
+                  chariUid: chariUid,
                 )));
 
-void toPassiveUserPage({required BuildContext context, required String userId}) => Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => PassiveUserProfilePage(userId: userId,)));
-
-
+void toPassiveUserPage(
+        {required BuildContext context, required String userId}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PassiveUserProfilePage(
+                  userId: userId,
+                )));

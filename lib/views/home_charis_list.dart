@@ -17,6 +17,7 @@ class CharisList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final CategoryChariModel categoryChariModel =
         ref.watch(categoryChariProvider);
+    // 渡されたカテゴリーのインデックスから対応したStringのcategoryを取得。
     final Map<int, String> categoryMap = {
       0: 'all',
       1: 'single',
@@ -27,8 +28,8 @@ class CharisList extends ConsumerWidget {
       6: 'mamachari',
       7: 'others',
     };
-
-    final asyncValue = ref.watch(categoryFamily(categoryMap[index]!));
+    final category = categoryMap[index];
+    final asyncValue = ref.watch(categoryFamily(category!));
     return Scaffold(
         body: Center(
             child: asyncValue.when(
@@ -40,17 +41,27 @@ class CharisList extends ConsumerWidget {
                   return Scaffold(
                       body: chariDocs.isEmpty
                           ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Center(
-                                  child: ElevatedButton(
-                                    onPressed: () async =>
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  child: SmartRefresher(
+                                    enablePullDown: true,
+                                    enablePullUp: true,
+                                    controller:
+                                        categoryChariModel.refreshController,
+                                    header: const WaterDropHeader(),
+                                    onRefresh: () async =>
                                         await categoryChariModel.onReload(
-                                            category: categoryMap[index]!,
-                                            chariDocs: chariDocs),
-                                    child: Text('reload'),
+                                            category: category,
+                                            chariDocs: chariDocs,
+                                            userDocs: userDocs),
+                                    child: const Center(
+                                        child:
+                                            Text('投稿がありません。下に引っ張って更新してください。')),
                                   ),
-                                )
+                                ),
                               ],
                             )
                           : Column(
@@ -65,83 +76,98 @@ class CharisList extends ConsumerWidget {
                                     header: const WaterDropHeader(),
                                     onRefresh: () async =>
                                         await categoryChariModel.onRefresh(
-                                            chariDocs,
-                                            userDocs,
-                                            categoryMap[index]!),
+                                            chariDocs, userDocs, category),
                                     onLoading: () async =>
                                         await categoryChariModel.onLoading(
-                                            chariDocs,
-                                            userDocs,
-                                            categoryMap[index]!),
+                                            chariDocs, userDocs, category),
                                     controller:
                                         categoryChariModel.refreshController,
-                                    child: MasonryGridView.count(
-                                        crossAxisCount: 2,
-                                        itemCount: chariDocs.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          final chariDoc = chariDocs[index];
-                                          final userDoc = userDocs[index];
-                                          final Chari chari =
-                                              Chari.fromJson(chariDoc.data()!);
-                                          final FirestoreUser passiveUser =
-                                              FirestoreUser.fromJson(
-                                                  userDoc.data()!);
-                                          return InkWell(
-                                            onTap: () {
-                                              toChariDetailPage(
-                                                  context: context,
-                                                  chariUid: chari.postId);
-                                            },
-                                            child: Card(
-                                              clipBehavior: Clip.antiAlias,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  ListTile(
-                                                    leading: passiveUser
-                                                            .userImageURL
-                                                            .isEmpty
-                                                        ? const CircleAvatar(
-                                                            child: Icon(
-                                                                Icons.person))
-                                                        : CircleAvatar(
-                                                            backgroundImage:
-                                                                NetworkImage(
-                                                                    passiveUser
-                                                                        .userImageURL)),
-                                                    title: Text(chari.brand),
-                                                    subtitle: Text(
-                                                      chari.frame,
-                                                      style: TextStyle(
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.6)),
-                                                    ),
-                                                  ),
-                                                  chari.imageURL.isEmpty
-                                                      ? CircleAvatar(
-                                                          backgroundImage:
-                                                              NetworkImage(
-                                                                  passiveUser
-                                                                      .userImageURL))
-                                                      : Image.network(
-                                                          (chari.imageURL[0]),
-                                                          height: 150,
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        }),
+                                    child: gridView(
+                                        chariDocs: chariDocs,
+                                        userDocs: userDocs),
                                   ),
                                 ),
                               ],
                             ));
                 })));
   }
+
+  Widget gridView({required dynamic chariDocs, required dynamic userDocs}) {
+    return MasonryGridView.count(
+        crossAxisCount: 2,
+        itemCount: chariDocs.length,
+        itemBuilder: (BuildContext context, int index) {
+          final chariDoc = chariDocs[index];
+          final userDoc = userDocs[index];
+          final Chari chari = Chari.fromJson(chariDoc.data()!);
+          final FirestoreUser passiveUser =
+              FirestoreUser.fromJson(userDoc.data()!);
+          return InkWell(
+              onTap: () {
+                toChariDetailPage(context: context, chariUid: chari.postId);
+              },
+              child: homeCard(chari: chari, passiveUser: passiveUser));
+        });
+  }
+
+  Widget homeCard({required Chari chari, required FirestoreUser passiveUser}) {
+    return Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            chari.imageURL.isEmpty
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(passiveUser.userImageURL))
+                : Image.network(
+                    (chari.imageURL[0]),
+                    fit: BoxFit.fill,
+                  ),
+            ListTile(
+              trailing: passiveUser.userImageURL.isEmpty
+                  ? const CircleAvatar(child: Icon(Icons.person))
+                  : CircleAvatar(
+                      backgroundImage: NetworkImage(passiveUser.userImageURL)),
+              title: Text(chari.brand),
+              subtitle: Text(
+                chari.frame,
+                style: TextStyle(color: Colors.black.withOpacity(0.6)),
+              ),
+            ),
+          ],
+        ));
+  }
+  // Widget homeCard({required Chari chari, required FirestoreUser passiveUser}) {
+  //   return Card(
+  //       clipBehavior: Clip.antiAlias,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       child: Column(
+  //         children: [
+  //           ListTile(
+  //             leading: passiveUser.userImageURL.isEmpty
+  //                 ? const CircleAvatar(child: Icon(Icons.person))
+  //                 : CircleAvatar(
+  //                     backgroundImage: NetworkImage(passiveUser.userImageURL)),
+  //             title: Text(chari.brand),
+  //             subtitle: Text(
+  //               chari.frame,
+  //               style: TextStyle(color: Colors.black.withOpacity(0.6)),
+  //             ),
+  //           ),
+  //           chari.imageURL.isEmpty
+  //               ? CircleAvatar(
+  //                   backgroundImage: NetworkImage(passiveUser.userImageURL))
+  //               : Image.network(
+  //                   (chari.imageURL[0]),
+  //                   height: 150,
+  //                   fit: BoxFit.fill,
+  //                 ),
+  //         ],
+  //       ));
+  // }
 }

@@ -110,11 +110,30 @@ class CategoryChariModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future<void> onReload({required String category, required chariDocs}) async {
+  Future<void> onReload(
+      {required String category,
+      required dynamic chariDocs,
+      required dynamic userDocs}) async {
     startLoading();
+    refreshController.refreshCompleted();
+
     final qshot = await returnQuery(category: category).limit(10).get();
-    chariDocs = qshot.docs;
-    print(qshot.docs.first);
+    final newChariDocs = qshot.docs;
+    final newChariUids = newChariDocs
+        .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
+        .toList();
+    List newUserDocs = [];
+    for (String uid in newChariUids) {
+      final qshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      newUserDocs.add(qshot);
+    }
+    for (final chariDoc in newChariDocs) {
+      chariDocs.add(chariDoc);
+    }
+    for (final userDoc in newUserDocs) {
+      userDocs.add(userDoc);
+    }
     endLoading();
   }
 
