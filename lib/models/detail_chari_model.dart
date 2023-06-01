@@ -27,8 +27,10 @@ final chariDetailProvider =
     ChangeNotifierProvider.autoDispose(((ref) => ChariDetailModel()));
 
 class ChariDetailModel extends ChangeNotifier {
-  void tasu({required Chari chari}) {
-    print(chari.brand);
+  int currentIndex = 0;
+
+  void changeImage(index) {
+    currentIndex = index;
     notifyListeners();
   }
 }

@@ -123,7 +123,7 @@ class CharisList extends ConsumerWidget {
                 ? CircleAvatar(
                     backgroundImage: NetworkImage(passiveUser.userImageURL))
                 : Image.network(
-                    (chari.imageURL[0]),
+                    (chari.imageURL.first),
                     fit: BoxFit.fill,
                   ),
             ListTile(
