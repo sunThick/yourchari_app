@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/models/charis_model.dart';
 import 'package:yourchari_app/models/detail_chari_model.dart';
+import 'package:yourchari_app/models/main_model.dart';
+import '../domain/chari/chari.dart';
 import '/constants/routes.dart' as routes;
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -11,15 +14,18 @@ class ChariDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(chariProviderFamily(chariUid));
+    final MainModel mainModel = ref.watch(mainProvider);
     final ChariDetailModel chariDetailModel = ref.watch(chariDetailProvider);
+    final CharisModel charisModel = ref.watch(charisProvider);
     int current = chariDetailModel.currentIndex;
     final CarouselController _controller = CarouselController();
 
     return Scaffold(
         body: state.when(
             data: (chariAndPassiveUser) {
-              final chari = chariAndPassiveUser.item1;
+              final chariDoc = chariAndPassiveUser.item1;
               final passiveUser = chariAndPassiveUser.item2;
+              final Chari chari = Chari.fromJson(chariDoc.data()!);
               final List<Widget> imageSliders = chari.imageURL
                   .map((item) => Container(
                         margin: const EdgeInsets.all(5.0),
@@ -53,12 +59,31 @@ class ChariDetailPage extends ConsumerWidget {
                 body: Column(
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: ListTile(
-                          title: Text(chari.brand),
-                          subtitle: Text(chari.frame),
-                          trailing: Icon(Icons.heart_broken)),
-                    ),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: ListTile(
+                            title: Text(chari.brand),
+                            subtitle: Text(chari.frame),
+                            trailing:
+                                mainModel.likeChariIds.contains(chari.postId)
+                                    ? InkWell(
+                                        onTap: () async => charisModel.unlike(
+                                            chari: chari,
+                                            chariDoc: chariDoc,
+                                            chariRef: chariDoc.reference,
+                                            mainModel: mainModel),
+                                        child: const Icon(
+                                          Icons.heart_broken,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    : InkWell(
+                                        onTap: () async => charisModel.like(
+                                            chari: chari,
+                                            chariDoc: chariDoc,
+                                            chariRef: chariDoc.reference,
+                                            mainModel: mainModel),
+                                        child: const Icon(Icons.favorite),
+                                      ))),
                     CarouselSlider(
                       items: imageSliders,
                       carouselController: _controller,

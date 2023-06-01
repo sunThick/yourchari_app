@@ -18,6 +18,7 @@ class MainModel extends ChangeNotifier {
   late FirestoreUser firestoreUser;
   final List<String> followingUids = [];
   List<FollowingToken> followingTokens = [];
+  List<String> likeChariIds = [];
 
   MainModel() {
     init();
@@ -33,7 +34,7 @@ class MainModel extends ChangeNotifier {
         .doc(currentUser!.uid)
         .get();
     //classの形にして呼び出せるようにする  firestoreUser.____
-    await distributeTokens();
+    // await distributeTokens();
     firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     endLoading();
   }
@@ -54,23 +55,29 @@ class MainModel extends ChangeNotifier {
   }
 
   Future<void> distributeTokens() async {
-    final tokensQshot = await currentUserDoc.reference.collection("tokens").get();
+    final tokensQshot =
+        await currentUserDoc.reference.collection("tokens").get();
     final tokenDocs = tokensQshot.docs;
     // 新しい順に並べる
     // 公式的なもの。覚える
     // 古い順に並べるなら、aとbを逆にする
-    tokenDocs.sort((a,b) => (b["createdAt"] as Timestamp).compareTo(a["createdAt"]));
+    tokenDocs.sort(
+        (a, b) => (b["createdAt"] as Timestamp).compareTo(a["createdAt"]));
     for (final token in tokenDocs) {
-      final Map<String,dynamic> tokenMap = token.data();
+      final Map<String, dynamic> tokenMap = token.data();
       // Stringからenumに変換してミスのないように
       final TokenType tokenType = mapToTokenType(tokenMap: tokenMap);
-      switch(tokenType) {
-        case TokenType.following: 
-          final FollowingToken followingToken = FollowingToken.fromJson(tokenMap);
+      switch (tokenType) {
+        case TokenType.following:
+          final FollowingToken followingToken =
+              FollowingToken.fromJson(tokenMap);
           followingTokens.add(followingToken);
           followingUids.add(followingToken.passiveUid);
           break;
         case TokenType.likePost:
+          // TODO: Handle this case.
+          break;
+        case TokenType.likeChari:
           // TODO: Handle this case.
           break;
       }

@@ -1,5 +1,5 @@
 // Stringにしたい！！
-enum TokenType { following, likePost}
+enum TokenType { following, likePost, likeChari}
 // 引数にTokenType.followingを入れるとStringの"following"がreturnされます
 String returnTokenTypeString({ required TokenType tokenType })  => tokenType.toString().substring(10);
  
