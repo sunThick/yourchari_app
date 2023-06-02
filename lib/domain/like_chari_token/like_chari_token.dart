@@ -13,6 +13,7 @@ abstract class LikeChariToken with _$LikeChariToken {
    required dynamic chariRef,
    required String postId,
    required String tokenId,
+   required String tokenType,
   }) = _LikeChariToken;
  factory LikeChariToken.fromJson(Map<String, dynamic> json) => _$LikeChariTokenFromJson(json);
 }

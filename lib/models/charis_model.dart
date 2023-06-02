@@ -32,6 +32,7 @@ class CharisModel extends ChangeNotifier{
       chariRef: chariRef, 
       postId: postId, 
       tokenId: tokenId,
+      tokenType: "likeChari"
     );
     await currentUserDoc.reference.collection("tokens").doc(tokenId).set(likeChariToken.toJson());
     // 投稿がいいねされたことの印

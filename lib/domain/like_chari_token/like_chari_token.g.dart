@@ -14,6 +14,7 @@ _$_LikeChariToken _$$_LikeChariTokenFromJson(Map<String, dynamic> json) =>
       chariRef: json['chariRef'],
       postId: json['postId'] as String,
       tokenId: json['tokenId'] as String,
+      tokenType: json['tokenType'] as String,
     );
 
 Map<String, dynamic> _$$_LikeChariTokenToJson(_$_LikeChariToken instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$_LikeChariTokenToJson(_$_LikeChariToken instance) =>
       'chariRef': instance.chariRef,
       'postId': instance.postId,
       'tokenId': instance.tokenId,
+      'tokenType': instance.tokenType,
     };

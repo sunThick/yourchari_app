@@ -56,65 +56,67 @@ class ChariDetailPage extends ConsumerWidget {
                     ),
                   ],
                 ),
-                body: Column(
-                  children: [
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: ListTile(
-                            title: Text(chari.brand),
-                            subtitle: Text(chari.frame),
-                            trailing:
-                                mainModel.likeChariIds.contains(chari.postId)
-                                    ? InkWell(
-                                        onTap: () async => charisModel.unlike(
-                                            chari: chari,
-                                            chariDoc: chariDoc,
-                                            chariRef: chariDoc.reference,
-                                            mainModel: mainModel),
-                                        child: const Icon(
-                                          Icons.heart_broken,
-                                          color: Colors.red,
-                                        ),
-                                      )
-                                    : InkWell(
-                                        onTap: () async => charisModel.like(
-                                            chari: chari,
-                                            chariDoc: chariDoc,
-                                            chariRef: chariDoc.reference,
-                                            mainModel: mainModel),
-                                        child: const Icon(Icons.favorite),
-                                      ))),
-                    CarouselSlider(
-                      items: imageSliders,
-                      carouselController: _controller,
-                      options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) {
-                            chariDetailModel.changeImage(index);
-                          }),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: chari.imageURL.asMap().entries.map((entry) {
-                        return GestureDetector(
-                          child: Container(
-                            width: 12.0,
-                            height: 12.0,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 4.0),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: (Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? Colors.white
-                                        : Colors.black)
-                                    .withOpacity(
-                                        current == entry.key ? 0.9 : 0.4)),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: ListTile(
+                              title: Text(chari.brand),
+                              subtitle: Text(chari.frame),
+                              trailing:
+                                  mainModel.likeChariIds.contains(chari.postId)
+                                      ? InkWell(
+                                          onTap: () async => charisModel.unlike(
+                                              chari: chari,
+                                              chariDoc: chariDoc,
+                                              chariRef: chariDoc.reference,
+                                              mainModel: mainModel),
+                                          child: const Icon(
+                                            Icons.heart_broken,
+                                            color: Colors.red,
+                                          ),
+                                        )
+                                      : InkWell(
+                                          onTap: () async => charisModel.like(
+                                              chari: chari,
+                                              chariDoc: chariDoc,
+                                              chariRef: chariDoc.reference,
+                                              mainModel: mainModel),
+                                          child: const Icon(Icons.favorite),
+                                        ))),
+                      CarouselSlider(
+                        items: imageSliders,
+                        carouselController: _controller,
+                        options: CarouselOptions(
+                            enlargeCenterPage: true,
+                            onPageChanged: (index, reason) {
+                              chariDetailModel.changeImage(index);
+                            }),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: chari.imageURL.asMap().entries.map((entry) {
+                          return GestureDetector(
+                            child: Container(
+                              width: 12.0,
+                              height: 12.0,
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: (Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black)
+                                      .withOpacity(
+                                          current == entry.key ? 0.9 : 0.4)),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

@@ -32,3 +32,23 @@ functions.firestore.document("users/{uid}/followers/{followerUid}").onDelete(
       });
     },
 );
+
+exports.onChariLikeCreate =
+functions.firestore.document("chari/{postId}/chariLikes/{activeUid}").onCreate(
+    async (snap, _) => {
+      const newValue = snap.data();
+      await newValue.chariRef.update({
+        "likeCount": admin.firestore.FieldValue.increment(plusOne),
+      });
+    },
+);
+
+exports.onChariLikeDelete =
+functions.firestore.document("chari/{postId}/chariLikes/{activeUid}").onDelete(
+    async (snap, _) => {
+      const newValue = snap.data();
+      await newValue.chariRef.update({
+        "likeCount": admin.firestore.FieldValue.increment(minusOne),
+      });
+    },
+);

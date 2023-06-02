@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import '../domain/chari/chari.dart';
 
 final homeProvider = ChangeNotifierProvider(((ref) => HomeModel()));
@@ -24,7 +23,6 @@ class HomeModel extends ChangeNotifier {
         .orderBy("createdAt", descending: true)
         .get();
     chariDocs = chariQshot.docs;
-
     // chariDocsに対応したuidを配列で取得
     final chariUids = chariDocs
         .map((dynamic value) => (Chari.fromJson(value.data()!).uid))

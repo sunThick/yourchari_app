@@ -26,6 +26,7 @@ mixin _$LikeChariToken {
   dynamic get chariRef => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
   String get tokenId => throw _privateConstructorUsedError;
+  String get tokenType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $LikeChariTokenCopyWith<$Res> {
       String passiveUid,
       dynamic chariRef,
       String postId,
-      String tokenId});
+      String tokenId,
+      String tokenType});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$LikeChariTokenCopyWithImpl<$Res, $Val extends LikeChariToken>
     Object? chariRef = freezed,
     Object? postId = null,
     Object? tokenId = null,
+    Object? tokenType = null,
   }) {
     return _then(_value.copyWith(
       activeUid: null == activeUid
@@ -93,6 +96,10 @@ class _$LikeChariTokenCopyWithImpl<$Res, $Val extends LikeChariToken>
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
+      tokenType: null == tokenType
+          ? _value.tokenType
+          : tokenType // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -111,7 +118,8 @@ abstract class _$$_LikeChariTokenCopyWith<$Res>
       String passiveUid,
       dynamic chariRef,
       String postId,
-      String tokenId});
+      String tokenId,
+      String tokenType});
 }
 
 /// @nodoc
@@ -131,6 +139,7 @@ class __$$_LikeChariTokenCopyWithImpl<$Res>
     Object? chariRef = freezed,
     Object? postId = null,
     Object? tokenId = null,
+    Object? tokenType = null,
   }) {
     return _then(_$_LikeChariToken(
       activeUid: null == activeUid
@@ -157,6 +166,10 @@ class __$$_LikeChariTokenCopyWithImpl<$Res>
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
+      tokenType: null == tokenType
+          ? _value.tokenType
+          : tokenType // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -170,7 +183,8 @@ class _$_LikeChariToken implements _LikeChariToken {
       required this.passiveUid,
       required this.chariRef,
       required this.postId,
-      required this.tokenId});
+      required this.tokenId,
+      required this.tokenType});
 
   factory _$_LikeChariToken.fromJson(Map<String, dynamic> json) =>
       _$$_LikeChariTokenFromJson(json);
@@ -187,10 +201,12 @@ class _$_LikeChariToken implements _LikeChariToken {
   final String postId;
   @override
   final String tokenId;
+  @override
+  final String tokenType;
 
   @override
   String toString() {
-    return 'LikeChariToken(activeUid: $activeUid, createdAt: $createdAt, passiveUid: $passiveUid, chariRef: $chariRef, postId: $postId, tokenId: $tokenId)';
+    return 'LikeChariToken(activeUid: $activeUid, createdAt: $createdAt, passiveUid: $passiveUid, chariRef: $chariRef, postId: $postId, tokenId: $tokenId, tokenType: $tokenType)';
   }
 
   @override
@@ -205,7 +221,9 @@ class _$_LikeChariToken implements _LikeChariToken {
                 other.passiveUid == passiveUid) &&
             const DeepCollectionEquality().equals(other.chariRef, chariRef) &&
             (identical(other.postId, postId) || other.postId == postId) &&
-            (identical(other.tokenId, tokenId) || other.tokenId == tokenId));
+            (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
+            (identical(other.tokenType, tokenType) ||
+                other.tokenType == tokenType));
   }
 
   @JsonKey(ignore: true)
@@ -217,7 +235,8 @@ class _$_LikeChariToken implements _LikeChariToken {
       passiveUid,
       const DeepCollectionEquality().hash(chariRef),
       postId,
-      tokenId);
+      tokenId,
+      tokenType);
 
   @JsonKey(ignore: true)
   @override
@@ -240,7 +259,8 @@ abstract class _LikeChariToken implements LikeChariToken {
       required final String passiveUid,
       required final dynamic chariRef,
       required final String postId,
-      required final String tokenId}) = _$_LikeChariToken;
+      required final String tokenId,
+      required final String tokenType}) = _$_LikeChariToken;
 
   factory _LikeChariToken.fromJson(Map<String, dynamic> json) =
       _$_LikeChariToken.fromJson;
@@ -257,6 +277,8 @@ abstract class _LikeChariToken implements LikeChariToken {
   String get postId;
   @override
   String get tokenId;
+  @override
+  String get tokenType;
   @override
   @JsonKey(ignore: true)
   _$$_LikeChariTokenCopyWith<_$_LikeChariToken> get copyWith =>
