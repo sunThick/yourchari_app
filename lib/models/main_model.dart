@@ -8,6 +8,7 @@ import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 
 import '../constants/enums.dart';
 import '../domain/following_token/following_token.dart';
+import '../domain/like_chari_token/like_chari_token.dart';
 
 final mainProvider = ChangeNotifierProvider((ref) => MainModel());
 
@@ -16,9 +17,10 @@ class MainModel extends ChangeNotifier {
   User? currentUser;
   late DocumentSnapshot<Map<String, dynamic>> currentUserDoc;
   late FirestoreUser firestoreUser;
-  final List<String> followingUids = [];
+  List<String> followingUids = [];
   List<FollowingToken> followingTokens = [];
   List<String> likeChariIds = [];
+  List<LikeChariToken> likeChariTokens = [];
 
   MainModel() {
     init();
@@ -34,7 +36,7 @@ class MainModel extends ChangeNotifier {
         .doc(currentUser!.uid)
         .get();
     //classの形にして呼び出せるようにする  firestoreUser.____
-    // await distributeTokens();
+    await distributeTokens();
     firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     endLoading();
   }
@@ -59,7 +61,7 @@ class MainModel extends ChangeNotifier {
         await currentUserDoc.reference.collection("tokens").get();
     final tokenDocs = tokensQshot.docs;
     // 新しい順に並べる
-    // 公式的なもの。覚える
+    // 公式的なもの。
     // 古い順に並べるなら、aとbを逆にする
     tokenDocs.sort(
         (a, b) => (b["createdAt"] as Timestamp).compareTo(a["createdAt"]));
@@ -74,11 +76,10 @@ class MainModel extends ChangeNotifier {
           followingTokens.add(followingToken);
           followingUids.add(followingToken.passiveUid);
           break;
-        case TokenType.likePost:
-          // TODO: Handle this case.
-          break;
         case TokenType.likeChari:
-          // TODO: Handle this case.
+          final LikeChariToken likeChariToken = LikeChariToken.fromJson(tokenMap);
+          likeChariTokens.add(likeChariToken);
+          likeChariIds.add(likeChariToken.postId);
           break;
       }
     }
