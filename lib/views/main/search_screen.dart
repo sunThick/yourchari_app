@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/profile_model.dart';
 
 import '../../constants/routes.dart';
 // constants

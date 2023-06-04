@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/models/charis_model.dart';
 import 'package:yourchari_app/models/detail_chari_model.dart';
 import 'package:yourchari_app/models/main_model.dart';
+import '../constants/routes.dart';
 import '../domain/chari/chari.dart';
-import '/constants/routes.dart' as routes;
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ChariDetailPage extends ConsumerWidget {
@@ -115,12 +115,28 @@ class ChariDetailPage extends ConsumerWidget {
                           );
                         }).toList(),
                       ),
+                      InkWell(
+                        onTap: () async => toPassiveUserPage(
+                            context: context, userId: passiveUser.uid),
+                        child: ListTile(
+                          leading: passiveUser.userImageURL.isEmpty
+                              ? const CircleAvatar(child: Icon(Icons.person))
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(passiveUser.userImageURL)),
+                          title: Text(passiveUser.userName),
+                        ),
+                      )
                     ],
                   ),
                 ),
               );
             },
-            error: (Object error, StackTrace stackTrace) {},
+            error: (Object error, StackTrace stackTrace) {
+              return null;
+            
+
+            },
             loading: () {
               return Scaffold(
                 appBar: AppBar(
