@@ -16,7 +16,7 @@ class SearchScreen extends ConsumerWidget {
       children: [
         FloatingActionButton(
           onPressed: () => toCreateChariPage(context: context),
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ],
     );

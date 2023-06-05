@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yourchari_app/domain/chari/chari.dart';
-import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
 import 'package:yourchari_app/views/passive_user_profile_page.dart';
 

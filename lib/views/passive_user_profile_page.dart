@@ -49,12 +49,12 @@ class PassiveUserProfilePage extends ConsumerWidget {
                       ? ElevatedButton(
                           onPressed: () => passiveUserModel.unfollow(
                               mainModel: mainModel, passiveUser: passiveUser),
-                          child: Text('unfollow'),
+                          child: const Text('unfollow'),
                         )
                       : ElevatedButton(
                           onPressed: () => passiveUserModel.follow(
                               mainModel: mainModel, passiveUser: passiveUser),
-                          child: Text('follow'),
+                          child: const Text('follow'),
                         ),
                   const Divider(),
                   MasonryGridView.count(

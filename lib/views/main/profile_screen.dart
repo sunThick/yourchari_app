@@ -9,11 +9,11 @@ import 'package:yourchari_app/models/profile_model.dart';
 import '../../domain/chari/chari.dart';
 
 class ProfileScreen extends ConsumerWidget {
-  const ProfileScreen({Key? key, required this.mainModel}) : super(key: key);
-  final MainModel mainModel;
+  const ProfileScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfileModel profileModel = ref.watch(profileProvider);
+    final MainModel mainModel = ref.watch(mainProvider);
     const double coverHeight = 150;
     const double profileHeight = 100;
     const bottom = profileHeight / 2;

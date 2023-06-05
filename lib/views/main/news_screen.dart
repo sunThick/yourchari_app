@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/models/login_model.dart';
 
 class NewsScreen extends ConsumerWidget {
-  NewsScreen({Key? key}) : super(key: key);
+  const NewsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final LoginModel loginModel = ref.watch(loginProvider);

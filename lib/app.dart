@@ -42,13 +42,11 @@ class MyHomePage extends ConsumerWidget {
     final MainModel mainModel = ref.watch(mainProvider);
     final HomeBottomNavigationBarModel homeBottomNavigationBarModel =
         ref.watch(homeBottomNavigationBarProvider);
-    List<Widget> screens = [
+    const List<Widget> screens = [
       HomeScreen(),
       SearchScreen(),
       NewsScreen(),
-      ProfileScreen(
-        mainModel: mainModel,
-      ),
+      ProfileScreen(),
     ];
     return Scaffold(
       // appBar: AppBar(

@@ -18,7 +18,7 @@ class ChariDetailPage extends ConsumerWidget {
     final ChariDetailModel chariDetailModel = ref.watch(chariDetailProvider);
     final CharisModel charisModel = ref.watch(charisProvider);
     int current = chariDetailModel.currentIndex;
-    final CarouselController _controller = CarouselController();
+    final CarouselController controller = CarouselController();
 
     return Scaffold(
         body: state.when(
@@ -87,7 +87,7 @@ class ChariDetailPage extends ConsumerWidget {
                                         ))),
                       CarouselSlider(
                         items: imageSliders,
-                        carouselController: _controller,
+                        carouselController: controller,
                         options: CarouselOptions(
                             enlargeCenterPage: true,
                             onPageChanged: (index, reason) {
