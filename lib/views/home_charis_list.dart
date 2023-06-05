@@ -124,7 +124,6 @@ class CharisList extends ConsumerWidget {
                     backgroundImage: NetworkImage(passiveUser.userImageURL))
                 : Image.network(
                     (chari.imageURL.first),
-                    fit: BoxFit.fill,
                   ),
             ListTile(
               trailing: passiveUser.userImageURL.isEmpty

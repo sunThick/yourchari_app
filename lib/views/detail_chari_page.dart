@@ -39,12 +39,6 @@ class ChariDetailPage extends ConsumerWidget {
                       ))
                   .toList();
 
-              // return Scaffold(
-              //     appBar: AppBar(title: Text('tt')),
-              //     body: Column(
-              //       children: [Text('dd')],
-              //     ));
-
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
