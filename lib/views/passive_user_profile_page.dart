@@ -269,7 +269,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
       }, error: (Object error, StackTrace stackTrace) {
         return null;
       }, loading: () {
-        return Scaffold();
+        return const Scaffold();
       }),
     );
   }

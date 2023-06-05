@@ -36,7 +36,7 @@ class MainModel extends ChangeNotifier {
         .doc(currentUser!.uid)
         .get();
     //classの形にして呼び出せるようにする  firestoreUser.____
-    await distributeTokens();
+    distributeTokens();
     firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     endLoading();
   }
