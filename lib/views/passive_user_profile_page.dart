@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/models/main_model.dart';
 import 'package:yourchari_app/models/passive_user_profile_model.dart';
 import 'package:yourchari_app/models/profile_model.dart';
@@ -51,11 +52,15 @@ class PassiveUserProfilePage extends ConsumerWidget {
 
     return Scaffold(
       body: state.when(data: (passiveUserAndCharis) {
-        final passiveUser = passiveUserAndCharis.item1;
+        final passiveUserDoc = passiveUserAndCharis.item1;
+        final FirestoreUser passiveUser =
+            FirestoreUser.fromJson(passiveUserDoc.data()!);
         final chariDocs = passiveUserAndCharis.item2;
         final bool isFollowing =
             mainModel.followingUids.contains(passiveUser.uid);
-
+        final int followerCount = passiveUser.followerCount;
+        final int plusOneFollowerCount = passiveUser.followerCount + 1;
+        final int minusOneFollowerCount = passiveUser.followerCount - 1;
         return Scaffold(
             appBar: AppBar(
               title: Text(passiveUser.userName),
@@ -134,7 +139,17 @@ class PassiveUserProfilePage extends ConsumerWidget {
                     buildButton(
                         text: 'follwing', value: passiveUser.followingCount),
                     buildButton(
-                        text: 'follwers', value: passiveUser.followerCount)
+                        text: 'follwers',
+                        value: passiveUserModel.plusOne
+                            ? plusOneFollowerCount
+                            : passiveUserModel.minusOne
+                                ? minusOneFollowerCount
+                                : followerCount)
+                    // value: mainModel.followingUids.contains(passiveUser.uid)
+                    //     ? passiveUserModel.followed
+                    //         ? followerCount
+                    //         : plusOneFollowerCount
+                    //     : followerCount)
                   ],
                 ),
                 isFollowing

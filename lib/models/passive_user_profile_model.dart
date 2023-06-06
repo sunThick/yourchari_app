@@ -9,34 +9,63 @@ import '../domain/follower/follower.dart';
 import '../domain/following_token/following_token.dart';
 import 'main_model.dart';
 
-final passiveUserFamily = StreamProvider.autoDispose.family<
-    Tuple2<FirestoreUser, List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
-    String>(((ref, uid) async* {
-  final userStream =
-      FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
-
-  final streamPassiveUser =
-      userStream.map((event) => FirestoreUser.fromJson(event.data()!));
-  await for (final passiveUser in streamPassiveUser) {
-    final qshot = await FirebaseFirestore.instance
-        .collection('chari')
-        .where('uid', isEqualTo: uid)
-        .get();
-    final chariDocs = qshot.docs;
-    yield Tuple2(passiveUser, chariDocs);
-  }
+final passiveUserFamily = FutureProvider.autoDispose.family<
+    Tuple2<DocumentSnapshot<Map<String, dynamic>>,
+        List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
+    String>(((ref, uid) async {
+  final userDoc =
+      await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  final chariQshot = await FirebaseFirestore.instance
+      .collection('chari')
+      .where('uid', isEqualTo: uid)
+      .get();
+  final chariDocs = chariQshot.docs;
+  return Tuple2(userDoc, chariDocs);
 }));
 
+// final passiveUserFamily = StreamProvider.autoDispose.family<
+//     Tuple2<FirestoreUser, List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
+//     String>(((ref, uid) async* {
+//   final userStream =
+//       FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
+
+//   final streamPassiveUser =
+//       userStream.map((event) => FirestoreUser.fromJson(event.data()!));
+//   await for (final passiveUser in streamPassiveUser) {
+//     final qshot = await FirebaseFirestore.instance
+//         .collection('chari')
+//         .where('uid', isEqualTo: uid)
+//         .get();
+//     final chariDocs = qshot.docs;
+//     yield Tuple2(passiveUser, chariDocs);
+//   }
+// }));
+
 final passiveUserProvider =
-    ChangeNotifierProvider(((ref) => PassiveUserModel()));
+    ChangeNotifierProvider.autoDispose(((ref) => PassiveUserModel()));
 
 class PassiveUserModel extends ChangeNotifier {
+
+  // passiveUserPageに訪れた際、そのuserをfollowしているかどうかで、followersのcountのplusOrMinusを判断
+  // userをfollowしている場合、先にunfollowが実行されるためfollowersはminusOne
+  // userをfollowしてない場合、先にfollowが実行されるためfollowersはplusOne
+  //　先にfollowかunfollowのどちらが実行されたかを知るためにそれぞれが実行された際、followersとunfollowsを += 1する。
+  // follows > unfollowの場合、followsが先に実行されるためplusOneがtrueになり、その後unfollowが実行されても,
+  // follows > unfollowの時にはminusOneは実行されず、followerCountをそのまま表示できるようにする。
+  bool plusOne = false;
+  bool minusOne = false;
+  int follows = 0;
+  int unfollows = 0;
+
   Future<void> follow(
       {required MainModel mainModel,
       required FirestoreUser passiveUser}) async {
-    // settings
     mainModel.followingUids.add(passiveUser.uid);
-
+    follows += 1;
+    minusOne = false;
+    if (follows > unfollows) {
+      plusOne = true;
+    }
     notifyListeners();
     final String tokenId = returnUuidV4();
     final Timestamp now = Timestamp.now();
@@ -72,6 +101,11 @@ class PassiveUserModel extends ChangeNotifier {
       {required MainModel mainModel,
       required FirestoreUser passiveUser}) async {
     mainModel.followingUids.remove(passiveUser.uid);
+    unfollows += 1;
+    plusOne = false;
+    if (unfollows > follows) {
+      minusOne = true;
+    }
     notifyListeners();
     // followしているTokenを取得する
     final FirestoreUser activeUser = mainModel.firestoreUser;

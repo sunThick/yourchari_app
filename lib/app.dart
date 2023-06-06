@@ -9,8 +9,8 @@ import 'package:yourchari_app/views/main/profile_screen.dart';
 import 'package:yourchari_app/views/main/news_screen.dart';
 import 'package:yourchari_app/views/main/search_screen.dart';
 
-import 'views/components/home_bottom_navigation_bar.dart';
-import 'models/home_bottom_navigation_bar_model.dart';
+// import 'views/components/home_bottom_navigation_bar.dart';
+// import 'models/home_bottom_navigation_bar_model.dart';
 import 'models/main_model.dart';
 
 class MyApp extends StatelessWidget {
