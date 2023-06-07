@@ -187,7 +187,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
                         TabBar(
                           labelColor: Colors.black,
                           unselectedLabelColor: Colors.black12,
-                          tabs: [Tab(text: "Chari"), Tab(text: "Likes")],
+                          tabs: [const Tab(text: "Chari"), const Tab(text: "Likes")],
                           onTap: (index) {
                             passiveUserModel.changePage(index);
                           },
@@ -202,7 +202,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
                             itemCount: chariDocs.length,
                             itemBuilder: (BuildContext context, int index) {
                               final doc = chariDocs[index];
-                              final Chari chari = Chari.fromJson(doc.data()!);
+                              final Chari chari = Chari.fromJson(doc.data());
                               return InkWell(
                                 onTap: () async => toChariDetailPage(
                                     context: context, chariUid: chari.postId),
@@ -211,17 +211,49 @@ class PassiveUserProfilePage extends ConsumerWidget {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Image.network(
-                                    (chari.imageURL[0]),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: Stack(children: [
+                                    Image.network(
+                                      (chari.imageURL[0]),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    Positioned(
+                                        bottom: 0,
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          color: Colors.black.withOpacity(0.4),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 10),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  chari.brand,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 30.0,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  chari.frame,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 25.0,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ))
+                                  ]),
                                 ),
                               );
                             },
                           ),
                         ),
                       )
-                    : Text('likes')
+                    : const Text('likes')
               ],
             ));
       }, error: (Object error, StackTrace stackTrace) {
