@@ -85,6 +85,10 @@ class ProfileScreen extends ConsumerWidget {
                 text: 'follwers', value: mainModel.firestoreUser.followerCount)
           ],
         ),
+        ElevatedButton(
+            onPressed: () async => profileModel.uploadImage(
+                currentUserDoc: mainModel.currentUserDoc),
+            child: Text('profile')),
         const Divider(color: Colors.black),
         Expanded(
           child: ListView.builder(
@@ -128,7 +132,7 @@ class ProfileScreen extends ConsumerWidget {
               Text(
                 text,
                 style: const TextStyle(fontSize: 16),
-              )
+              ),
             ]),
       );
 

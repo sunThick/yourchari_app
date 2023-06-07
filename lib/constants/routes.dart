@@ -27,9 +27,10 @@ void toChariDetailPage(
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ChariDetailPage(
-                  chariUid: chariUid,
-                ),));
+          builder: (context) => ChariDetailPage(
+            chariUid: chariUid,
+          ),
+        ));
 
 void toPassiveUserPage(
         {required BuildContext context, required String userId}) =>
