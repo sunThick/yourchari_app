@@ -29,8 +29,7 @@ void toChariDetailPage(
         MaterialPageRoute(
             builder: (context) => ChariDetailPage(
                   chariUid: chariUid,
-                ),
-            fullscreenDialog: true));
+                ),));
 
 void toPassiveUserPage(
         {required BuildContext context, required String userId}) =>
