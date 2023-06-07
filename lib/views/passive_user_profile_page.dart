@@ -179,32 +179,49 @@ class PassiveUserProfilePage extends ConsumerWidget {
                   ),
                 ),
                 const Divider(color: Colors.black),
-                Expanded(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: ListView.builder(
-                      itemCount: chariDocs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final doc = chariDocs[index];
-                        final Chari chari = Chari.fromJson(doc.data()!);
-                        return InkWell(
-                          onTap: () async => toChariDetailPage(
-                              context: context, chariUid: chari.postId),
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Image.network(
-                              (chari.imageURL[0]),
-                              fit: BoxFit.fill,
-                            ),
+                DefaultTabController(
+                    initialIndex: passiveUserModel.currentIndex,
+                    length: 2,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.black12,
+                          tabs: [Tab(text: "Chari"), Tab(text: "Likes")],
+                          onTap: (index) {
+                            passiveUserModel.changePage(index);
+                          },
+                        ),
+                      ],
+                    )),
+                passiveUserModel.currentIndex == 0
+                    ? Expanded(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: ListView.builder(
+                            itemCount: chariDocs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final doc = chariDocs[index];
+                              final Chari chari = Chari.fromJson(doc.data()!);
+                              return InkWell(
+                                onTap: () async => toChariDetailPage(
+                                    context: context, chariUid: chari.postId),
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Image.network(
+                                    (chari.imageURL[0]),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                        ),
+                      )
+                    : Text('likes')
               ],
             ));
       }, error: (Object error, StackTrace stackTrace) {

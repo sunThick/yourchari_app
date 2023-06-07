@@ -45,6 +45,13 @@ final passiveUserProvider =
     ChangeNotifierProvider.autoDispose(((ref) => PassiveUserModel()));
 
 class PassiveUserModel extends ChangeNotifier {
+  int currentIndex = 0;
+
+  void changePage(index) {
+    currentIndex = index;
+    notifyListeners();
+  }
+
   // passiveUserPageに訪れた際、そのuserをfollowしているかどうかで、followersのcountのplusOrMinusを判断
   // userをfollowしている場合、先にunfollowが実行されるためfollowersはminusOne
   // userをfollowしてない場合、先にfollowが実行されるためfollowersはplusOne
