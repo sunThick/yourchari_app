@@ -7,6 +7,7 @@ import '../app.dart';
 import '../views/auth/login_page.dart';
 import '../views/auth/signup_page.dart';
 import '../views/detail_chari_page.dart';
+import '../views/follows_and_followers_page.dart';
 
 void toMyApp({required BuildContext context}) => Navigator.push(
     context, MaterialPageRoute(builder: (context) => const MyApp()));
@@ -31,6 +32,18 @@ void toChariDetailPage(
             chariUid: chariUid,
           ),
         ));
+
+void toFollowsAndFollowersPage(
+        {required BuildContext context,
+        required String userUid,
+        required String followingOrFollowers}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => FollowsAndFollowersPage(
+                  userUid: userUid,
+                  followingOrFollowers: followingOrFollowers,
+                )));
 
 void toPassiveUserPage(
         {required BuildContext context, required String userId}) =>

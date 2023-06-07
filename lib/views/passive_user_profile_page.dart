@@ -128,13 +128,23 @@ class PassiveUserProfilePage extends ConsumerWidget {
                           children: [
                             buildButton(text: 'chari', value: chariDocs.length),
                             InkWell(
-                              onTap: () => {},
+                              onTap: () => {
+                                toFollowsAndFollowersPage(
+                                    context: context,
+                                    followingOrFollowers: "following",
+                                    userUid: passiveUser.uid)
+                              },
                               child: buildButton(
                                   text: 'follwing',
                                   value: passiveUser.followingCount),
                             ),
                             InkWell(
-                              onTap: () => {},
+                              onTap: () => {
+                                toFollowsAndFollowersPage(
+                                    context: context,
+                                    followingOrFollowers: "followers",
+                                    userUid: passiveUser.uid)
+                              },
                               child: buildButton(
                                   text: 'follwers',
                                   value: passiveUserModel.plusOne
@@ -187,7 +197,10 @@ class PassiveUserProfilePage extends ConsumerWidget {
                         TabBar(
                           labelColor: Colors.black,
                           unselectedLabelColor: Colors.black12,
-                          tabs: [const Tab(text: "Chari"), const Tab(text: "Likes")],
+                          tabs: [
+                            const Tab(text: "Chari"),
+                            const Tab(text: "Likes")
+                          ],
                           onTap: (index) {
                             passiveUserModel.changePage(index);
                           },
@@ -223,7 +236,8 @@ class PassiveUserProfilePage extends ConsumerWidget {
                                               MediaQuery.of(context).size.width,
                                           color: Colors.black.withOpacity(0.4),
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 10),
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
