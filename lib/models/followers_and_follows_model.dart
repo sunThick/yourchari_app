@@ -5,17 +5,13 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/domain/follower/follower.dart';
 import 'package:yourchari_app/domain/following_token/following_token.dart';
-import '../domain/firestore_user/firestore_user.dart';
 
 final followersOrFollowsFamily = FutureProvider.autoDispose.family<
-    Tuple2<
-      List<DocumentSnapshot<Map<String, dynamic>>>,
-      QueryDocumentSnapshot<Map<String, dynamic>>>,
+    List<DocumentSnapshot<Map<String, dynamic>>>,
     Tuple2<String, String>>(((ref, state) async {
   final String uid = state.item1;
   final String followingOrFollowers = state.item2;
   List<DocumentSnapshot<Map<String, dynamic>>> userDocs = [];
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> lastDocs = [];
 
   if (followingOrFollowers == "followers") {
     final followersQshot = await FirebaseFirestore.instance
@@ -26,14 +22,12 @@ final followersOrFollowsFamily = FutureProvider.autoDispose.family<
         .limit(10)
         .get();
     final followersDocs = followersQshot.docs;
-    lastDocs.add(followersDocs.first);
     for (final followerDoc in followersDocs) {
       Follower follower = Follower.fromJson(followerDoc.data());
       final followerQshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(follower.followerUid)
           .get();
-
       userDocs.add(followerQshot);
     }
   }
@@ -48,7 +42,6 @@ final followersOrFollowsFamily = FutureProvider.autoDispose.family<
         .get();
 
     final followsDocs = followsQshot.docs;
-    lastDocs.add(followsDocs.first);
     for (final follow in followsDocs) {
       final FollowingToken followingToken =
           FollowingToken.fromJson(follow.data());
@@ -59,11 +52,7 @@ final followersOrFollowsFamily = FutureProvider.autoDispose.family<
       userDocs.add(userQshot);
     }
   }
-  final lastDoc = lastDocs.first;
-  final userDocsAndLastDoc = Tuple2<
-      List<DocumentSnapshot<Map<String, dynamic>>>,
-      QueryDocumentSnapshot<Map<String, dynamic>>>(userDocs, lastDoc);
-  return userDocsAndLastDoc;
+  return userDocs;
 }));
 
 final followersAndFollowsProvider =
@@ -83,11 +72,11 @@ class FollowersAndFollowsModel extends ChangeNotifier {
 
   final RefreshController refreshController = RefreshController();
 
-  Future<void> onLoading(
-      {required List<DocumentSnapshot<Map<String, dynamic>>> userDocs,
-      required String followingOrFollowers,
-      required String userUid,
-      required QueryDocumentSnapshot<Map<String, dynamic>> lastDoc}) async {
+  Future<void> onLoading({
+    required List<DocumentSnapshot<Map<String, dynamic>>> userDocs,
+    required String followingOrFollowers,
+    required String userUid,
+  }) async {
     startLoading();
     refreshController.loadComplete();
     final lastDoc = userDocs.last;
@@ -103,7 +92,6 @@ class FollowersAndFollowsModel extends ChangeNotifier {
             .get();
         final followersDocs = followersQshot.docs;
         for (final followerDoc in followersDocs) {
-          // Follower follower = Follower.fromJson(followerDoc.data());
           final oldFollowerDoc = await FirebaseFirestore.instance
               .collection("users")
               .doc(followerDoc.id)
