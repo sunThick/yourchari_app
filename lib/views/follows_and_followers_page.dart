@@ -57,28 +57,30 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                         ),
                   title: Text(user.userName),
                   subtitle: Text('Id: tasochan'),
-                  trailing: isFollowing
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(
-                              color: Colors.black, //枠線!
-                              width: 1, //枠線！
+                  trailing: user.uid == mainModel.firestoreUser.uid
+                      ? Text('')
+                      : isFollowing
+                          ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                side: const BorderSide(
+                                  color: Colors.black, //枠線!
+                                  width: 1, //枠線！
+                                ),
+                              ),
+                              onPressed: () => passiveUserModel.unfollow(
+                                  mainModel: mainModel, passiveUser: user),
+                              child: const Text('following'),
+                            )
+                          : ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                //ボタンの背景色
+                              ),
+                              onPressed: () => passiveUserModel.follow(
+                                  mainModel: mainModel, passiveUser: user),
+                              child: const Text('follow'),
                             ),
-                          ),
-                          onPressed: () => passiveUserModel.unfollow(
-                              mainModel: mainModel, passiveUser: user),
-                          child: const Text('following'),
-                        )
-                      : ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            //ボタンの背景色
-                          ),
-                          onPressed: () => passiveUserModel.follow(
-                              mainModel: mainModel, passiveUser: user),
-                          child: const Text('follow'),
-                        ),
                   onTap: () =>
                       toPassiveUserPage(context: context, userId: user.uid),
                 );

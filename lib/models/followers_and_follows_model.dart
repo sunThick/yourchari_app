@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tuple/tuple.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/domain/follower/follower.dart';
 import 'package:yourchari_app/domain/following_token/following_token.dart';
 
@@ -19,7 +20,7 @@ final followersOrFollowsFamily = FutureProvider.autoDispose.family<
         .doc(uid)
         .collection("followers")
         .orderBy("createdAt", descending: true)
-        .limit(10)
+        .limit(15)
         .get();
     final followersDocs = followersQshot.docs;
     for (final followerDoc in followersDocs) {
@@ -38,7 +39,7 @@ final followersOrFollowsFamily = FutureProvider.autoDispose.family<
         .collection('tokens')
         .where('tokenType', isEqualTo: "following")
         .orderBy("createdAt", descending: true)
-        .limit(10)
+        .limit(15)
         .get();
 
     final followsDocs = followsQshot.docs;
@@ -70,7 +71,8 @@ class FollowersAndFollowsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final RefreshController refreshController = RefreshController();
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
 
   Future<void> onLoading({
     required List<DocumentSnapshot<Map<String, dynamic>>> userDocs,
@@ -79,15 +81,25 @@ class FollowersAndFollowsModel extends ChangeNotifier {
   }) async {
     startLoading();
     refreshController.loadComplete();
-    final lastDoc = userDocs.last;
+    // final lastDoc = userDocs.last;
+
     if (userDocs.isNotEmpty) {
+      final FirestoreUser fireLastUser =
+          FirestoreUser.fromJson(userDocs.last.data()!);
       if (followingOrFollowers == "followers") {
+        final lastFollowerQshot = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(userUid)
+            .collection("followers")
+            .where("followerUid", isEqualTo: fireLastUser.uid)
+            .get();
+        final lastFollowerDoc = lastFollowerQshot.docs.first;
         final followersQshot = await FirebaseFirestore.instance
             .collection("users")
             .doc(userUid)
             .collection("followers")
             .orderBy("createdAt", descending: true)
-            .startAfterDocument(lastDoc)
+            .startAfterDocument(lastFollowerDoc)
             .limit(10)
             .get();
         final followersDocs = followersQshot.docs;
@@ -100,20 +112,28 @@ class FollowersAndFollowsModel extends ChangeNotifier {
         }
       }
       if (followingOrFollowers == "following") {
-        final followsQshot = await FirebaseFirestore.instance
+        final lastFolloingTokens = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(userUid)
+            .collection("tokens")
+            .where('passiveUid', isEqualTo: fireLastUser.uid)
+            .where('tokenType', isEqualTo: "following")
+            .get();
+        final lastFollowingToken = lastFolloingTokens.docs.first;
+        final oldFollowingQshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(userUid)
             .collection('tokens')
             .where('tokenType', isEqualTo: "following")
             .orderBy("createdAt", descending: true)
-            .startAfterDocument(lastDoc)
+            .startAfterDocument(lastFollowingToken)
             .limit(10)
             .get();
 
-        final followsDocs = followsQshot.docs;
-        for (final follow in followsDocs) {
+        final oldFollowingDocs = oldFollowingQshot.docs;
+        for (final oldFollowingDoc in oldFollowingDocs) {
           final FollowingToken followingToken =
-              FollowingToken.fromJson(follow.data());
+              FollowingToken.fromJson(oldFollowingDoc.data());
           final userQshot = await FirebaseFirestore.instance
               .collection('users')
               .doc(followingToken.passiveUid)
