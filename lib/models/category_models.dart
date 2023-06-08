@@ -167,29 +167,3 @@ class CategoryChariModel extends ChangeNotifier {
   }
 }
 
-
-// final allChariProvider = FutureProvider(((ref) => AllChariModel()));
-// final singleChariProvider = FutureProvider(((ref) => SingleChariModel()));
-// final mtbChariProvider = FutureProvider(((ref) => MiniChariModel()));
-// final touringChariProvider = FutureProvider(((ref) => TouringChariModel()));
-// final roadChariProvider = FutureProvider(((ref) => RoadAllChariModel()));
-// final miniChariProvider = FutureProvider(((ref) => MiniAllChariModel()));
-// final mamachariChariProvider =
-//     FutureProvider(((ref) => MamachariAllChariModel()));
-// final othersChariProvider = FutureProvider(((ref) => OthersAllChariModel()));
-
-// class AllChariModel extends ChangeNotifier {}
-
-// class MamachariAllChariModel extends ChangeNotifier {}
-
-// class MiniAllChariModel extends ChangeNotifier {}
-
-// class RoadAllChariModel extends ChangeNotifier {}
-
-// class TouringChariModel extends ChangeNotifier {}
-
-// class MiniChariModel extends ChangeNotifier {}
-
-// class SingleChariModel extends ChangeNotifier {}
-
-// class OthersAllChariModel extends ChangeNotifier {}

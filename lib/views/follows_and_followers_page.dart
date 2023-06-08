@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/constants/routes.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/models/followers_and_follows_model.dart';
 import 'package:yourchari_app/models/main_model.dart';
 import 'package:yourchari_app/models/passive_user_profile_model.dart';
@@ -16,20 +17,23 @@ class FollowsAndFollowersPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t2 = Tuple2<String, String>(userUid, followingOrFollowers);
-    final state = ref.watch(followersOrFollowsFamily(t2));
+    final userDocsAndLastDoc = ref.watch(followersOrFollowsFamily(t2));
     final PassiveUserModel passiveUserModel = ref.watch(passiveUserProvider);
     final MainModel mainModel = ref.watch(mainProvider);
 
     return Scaffold(
-        body: state.when(data: (state) {
+        body: userDocsAndLastDoc.when(data: (userDocsAndLastDoc) {
+      final userDocs = userDocsAndLastDoc.item1;
+      final lastDoc = userDocsAndLastDoc.item2;
       return Scaffold(
         appBar: AppBar(
           title: Text(followingOrFollowers),
         ),
         body: ListView.builder(
-          itemCount: state.length,
+          itemCount: userDocs.length,
           itemBuilder: (context, index) {
-            final user = state[index];
+            final userDoc = userDocs[index];
+            final FirestoreUser user = FirestoreUser.fromJson(userDoc.data()!);
             final bool isFollowing = mainModel.followingUids.contains(user.uid);
             return ListTile(
               leading: user.userImageURL.isEmpty
