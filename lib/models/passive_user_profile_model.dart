@@ -3,43 +3,65 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
+import 'package:yourchari_app/domain/like_chari_token/like_chari_token.dart';
 import '../constants/enums.dart';
 import '../constants/string.dart';
 import '../domain/follower/follower.dart';
 import '../domain/following_token/following_token.dart';
 import 'main_model.dart';
 
-final passiveUserFamily = FutureProvider.autoDispose.family<
-    Tuple2<DocumentSnapshot<Map<String, dynamic>>,
-        List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
-    String>(((ref, uid) async {
+final passiveUserFamily = FutureProvider.autoDispose
+    .family<DocumentSnapshot<Map<String, dynamic>>, String>(((ref, uid) async {
   final userDoc =
       await FirebaseFirestore.instance.collection('users').doc(uid).get();
-  final chariQshot = await FirebaseFirestore.instance
-      .collection('chari')
-      .where('uid', isEqualTo: uid)
-      .get();
-  final chariDocs = chariQshot.docs;
-  return Tuple2(userDoc, chariDocs);
+  return userDoc;
 }));
 
-// final passiveUserFamily = StreamProvider.autoDispose.family<
-//     Tuple2<FirestoreUser, List<QueryDocumentSnapshot<Map<String, dynamic>>>>,
-//     String>(((ref, uid) async* {
-//   final userStream =
-//       FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
+final chariDocsFamily =
+    FutureProvider.family<dynamic, Tuple2<String, String>>(((ref, t2) async {
+  final String uid = t2.item1;
+  final String chariOrLikes = t2.item2;
 
-//   final streamPassiveUser =
-//       userStream.map((event) => FirestoreUser.fromJson(event.data()!));
-//   await for (final passiveUser in streamPassiveUser) {
-//     final qshot = await FirebaseFirestore.instance
-//         .collection('chari')
-//         .where('uid', isEqualTo: uid)
-//         .get();
-//     final chariDocs = qshot.docs;
-//     yield Tuple2(passiveUser, chariDocs);
-//   }
-// }));
+  final usercharisQshot = await FirebaseFirestore.instance
+      .collection('chari')
+      .where('uid', isEqualTo: uid)
+      .orderBy("createdAt", descending: true)
+      .limit(10)
+      .get();
+  final likeChariTokenQshot = await FirebaseFirestore.instance
+      .collection("users")
+      .doc(uid)
+      .collection("tokens")
+      .where("tokenType", isEqualTo: "likeChari")
+      .orderBy("createdAt", descending: true)
+      .limit(10)
+      .get();
+  final likeChariTokenDocs = likeChariTokenQshot.docs;
+
+  dynamic likeChariDocs = [];
+
+  for (final likeChariTokenDoc in likeChariTokenDocs) {
+    final LikeChariToken likeChariToken =
+        LikeChariToken.fromJson(likeChariTokenDoc.data());
+    final likedChariDoc = await FirebaseFirestore.instance
+        .collection("chari")
+        .doc(likeChariToken.postId)
+        .get();
+    likeChariDocs.add(likedChariDoc);
+  }
+
+  final userchariDocs = usercharisQshot.docs;
+
+  dynamic chariDocs = [];
+
+  if (chariOrLikes == "chari") {
+    chariDocs = userchariDocs;
+  } else {
+    chariDocs = likeChariDocs;
+  }
+
+  return chariDocs;
+}));
 
 final passiveUserProvider =
     ChangeNotifierProvider.autoDispose(((ref) => PassiveUserModel()));
@@ -122,6 +144,7 @@ class PassiveUserModel extends ChangeNotifier {
         .doc(activeUser.uid)
         .collection("tokens")
         .where("passiveUid", isEqualTo: passiveUser.uid)
+        .where("tokenType", isEqualTo: "following")
         .get();
     // 1個しか取得してないけど複数している扱い
     final List<DocumentSnapshot<Map<String, dynamic>>> docs = qshot.docs;

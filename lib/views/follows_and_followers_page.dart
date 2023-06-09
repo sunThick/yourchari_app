@@ -25,83 +25,81 @@ class FollowsAndFollowersPage extends ConsumerWidget {
         ref.watch(followersAndFollowsProvider);
 
     return Scaffold(
-        body: userDocs.when(data: (userDocs) {
-      return Scaffold(
-          appBar: AppBar(
-            title: Text(followingOrFollowers),
-          ),
-          body: SmartRefresher(
-            enablePullDown: false,
-            enablePullUp: true,
-            header: const WaterDropHeader(),
-            onLoading: () async => await followersAndFollowsModel.onLoading(
-                followingOrFollowers: followingOrFollowers,
-                userDocs: userDocs,
-                userUid: userUid),
-            controller: followersAndFollowsModel.refreshController,
-            child: ListView.builder(
-              itemCount: userDocs.length,
-              itemBuilder: (context, index) {
-                final userDoc = userDocs[index];
-                final FirestoreUser user =
-                    FirestoreUser.fromJson(userDoc.data()!);
-                final bool isFollowing =
-                    mainModel.followingUids.contains(user.uid);
-                return ListTile(
-                  leading: user.userImageURL.isEmpty
-                      ? const CircleAvatar(
-                          child: Icon(Icons.person),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: NetworkImage(user.userImageURL),
-                        ),
-                  title: Text(user.userName),
-                  subtitle: Text('Id: tasochan'),
-                  trailing: user.uid == mainModel.firestoreUser.uid
-                      ? Text('')
-                      : isFollowing
-                          ? ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                side: const BorderSide(
-                                  color: Colors.black, //枠線!
-                                  width: 1, //枠線！
-                                ),
-                              ),
-                              onPressed: () => passiveUserModel.unfollow(
-                                  mainModel: mainModel, passiveUser: user),
-                              child: const Text('following'),
-                            )
-                          : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                //ボタンの背景色
-                              ),
-                              onPressed: () => passiveUserModel.follow(
-                                  mainModel: mainModel, passiveUser: user),
-                              child: const Text('follow'),
-                            ),
-                  onTap: () =>
-                      toPassiveUserPage(context: context, userId: user.uid),
-                );
-              },
-            ),
-          ));
-    }, error: (Object error, StackTrace stackTrace) {
-      return null;
-    }, loading: () {
-      return Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert),
-            ),
-          ],
+          title: Text(followingOrFollowers),
         ),
-      );
-    }));
+        body: userDocs.when(data: (userDocs) {
+          return SmartRefresher(
+              enablePullDown: false,
+              enablePullUp: true,
+              header: const WaterDropHeader(),
+              onLoading: () async => await followersAndFollowsModel.onLoading(
+                  followingOrFollowers: followingOrFollowers,
+                  userDocs: userDocs,
+                  userUid: userUid),
+              controller: followersAndFollowsModel.refreshController,
+              child: ListView.builder(
+                itemCount: userDocs.length,
+                itemBuilder: (context, index) {
+                  final userDoc = userDocs[index];
+                  final FirestoreUser user =
+                      FirestoreUser.fromJson(userDoc.data()!);
+                  final bool isFollowing =
+                      mainModel.followingUids.contains(user.uid);
+                  return ListTile(
+                    leading: user.userImageURL.isEmpty
+                        ? const CircleAvatar(
+                            child: Icon(Icons.person),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: NetworkImage(user.userImageURL),
+                          ),
+                    title: Text(user.userName),
+                    subtitle: const Text('Id: tasochan'),
+                    trailing: user.uid == mainModel.firestoreUser.uid
+                        ? const Text('')
+                        : isFollowing
+                            ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  side: const BorderSide(
+                                    color: Colors.black, //枠線!
+                                    width: 1, //枠線！
+                                  ),
+                                ),
+                                onPressed: () => passiveUserModel.unfollow(
+                                    mainModel: mainModel, passiveUser: user),
+                                child: const Text('following'),
+                              )
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  //ボタンの背景色
+                                ),
+                                onPressed: () => passiveUserModel.follow(
+                                    mainModel: mainModel, passiveUser: user),
+                                child: const Text('follow'),
+                              ),
+                    onTap: () =>
+                        toPassiveUserPage(context: context, userId: user.uid),
+                  );
+                },
+              ));
+        }, error: (Object error, StackTrace stackTrace) {
+          return null;
+        }, loading: () {
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert),
+                ),
+              ],
+            ),
+          );
+        }));
   }
 }

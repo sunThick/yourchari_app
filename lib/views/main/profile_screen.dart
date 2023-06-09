@@ -88,7 +88,7 @@ class ProfileScreen extends ConsumerWidget {
         ElevatedButton(
             onPressed: () async => profileModel.uploadImage(
                 currentUserDoc: mainModel.currentUserDoc),
-            child: Text('profile')),
+            child: const Text('profile')),
         const Divider(color: Colors.black),
         Expanded(
           child: ListView.builder(
