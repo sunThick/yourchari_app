@@ -29,9 +29,9 @@ class ProfileScreen extends ConsumerWidget {
             children: [
               Container(
                   color: Colors.grey,
-                  child: mainModel.firestoreUser.userImageURL.isNotEmpty
+                  child: mainModel.currentFirestoreUser.userImageURL.isNotEmpty
                       ? Image.network(
-                          mainModel.firestoreUser.userImageURL,
+                          mainModel.currentFirestoreUser.userImageURL,
                           width: double.infinity,
                           height: coverHeight,
                           fit: BoxFit.cover,
@@ -53,14 +53,15 @@ class ProfileScreen extends ConsumerWidget {
                         )
                       : Container(
                           // croppedfileがなければcloudstorageのファイルを表示
-                          child: mainModel.firestoreUser.userImageURL.isEmpty
+                          child: mainModel
+                                  .currentFirestoreUser.userImageURL.isEmpty
                               ? const CircleAvatar(
                                   radius: profileHeight / 2,
                                   child: Icon(Icons.person))
                               : CircleAvatar(
                                   radius: profileHeight / 2,
-                                  backgroundImage: NetworkImage(
-                                      mainModel.firestoreUser.userImageURL)),
+                                  backgroundImage: NetworkImage(mainModel
+                                      .currentFirestoreUser.userImageURL)),
                         ),
                 ),
               ),
@@ -70,7 +71,7 @@ class ProfileScreen extends ConsumerWidget {
         const SizedBox(height: 8),
         Center(
           child: Text(
-            mainModel.firestoreUser.userName,
+            mainModel.currentFirestoreUser.userName,
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
@@ -80,9 +81,10 @@ class ProfileScreen extends ConsumerWidget {
             buildButton(text: 'chari', value: profileModel.chariDocs.length),
             buildButton(
                 text: 'follwing',
-                value: mainModel.firestoreUser.followingCount),
+                value: mainModel.currentFirestoreUser.followingCount),
             buildButton(
-                text: 'follwers', value: mainModel.firestoreUser.followerCount)
+                text: 'follwers',
+                value: mainModel.currentFirestoreUser.followerCount)
           ],
         ),
         ElevatedButton(

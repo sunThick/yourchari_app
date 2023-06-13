@@ -5,6 +5,7 @@ import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/models/main_model.dart';
 import 'package:yourchari_app/models/passive_user_profile_model.dart';
 import 'package:yourchari_app/models/profile_model.dart';
+import 'package:yourchari_app/views/components/avator_image.dart';
 
 import '../constants/routes.dart';
 import '../domain/chari/chari.dart';
@@ -71,25 +72,12 @@ class PassiveUserProfilePage extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      // croppedfileがなければcloudstorageのファイルを表示
-                      child: profileModel.croppedFile != null
-                          ? CircleAvatar(
-                              radius: headerHeight / 2,
-                              backgroundImage:
-                                  Image.file(profileModel.croppedFile!).image,
-                            )
-                          : Container(
-                              // croppedfileがなければcloudstorageのファイルを表示
-                              child: passiveUser.userImageURL.isEmpty
-                                  ? const CircleAvatar(
-                                      radius: headerHeight / 2,
-                                      child: Icon(Icons.person))
-                                  : CircleAvatar(
-                                      radius: headerHeight / 2,
-                                      backgroundImage: NetworkImage(mainModel
-                                          .firestoreUser.userImageURL)),
-                            ),
-                    ),
+                        child: buildAvatarImage(
+                            passiveUser: passiveUser,
+                            currentFirestoreUser:
+                                mainModel.currentFirestoreUser,
+                            profileModel: profileModel,
+                            radius: headerHeight / 2)),
                     const SizedBox(
                       width: 10,
                     ),

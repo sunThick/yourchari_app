@@ -102,7 +102,7 @@ class PassiveUserModel extends ChangeNotifier {
         passiveUid: passiveUser.uid,
         tokenId: tokenId,
         tokenType: followingTokenTypeString);
-    final FirestoreUser activeUser = mainModel.firestoreUser;
+    final FirestoreUser activeUser = mainModel.currentFirestoreUser;
 
     // 自分がフォローした印
     await FirebaseFirestore.instance
@@ -136,7 +136,7 @@ class PassiveUserModel extends ChangeNotifier {
     }
     notifyListeners();
     // followしているTokenを取得する
-    final FirestoreUser activeUser = mainModel.firestoreUser;
+    final FirestoreUser activeUser = mainModel.currentFirestoreUser;
     // qshotというdataの塊の存在を存在を取得
     final QuerySnapshot<Map<String, dynamic>> qshot = await FirebaseFirestore
         .instance

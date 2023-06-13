@@ -56,7 +56,7 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                           ),
                     title: Text(user.userName),
                     subtitle: const Text('Id: tasochan'),
-                    trailing: user.uid == mainModel.firestoreUser.uid
+                    trailing: user.uid == mainModel.currentFirestoreUser.uid
                         ? const Text('')
                         : isFollowing
                             ? ElevatedButton(

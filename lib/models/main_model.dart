@@ -16,7 +16,7 @@ class MainModel extends ChangeNotifier {
   bool isLoading = false;
   User? currentUser;
   late DocumentSnapshot<Map<String, dynamic>> currentUserDoc;
-  late FirestoreUser firestoreUser;
+  late FirestoreUser currentFirestoreUser;
   List<String> followingUids = [];
   List<FollowingToken> followingTokens = [];
   List<String> likeChariIds = [];
@@ -37,7 +37,7 @@ class MainModel extends ChangeNotifier {
         .get();
     //classの形にして呼び出せるようにする  firestoreUser.____
     distributeTokens();
-    firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
+    currentFirestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     endLoading();
   }
 
@@ -77,7 +77,8 @@ class MainModel extends ChangeNotifier {
           followingUids.add(followingToken.passiveUid);
           break;
         case TokenType.likeChari:
-          final LikeChariToken likeChariToken = LikeChariToken.fromJson(tokenMap);
+          final LikeChariToken likeChariToken =
+              LikeChariToken.fromJson(tokenMap);
           likeChariTokens.add(likeChariToken);
           likeChariIds.add(likeChariToken.postId);
           break;
