@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -21,6 +22,8 @@ class CreateChariModel extends ChangeNotifier {
   String caption = "";
   List images = [];
   File? croppedFile;
+  File? compressedfile;
+  Uint8List? compress;
 
   final TextEditingController brandEditingController = TextEditingController();
   final TextEditingController frameEditingController = TextEditingController();
@@ -34,7 +37,6 @@ class CreateChariModel extends ChangeNotifier {
 
   Future<void> selectImages() async {
     // デバイスから画像を取得
-
     if (images.length >= 5) {
       return;
     }
@@ -46,11 +48,13 @@ class CreateChariModel extends ChangeNotifier {
     }
     // final String uid = currentUserDoc.id;
     // xfileを元にc編集されたcroppedFileを取得
-    croppedFile = await returnCroppedFile(xFile: xFile, ratioX: 4, ratioY: 3);
+    // compress = await returnCroppedFile(
+    //     xFile: xFile, ratioX: 4, ratioY: 3, minHeight: 5, minWidth: 5);
     //写真編集の画面でキャンセルの場合はretun
     if (croppedFile == null) {
       return;
     }
+
     images.add(croppedFile);
     notifyListeners();
   }

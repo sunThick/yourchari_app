@@ -41,7 +41,7 @@ class CreateChariModel extends ChangeNotifier {
     }
     // final String uid = currentUserDoc.id;
     // xfileを元にc編集されたcroppedFileを取得
-    croppedFile = await returnCroppedFile(xFile: xFile, ratioX: 4, ratioY: 3);
+    // croppedFile = await returnCroppedFile(xFile: xFile, ratioX: 4, ratioY: 3);
     //写真編集の画面でキャンセルの場合はretun
     if (croppedFile == null) {
       return;
