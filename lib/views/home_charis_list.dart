@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -119,17 +120,20 @@ class CharisList extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            chari.imageURL.isEmpty
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(passiveUser.userImageURL))
-                : Image.network(
-                    (chari.imageURL.first),
-                  ),
+            CachedNetworkImage(
+              imageUrl: chari.imageURL.first,
+              memCacheHeight: 300,
+              // maxHeightDiskCache: 300,
+              placeholder: (context, url) => Container(
+                color: Colors.grey,
+                height: 150,
+              ),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
+            ),
             ListTile(
-              trailing: passiveUser.userImageURL.isEmpty
-                  ? const CircleAvatar(child: Icon(Icons.person))
-                  : CircleAvatar(
-                      backgroundImage: NetworkImage(passiveUser.userImageURL)),
+              leading: CircleAvatar(
+                  backgroundImage: NetworkImage(passiveUser.userImageURL)),
               title: Text(chari.brand),
               subtitle: Text(
                 chari.frame,

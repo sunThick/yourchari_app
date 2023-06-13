@@ -20,7 +20,7 @@ class CreateChariModel extends ChangeNotifier {
   String brand = "";
   String frame = "";
   String caption = "";
-  List images = [];
+  List<File> images = [];
   File? croppedFile;
   File? compressedfile;
   Uint8List? compress;
@@ -46,16 +46,14 @@ class CreateChariModel extends ChangeNotifier {
     if (xFile == null) {
       return;
     }
-    // final String uid = currentUserDoc.id;
     // xfileを元にc編集されたcroppedFileを取得
-    // compress = await returnCroppedFile(
-    //     xFile: xFile, ratioX: 4, ratioY: 3, minHeight: 5, minWidth: 5);
+    croppedFile = await returnCroppedFile(xFile: xFile, ratioX: 4, ratioY: 3);
     //写真編集の画面でキャンセルの場合はretun
     if (croppedFile == null) {
       return;
     }
-
-    images.add(croppedFile);
+    // viewで選択画像を表示するためにimagesに追加
+    images.add(croppedFile!);
     notifyListeners();
   }
 
@@ -79,18 +77,16 @@ class CreateChariModel extends ChangeNotifier {
         createdAt: now,
         updatedAt: Timestamp.now());
 
-    // storage
-    final imageFiles = [];
-    //  croppedFileをFileに変換
-    for (var element in images) {
-      final imageFile = File(element!.path);
-      imageFiles.add(imageFile);
-    }
-    // final File imageFile = File(croppedFile!.path);
+    final compressImages = [];
 
-    for (var element in imageFiles) {
+    for (var element in images) {
+      compress = await returnCompressAndGetData(
+          file: element, minWidth: 400, minHeight: 300);
+      compressImages.add(compress);
+    }
+    for (var element in compressImages) {
       final String url =
-          await uploadImageAndGetURL(postId: postId, file: element);
+          await uploadImageAndGetURL(postId: postId, compress: element);
       imageURL.add(url);
     }
     await chariCollection.doc(postId).set(chari.toJson());
@@ -98,7 +94,7 @@ class CreateChariModel extends ChangeNotifier {
 
   // 自転車の写真をfirestorageに投稿 && アップロード先のURLを取得。
   Future<String> uploadImageAndGetURL(
-      {required String postId, required File file}) async {
+      {required String postId, required Uint8List compress}) async {
     //uuid
     final String fileName = returnFileName();
 
@@ -108,7 +104,7 @@ class CreateChariModel extends ChangeNotifier {
         .child(postId)
         .child(fileName);
     // users/uid/ファイル名 にアップロード
-    await storageRef.putFile(file);
+    await storageRef.putData(compress);
     // users/uid/ファイル名 のURLを取得
     return storageRef.getDownloadURL();
   }
