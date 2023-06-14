@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yourchari_app/models/category_models.dart';
+import 'package:yourchari_app/models/charis_model.dart';
 import 'package:yourchari_app/models/main_model.dart';
 import 'package:yourchari_app/models/profile_model.dart';
 import 'package:yourchari_app/views/components/avator_image.dart';
@@ -120,13 +121,7 @@ class CharisList extends ConsumerWidget {
               onTap: () {
                 toChariDetailPage(context: context, chariUid: chari.postId);
               },
-              onDoubleTap: () {
-                charisModel.unlike(
-                                              chari: chari,
-                                              chariDoc: chariDoc,
-                                              chariRef: chariDoc.reference,
-                                              mainModel: mainModel),
-              },
+              onDoubleTap: () {},
               child: homeCard(
                   chari: chari,
                   passiveUser: passiveUser,
@@ -199,21 +194,22 @@ class CharisList extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      mainModel.likeChariIds.contains(chari.postId)
-                          ? const Icon(
-                              CupertinoIcons.heart_fill,
-                              size: 15,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              CupertinoIcons.heart,
-                              size: 15,
-                            ),
-                      Text(
-                        chari.likeCount.toString(),
-                        style: const TextStyle(
-                            fontSize: 15, color: Colors.black45),
-                      ),
+                      Consumer(builder: (context, ref, _) {
+                        // ignore: unused_local_variable
+                        final CharisModel charisModel =
+                            ref.watch(charisProvider);
+                        final MainModel mainModel = ref.watch(mainProvider);
+                        return mainModel.likeChariIds.contains(chari.postId)
+                            ? const Icon(
+                                CupertinoIcons.heart_fill,
+                                size: 15,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                CupertinoIcons.heart,
+                                size: 15,
+                              );
+                      }),
                     ],
                   ),
                   Text(createTimeAgoString(chari.createdAt.toDate()),
