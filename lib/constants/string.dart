@@ -1,6 +1,7 @@
 // packages
 
 import 'package:uuid/uuid.dart';
+import 'package:timeago/timeago.dart' as timeAgo;
 
 // titles
 const String appTitle = "SNS";
@@ -119,3 +120,9 @@ String returnReportContentString(
 }
 
 
+
+String createTimeAgoString(DateTime postDateTime) {
+  final now = DateTime.now();
+  final difference = now.difference(postDateTime);
+  return timeAgo.format(now.subtract(difference), locale: "ja");
+}
