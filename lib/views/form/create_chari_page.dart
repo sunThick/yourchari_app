@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/create_chari_model.dart';
-import 'package:yourchari_app/models/main_model.dart';
+import 'package:yourchari_app/viewModels/create_chari_model.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
 
 class CreateChariPage extends ConsumerWidget {
   const CreateChariPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    MainModel mainModel = MainModel();
-    final CreateChariModel createChariModel = ref.watch(createChariProvider);
+    MainController mainController = MainController();
+    final CreateChariController createChariController =
+        ref.watch(createChariProvider);
     //formcontroller
     // final isSelectedCategory = createChariModel.category;
     return Scaffold(
@@ -20,20 +21,19 @@ class CreateChariPage extends ConsumerWidget {
         children: [
           ElevatedButton(
               onPressed: () async {
-                await createChariModel.selectImages();
+                await createChariController.selectImages();
               },
               child: const Text('images')),
-          createChariModel.croppedFile != null
+          createChariController.croppedFile != null
               ? SizedBox(
                   height: 100,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: createChariModel.images.length,
+                    itemCount: createChariController.images.length,
                     itemBuilder: (context, index) {
                       return SizedBox(
                         height: 100,
-                        child: Image.file(createChariModel.images[index]),
-                        
+                        child: Image.file(createChariController.images[index]),
                       );
                     },
                     // shrinkWrap: true,
@@ -65,9 +65,9 @@ class CreateChariPage extends ConsumerWidget {
               }).toList(),
               onChanged: (value) {
                 final category = value.toString();
-                createChariModel.onCategoryChanged(value: category);
+                createChariController.onCategoryChanged(value: category);
               },
-              value: createChariModel.category),
+              value: createChariController.category),
           const SizedBox(
             height: 10,
           ),
@@ -79,7 +79,7 @@ class CreateChariPage extends ConsumerWidget {
             decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
             width: MediaQuery.of(context).size.width * 0.8,
             child: TextField(
-              controller: createChariModel.brandEditingController,
+              controller: createChariController.brandEditingController,
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(left: 10)),
@@ -96,7 +96,7 @@ class CreateChariPage extends ConsumerWidget {
             decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
             width: MediaQuery.of(context).size.width * 0.8,
             child: TextField(
-              controller: createChariModel.frameEditingController,
+              controller: createChariController.frameEditingController,
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(left: 10)),
@@ -113,7 +113,7 @@ class CreateChariPage extends ConsumerWidget {
             decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
             width: MediaQuery.of(context).size.width * 0.8,
             child: TextField(
-              controller: createChariModel.captionEditingController,
+              controller: createChariController.captionEditingController,
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(left: 10)),
@@ -131,8 +131,8 @@ class CreateChariPage extends ConsumerWidget {
             alignment: Alignment.center,
             child: ElevatedButton(
               onPressed: () async {
-                createChariModel.createChari(
-                    currentUserDoc: mainModel.currentUserDoc);
+                createChariController.createChari(
+                    currentUserDoc: mainController.currentUserDoc);
               },
               child: const Text('post'),
             ),

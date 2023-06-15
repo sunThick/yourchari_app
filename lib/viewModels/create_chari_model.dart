@@ -13,9 +13,9 @@ import '../constants/othes.dart';
 import '../constants/string.dart';
 
 final createChariProvider =
-    ChangeNotifierProvider.autoDispose(((ref) => CreateChariModel()));
+    ChangeNotifierProvider.autoDispose(((ref) => CreateChariController()));
 
-class CreateChariModel extends ChangeNotifier {
+class CreateChariController extends ChangeNotifier {
   String category = "single";
   String brand = "";
   String frame = "";

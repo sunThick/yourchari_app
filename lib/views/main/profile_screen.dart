@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // models
-import 'package:yourchari_app/models/main_model.dart';
-import 'package:yourchari_app/models/profile_model.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
+import 'package:yourchari_app/viewModels/profile_controller.dart';
 
 import '../../domain/chari/chari.dart';
 
@@ -12,12 +12,15 @@ class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ProfileModel profileModel = ref.watch(profileProvider);
-    final MainModel mainModel = ref.watch(mainProvider);
+
+    final ProfileController profileController = ref.watch(profileNotifierProvider);
+    final MainController mainController = ref.watch(mainProvider);
+
     const double coverHeight = 150;
     const double profileHeight = 100;
     const bottom = profileHeight / 2;
     const top = coverHeight - profileHeight / 2;
+    
     return Scaffold(
         body: Column(
       children: [
@@ -29,9 +32,9 @@ class ProfileScreen extends ConsumerWidget {
             children: [
               Container(
                   color: Colors.grey,
-                  child: mainModel.currentFirestoreUser.userImageURL.isNotEmpty
+                  child: mainController.currentFirestoreUser.userImageURL.isNotEmpty
                       ? Image.network(
-                          mainModel.currentFirestoreUser.userImageURL,
+                          mainController.currentFirestoreUser.userImageURL,
                           width: double.infinity,
                           height: coverHeight,
                           fit: BoxFit.cover,
@@ -45,22 +48,22 @@ class ProfileScreen extends ConsumerWidget {
                 top: top,
                 child: Container(
                   // croppedfileがなければcloudstorageのファイルを表示
-                  child: profileModel.croppedFile != null
+                  child: profileController.croppedFile != null
                       ? CircleAvatar(
                           radius: profileHeight / 2,
                           backgroundImage:
-                              Image.file(profileModel.croppedFile!).image,
+                              Image.file(profileController.croppedFile!).image,
                         )
                       : Container(
                           // croppedfileがなければcloudstorageのファイルを表示
-                          child: mainModel
+                          child: mainController
                                   .currentFirestoreUser.userImageURL.isEmpty
                               ? const CircleAvatar(
                                   radius: profileHeight / 2,
                                   child: Icon(Icons.person))
                               : CircleAvatar(
                                   radius: profileHeight / 2,
-                                  backgroundImage: NetworkImage(mainModel
+                                  backgroundImage: NetworkImage(mainController
                                       .currentFirestoreUser.userImageURL)),
                         ),
                 ),
@@ -71,32 +74,32 @@ class ProfileScreen extends ConsumerWidget {
         const SizedBox(height: 8),
         Center(
           child: Text(
-            mainModel.currentFirestoreUser.userName,
+            mainController.currentFirestoreUser.userName,
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildButton(text: 'chari', value: profileModel.chariDocs.length),
+            buildButton(text: 'chari', value: profileController.chariDocs.length),
             buildButton(
                 text: 'follwing',
-                value: mainModel.currentFirestoreUser.followingCount),
+                value: mainController.currentFirestoreUser.followingCount),
             buildButton(
                 text: 'follwers',
-                value: mainModel.currentFirestoreUser.followerCount)
+                value: mainController.currentFirestoreUser.followerCount)
           ],
         ),
         ElevatedButton(
-            onPressed: () async => profileModel.uploadImage(
-                currentUserDoc: mainModel.currentUserDoc),
+            onPressed: () async => profileController.uploadImage(
+                currentUserDoc: mainController.currentUserDoc),
             child: const Text('profile')),
         const Divider(color: Colors.black),
         Expanded(
           child: ListView.builder(
-            itemCount: profileModel.chariDocs.length, // moviesの長さだけ表示
+            itemCount: profileController.chariDocs.length, // moviesの長さだけ表示
             itemBuilder: (BuildContext context, int index) {
-              final doc = profileModel.chariDocs[index];
+              final doc = profileController.chariDocs[index];
               final Chari chari = Chari.fromJson(doc.data()!);
               return Card(
                 shape: RoundedRectangleBorder(
@@ -137,23 +140,4 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ]),
       );
-
-  // Widget buildProfileImage() => Container(
-  //           // 写真を更新後のcroppedfileがあればcroppedfileをviewに表示
-  // child: profileModel.croppedFile != null
-  //     ? CircleAvatar(
-  //         backgroundImage:
-  //             Image.file(profileModel.croppedFile!).image,
-  //       )
-  //     : Container(
-  //         // croppedfileがなければcloudstorageのファイルを表示
-  //         child: mainModel.firestoreUser.userImageURL.isEmpty
-  //             ? const DefaultUserImage(
-  //                 length: 50,
-  //               )
-  //             : CircleAvatar(
-  //                 backgroundImage: NetworkImage(
-  //                     mainModel.firestoreUser.userImageURL)),
-  //       ),
-  //         ),
 }

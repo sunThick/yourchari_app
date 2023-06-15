@@ -5,15 +5,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yourchari_app/models/category_models.dart';
-import 'package:yourchari_app/models/charis_model.dart';
-import 'package:yourchari_app/models/main_model.dart';
-import 'package:yourchari_app/models/profile_model.dart';
-import 'package:yourchari_app/views/components/avator_image.dart';
+import 'package:yourchari_app/viewModels/chari_like_controller.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
+import 'package:yourchari_app/viewModels/profile_controller.dart';
+import 'package:yourchari_app/views/components/components.dart';
 
 import '../constants/routes.dart';
 import '../constants/string.dart';
 import '../domain/chari/chari.dart';
 import '../domain/firestore_user/firestore_user.dart';
+import '../viewModels/home_chari_list_controller.dart';
 
 class CharisList extends ConsumerWidget {
   const CharisList({Key? key, required this.index}) : super(key: key);
@@ -22,10 +23,11 @@ class CharisList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final CategoryChariModel categoryChariModel =
-        ref.watch(categoryChariProvider);
-    final MainModel mainModel = ref.watch(mainProvider);
-    final ProfileModel profileModel = ref.watch(profileProvider);
+    final HomeChariListController categoryChariController =
+        ref.watch(homeChariListProvider);
+    final MainController mainController = ref.watch(mainProvider);
+    final ProfileController profileController =
+        ref.watch(profileNotifierProvider);
     // 渡されたカテゴリーのインデックスから対応したStringのcategoryを取得。
     final Map<int, String> categoryMap = {
       0: 'all',
@@ -38,7 +40,7 @@ class CharisList extends ConsumerWidget {
       7: 'others',
     };
     final category = categoryMap[index];
-    final asyncValue = ref.watch(categoryFamily(category!));
+    final asyncValue = ref.watch(chariListFromCategoryProvider(category!));
     return Scaffold(
         body: Center(
             child: asyncValue.when(
@@ -58,11 +60,11 @@ class CharisList extends ConsumerWidget {
                                   child: SmartRefresher(
                                     enablePullDown: true,
                                     enablePullUp: true,
-                                    controller:
-                                        categoryChariModel.refreshController,
+                                    controller: categoryChariController
+                                        .refreshController,
                                     header: const WaterDropHeader(),
                                     onRefresh: () async =>
-                                        await categoryChariModel.onReload(
+                                        await categoryChariController.onReload(
                                             category: category,
                                             chariDocs: chariDocs,
                                             userDocs: userDocs),
@@ -84,18 +86,18 @@ class CharisList extends ConsumerWidget {
                                     enablePullUp: true,
                                     header: const WaterDropHeader(),
                                     onRefresh: () async =>
-                                        await categoryChariModel.onRefresh(
+                                        await categoryChariController.onRefresh(
                                             chariDocs, userDocs, category),
                                     onLoading: () async =>
-                                        await categoryChariModel.onLoading(
+                                        await categoryChariController.onLoading(
                                             chariDocs, userDocs, category),
-                                    controller:
-                                        categoryChariModel.refreshController,
+                                    controller: categoryChariController
+                                        .refreshController,
                                     child: gridView(
                                         chariDocs: chariDocs,
                                         userDocs: userDocs,
-                                        mainModel: mainModel,
-                                        profileModel: profileModel),
+                                        mainController: mainController,
+                                        profileController: profileController),
                                   ),
                                 ),
                               ],
@@ -106,8 +108,8 @@ class CharisList extends ConsumerWidget {
   Widget gridView(
       {required dynamic chariDocs,
       required dynamic userDocs,
-      required MainModel mainModel,
-      required ProfileModel profileModel}) {
+      required MainController mainController,
+      required ProfileController profileController}) {
     return MasonryGridView.count(
         crossAxisCount: 2,
         itemCount: chariDocs.length,
@@ -125,16 +127,16 @@ class CharisList extends ConsumerWidget {
               child: homeCard(
                   chari: chari,
                   passiveUser: passiveUser,
-                  mainModel: mainModel,
-                  profileModel: profileModel));
+                  mainController: mainController,
+                  profileController: profileController));
         });
   }
 
   Widget homeCard(
       {required Chari chari,
       required FirestoreUser passiveUser,
-      required MainModel mainModel,
-      required ProfileModel profileModel}) {
+      required MainController mainController,
+      required ProfileController profileController}) {
     return Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
@@ -177,8 +179,8 @@ class CharisList extends ConsumerWidget {
                     ),
                     buildAvatarImage(
                       passiveUser: passiveUser,
-                      currentFirestoreUser: mainModel.currentFirestoreUser,
-                      profileModel: profileModel,
+                      currentFirestoreUser: mainController.currentFirestoreUser,
+                      profileController: profileController,
                       radius: 15,
                     )
                   ],
@@ -196,10 +198,12 @@ class CharisList extends ConsumerWidget {
                     children: [
                       Consumer(builder: (context, ref, _) {
                         // ignore: unused_local_variable
-                        final CharisModel charisModel =
-                            ref.watch(charisProvider);
-                        final MainModel mainModel = ref.watch(mainProvider);
-                        return mainModel.likeChariIds.contains(chari.postId)
+                        final ChariLikeController charisModel =
+                            ref.watch(chariLikeProvider);
+                        final MainController mainController =
+                            ref.watch(mainProvider);
+                        return mainController.likeChariIds
+                                .contains(chari.postId)
                             ? const Icon(
                                 CupertinoIcons.heart_fill,
                                 size: 15,

@@ -1,72 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tuple/tuple.dart';
-import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
-import 'package:yourchari_app/domain/like_chari_token/like_chari_token.dart';
+
 import '../constants/enums.dart';
 import '../constants/string.dart';
+import '../domain/firestore_user/firestore_user.dart';
 import '../domain/follower/follower.dart';
 import '../domain/following_token/following_token.dart';
-import 'main_model.dart';
+import 'main_controller.dart';
 
-final passiveUserFamily = FutureProvider.autoDispose
-    .family<DocumentSnapshot<Map<String, dynamic>>, String>(((ref, uid) async {
-  final userDoc =
-      await FirebaseFirestore.instance.collection('users').doc(uid).get();
-  return userDoc;
-}));
+final passiveUserNotifierProvider =
+    ChangeNotifierProvider.autoDispose(((ref) => PassiveUserController()));
 
-final chariDocsFamily =
-    FutureProvider.family<dynamic, Tuple2<String, String>>(((ref, t2) async {
-  final String uid = t2.item1;
-  final String chariOrLikes = t2.item2;
-
-  final usercharisQshot = await FirebaseFirestore.instance
-      .collection('chari')
-      .where('uid', isEqualTo: uid)
-      .orderBy("createdAt", descending: true)
-      .limit(10)
-      .get();
-  final likeChariTokenQshot = await FirebaseFirestore.instance
-      .collection("users")
-      .doc(uid)
-      .collection("tokens")
-      .where("tokenType", isEqualTo: "likeChari")
-      .orderBy("createdAt", descending: true)
-      .limit(10)
-      .get();
-  final likeChariTokenDocs = likeChariTokenQshot.docs;
-
-  dynamic likeChariDocs = [];
-
-  for (final likeChariTokenDoc in likeChariTokenDocs) {
-    final LikeChariToken likeChariToken =
-        LikeChariToken.fromJson(likeChariTokenDoc.data());
-    final likedChariDoc = await FirebaseFirestore.instance
-        .collection("chari")
-        .doc(likeChariToken.postId)
-        .get();
-    likeChariDocs.add(likedChariDoc);
-  }
-
-  final userchariDocs = usercharisQshot.docs;
-
-  dynamic chariDocs = [];
-
-  if (chariOrLikes == "chari") {
-    chariDocs = userchariDocs;
-  } else {
-    chariDocs = likeChariDocs;
-  }
-
-  return chariDocs;
-}));
-
-final passiveUserProvider =
-    ChangeNotifierProvider.autoDispose(((ref) => PassiveUserModel()));
-
-class PassiveUserModel extends ChangeNotifier {
+class PassiveUserController extends ChangeNotifier {
   int currentIndex = 0;
 
   void changePage(index) {
@@ -86,9 +32,9 @@ class PassiveUserModel extends ChangeNotifier {
   int unfollows = 0;
 
   Future<void> follow(
-      {required MainModel mainModel,
+      {required MainController mainController,
       required FirestoreUser passiveUser}) async {
-    mainModel.followingUids.add(passiveUser.uid);
+    mainController.followingUids.add(passiveUser.uid);
     follows += 1;
     minusOne = false;
     if (follows > unfollows) {
@@ -102,7 +48,7 @@ class PassiveUserModel extends ChangeNotifier {
         passiveUid: passiveUser.uid,
         tokenId: tokenId,
         tokenType: followingTokenTypeString);
-    final FirestoreUser activeUser = mainModel.currentFirestoreUser;
+    final FirestoreUser activeUser = mainController.currentFirestoreUser;
 
     // 自分がフォローした印
     await FirebaseFirestore.instance
@@ -126,9 +72,9 @@ class PassiveUserModel extends ChangeNotifier {
   }
 
   Future<void> unfollow(
-      {required MainModel mainModel,
+      {required MainController mainController,
       required FirestoreUser passiveUser}) async {
-    mainModel.followingUids.remove(passiveUser.uid);
+    mainController.followingUids.remove(passiveUser.uid);
     unfollows += 1;
     plusOne = false;
     if (unfollows > follows) {
@@ -136,7 +82,7 @@ class PassiveUserModel extends ChangeNotifier {
     }
     notifyListeners();
     // followしているTokenを取得する
-    final FirestoreUser activeUser = mainModel.currentFirestoreUser;
+    final FirestoreUser activeUser = mainController.currentFirestoreUser;
     // qshotというdataの塊の存在を存在を取得
     final QuerySnapshot<Map<String, dynamic>> qshot = await FirebaseFirestore
         .instance

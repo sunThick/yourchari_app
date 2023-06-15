@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/charis_model.dart';
-import 'package:yourchari_app/models/detail_chari_model.dart';
-import 'package:yourchari_app/models/main_model.dart';
+import 'package:yourchari_app/viewModels/chari_like_controller.dart';
+import 'package:yourchari_app/models/chari_detail_model.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
 import '../constants/routes.dart';
 import '../domain/chari/chari.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import '../viewModels/detail_chari_page_controller.dart';
 
 class ChariDetailPage extends ConsumerWidget {
   const ChariDetailPage({Key? key, required this.chariUid}) : super(key: key);
@@ -13,12 +15,16 @@ class ChariDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(chariProviderFamily(chariUid));
-    final MainModel mainModel = ref.watch(mainProvider);
-    final ChariDetailModel chariDetailModel = ref.watch(chariDetailProvider);
-    final CharisModel charisModel = ref.watch(charisProvider);
-    int current = chariDetailModel.currentIndex;
+    final state = ref.watch(chariDetailProvider(chariUid));
+    final MainController mainController = ref.watch(mainProvider);
+    final ChariDetailPageController chariDetailModel =
+        ref.watch(chariDetailNotifierProvider);
+    final ChariLikeController chariLikeController =
+        ref.watch(chariLikeProvider);
+
     final CarouselController controller = CarouselController();
+
+    int current = chariDetailModel.currentIndex;
 
     return Scaffold(
         body: state.when(data: (chariAndPassiveUser) {
@@ -56,26 +62,27 @@ class ChariDetailPage extends ConsumerWidget {
                   child: ListTile(
                       title: Text(chari.brand),
                       subtitle: Text(chari.frame),
-                      trailing: mainModel.likeChariIds.contains(chari.postId)
-                          ? InkWell(
-                              onTap: () async => charisModel.unlike(
-                                  chari: chari,
-                                  chariDoc: chariDoc,
-                                  chariRef: chariDoc.reference,
-                                  mainModel: mainModel),
-                              child: const Icon(
-                                Icons.heart_broken,
-                                color: Colors.red,
-                              ),
-                            )
-                          : InkWell(
-                              onTap: () async => charisModel.like(
-                                  chari: chari,
-                                  chariDoc: chariDoc,
-                                  chariRef: chariDoc.reference,
-                                  mainModel: mainModel),
-                              child: const Icon(Icons.favorite),
-                            ))),
+                      trailing:
+                          mainController.likeChariIds.contains(chari.postId)
+                              ? InkWell(
+                                  onTap: () async => chariLikeController.unlike(
+                                      chari: chari,
+                                      chariDoc: chariDoc,
+                                      chariRef: chariDoc.reference,
+                                      mainController: mainController),
+                                  child: const Icon(
+                                    Icons.heart_broken,
+                                    color: Colors.red,
+                                  ),
+                                )
+                              : InkWell(
+                                  onTap: () async => chariLikeController.like(
+                                      chari: chari,
+                                      chariDoc: chariDoc,
+                                      chariRef: chariDoc.reference,
+                                      mainController: mainController),
+                                  child: const Icon(Icons.favorite),
+                                ))),
               CarouselSlider(
                 items: imageSliders,
                 carouselController: controller,

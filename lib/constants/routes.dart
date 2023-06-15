@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
 import 'package:yourchari_app/views/passive_user_profile_page.dart';
 
-import '../models/main_model.dart';
+import '../viewModels/main_controller.dart';
 import '../app.dart';
 import '../views/auth/login_page.dart';
 import '../views/auth/signup_page.dart';
@@ -19,7 +19,7 @@ void toSignupPage({required BuildContext context}) => Navigator.push(
     context, MaterialPageRoute(builder: (context) => const SignupPage()));
 
 void toLoginPage(
-        {required BuildContext context, required MainModel mainModel}) =>
+        {required BuildContext context, required MainController mainController}) =>
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
 

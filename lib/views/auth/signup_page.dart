@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/signup_model.dart';
+import '../../viewModels/signup_controller.dart';
 // models
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SignupModel signupModel = ref.watch(signupProvider);
+    final SignupController signupController = ref.watch(signupNotifierProvider);
     final TextEditingController userNameEditingController =
-        TextEditingController(text: signupModel.userName);
+        TextEditingController(text: signupController.userName);
     final TextEditingController emailEditingController =
-        TextEditingController(text: signupModel.email);
+        TextEditingController(text: signupController.email);
     final TextEditingController passwordEditingController =
-        TextEditingController(text: signupModel.password);
+        TextEditingController(text: signupController.password);
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -37,7 +37,7 @@ class SignupPage extends ConsumerWidget {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: userNameEditingController,
-                  onChanged: (text) => signupModel.userName = text,
+                  onChanged: (text) => signupController.userName = text,
                   decoration: const InputDecoration(labelText: "username"),
                 ),
               ),
@@ -46,7 +46,7 @@ class SignupPage extends ConsumerWidget {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailEditingController,
-                  onChanged: (text) => signupModel.email = text,
+                  onChanged: (text) => signupController.email = text,
                   decoration: const InputDecoration(labelText: "Email"),
                 ),
               ),
@@ -55,18 +55,18 @@ class SignupPage extends ConsumerWidget {
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
                   controller: passwordEditingController,
-                  onChanged: (text) => signupModel.password = text,
-                  obscureText: signupModel.isObscure,
+                  onChanged: (text) => signupController.password = text,
+                  obscureText: signupController.isObscure,
                   decoration: InputDecoration(
                       labelText: "password",
                       suffix: InkWell(
                         child: const Icon(Icons.visibility_off),
-                        onTap: () => signupModel.toggleIsObscure(),
+                        onTap: () => signupController.toggleIsObscure(),
                       )),
                 ),
               ),
               ElevatedButton(
-                onPressed: () => signupModel.createUser(context: context),
+                onPressed: () => signupController.createUser(context: context),
                 child: const Text('新規登録'),
               ),
               TextButton(

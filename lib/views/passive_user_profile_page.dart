@@ -2,45 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
-import 'package:yourchari_app/models/main_model.dart';
-import 'package:yourchari_app/models/passive_user_profile_model.dart';
-import 'package:yourchari_app/models/profile_model.dart';
-import 'package:yourchari_app/views/components/avator_image.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
+import 'package:yourchari_app/models/passive_user_model.dart';
+import 'package:yourchari_app/viewModels/profile_controller.dart';
+import 'package:yourchari_app/views/components/components.dart';
 
 import '../constants/routes.dart';
 import '../domain/chari/chari.dart';
+import '../viewModels/passive_user_page_controller.dart';
 
 class PassiveUserProfilePage extends ConsumerWidget {
   const PassiveUserProfilePage({required this.userId, Key? key})
       : super(key: key);
   final String userId;
 
-// widgetのcomponent
-  Widget buildButton({
-    required String text,
-    required int value,
-  }) =>
-      Column(children: [
-        Text(
-          '$value',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          text,
-          style: const TextStyle(fontSize: 15),
-        )
-      ]);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PassiveUserModel passiveUserModel = ref.watch(passiveUserProvider);
+    final MainController mainController = ref.watch(mainProvider);
+    final PassiveUserController passiveUserController =
+        ref.watch(passiveUserNotifierProvider);
+    final ProfileController profileController =
+        ref.watch(profileNotifierProvider);
+        
     final String chariOrLikes =
-        passiveUserModel.currentIndex == 0 ? "chari" : "likes";
-    final state = ref.watch(passiveUserFamily(userId));
-    final ProfileModel profileModel = ref.watch(profileProvider);
-    final MainModel mainModel = ref.watch(mainProvider);
+        passiveUserController.currentIndex == 0 ? "chari" : "likes";
     const double headerHeight = 90;
+
+    final state = ref.watch(passiveUserProvider(userId));
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +45,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
         final FirestoreUser passiveUser =
             FirestoreUser.fromJson(passiveUserDoc.data()!);
         final bool isFollowing =
-            mainModel.followingUids.contains(passiveUser.uid);
+            mainController.followingUids.contains(passiveUser.uid);
         final int followerCount = passiveUser.followerCount;
         final int plusOneFollowerCount = passiveUser.followerCount + 1;
         final int minusOneFollowerCount = passiveUser.followerCount - 1;
@@ -75,8 +63,8 @@ class PassiveUserProfilePage extends ConsumerWidget {
                         child: buildAvatarImage(
                             passiveUser: passiveUser,
                             currentFirestoreUser:
-                                mainModel.currentFirestoreUser,
-                            profileModel: profileModel,
+                                mainController.currentFirestoreUser,
+                            profileController: profileController,
                             radius: headerHeight / 2)),
                     const SizedBox(
                       width: 10,
@@ -133,9 +121,9 @@ class PassiveUserProfilePage extends ConsumerWidget {
                           },
                           child: buildButton(
                               text: 'follwers',
-                              value: passiveUserModel.plusOne
+                              value: passiveUserController.plusOne
                                   ? plusOneFollowerCount
-                                  : passiveUserModel.minusOne
+                                  : passiveUserController.minusOne
                                       ? minusOneFollowerCount
                                       : followerCount),
                         )
@@ -154,8 +142,8 @@ class PassiveUserProfilePage extends ConsumerWidget {
                                   width: 1, //枠線！
                                 ),
                               ),
-                              onPressed: () => passiveUserModel.unfollow(
-                                  mainModel: mainModel,
+                              onPressed: () => passiveUserController.unfollow(
+                                  mainController: mainController,
                                   passiveUser: passiveUser),
                               child: const Text('following'),
                             )
@@ -164,8 +152,8 @@ class PassiveUserProfilePage extends ConsumerWidget {
                                 backgroundColor: Colors.white,
                                 //ボタンの背景色
                               ),
-                              onPressed: () => passiveUserModel.follow(
-                                  mainModel: mainModel,
+                              onPressed: () => passiveUserController.follow(
+                                  mainController: mainController,
                                   passiveUser: passiveUser),
                               child: const Text('follow'),
                             ),
@@ -176,7 +164,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
             ),
             const Divider(color: Colors.black),
             DefaultTabController(
-                initialIndex: passiveUserModel.currentIndex,
+                initialIndex: passiveUserController.currentIndex,
                 length: 2,
                 child: Column(
                   children: [
@@ -185,21 +173,21 @@ class PassiveUserProfilePage extends ConsumerWidget {
                       unselectedLabelColor: Colors.black12,
                       tabs: const [Tab(text: "Chari"), Tab(text: "Likes")],
                       onTap: (index) {
-                        passiveUserModel.changePage(index);
+                        passiveUserController.changePage(index);
                       },
                     ),
                   ],
                 )),
             Consumer(builder: (context, ref, _) {
               final t2 = Tuple2<String, String>(userId, chariOrLikes);
-              final chariDocs = ref.watch(chariDocsFamily(t2));
+              final chariDocs = ref.watch(passiveUserChariDocsProvider(t2));
               return chariDocs.when(
                 loading: () => const CircularProgressIndicator(),
                 error: (err, stack) => Text('Error: $err'),
                 data: (chariDocs) {
                   return buildChariList(
                       context: context,
-                      passiveUserModel: passiveUserModel,
+                      passiveUserModel: passiveUserController,
                       chariDocs: chariDocs);
                 },
               );
@@ -216,7 +204,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
 
   Widget buildChariList(
       {required context,
-      required PassiveUserModel passiveUserModel,
+      required PassiveUserController passiveUserModel,
       required chariDocs}) {
     return Expanded(
       child: SizedBox(

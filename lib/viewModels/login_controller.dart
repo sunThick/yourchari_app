@@ -7,9 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:yourchari_app/constants/routes.dart' as routes;
 
-final loginProvider = ChangeNotifierProvider(((ref) => LoginModel()));
+final loginNotifierProvider =
+    ChangeNotifierProvider(((ref) => LoginController()));
 
-class LoginModel extends ChangeNotifier {
+class LoginController extends ChangeNotifier {
   User? currentUser;
   // auth
   String email = "";

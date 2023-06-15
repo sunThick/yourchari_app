@@ -8,9 +8,10 @@ import 'package:yourchari_app/constants/routes.dart' as routes;
 import '../domain/firestore_user/firestore_user.dart';
 // domain
 
-final signupProvider = ChangeNotifierProvider((ref) => SignupModel());
+final signupNotifierProvider =
+    ChangeNotifierProvider((ref) => SignupController());
 
-class SignupModel extends ChangeNotifier {
+class SignupController extends ChangeNotifier {
   User? currentUser;
   // auth
   String userName = "";

@@ -9,14 +9,15 @@ import 'package:yourchari_app/constants/othes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yourchari_app/constants/string.dart';
-import 'package:yourchari_app/models/main_model.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
 
-final profileProvider = ChangeNotifierProvider(((ref) => ProfileModel()));
+final profileNotifierProvider =
+    ChangeNotifierProvider(((ref) => ProfileController()));
 
-class ProfileModel extends ChangeNotifier {
+class ProfileController extends ChangeNotifier {
   File? croppedFile;
   Uint8List? compressData;
-  MainModel mainModel = MainModel();
+  MainController mainController = MainController();
   Future<String> uploadImageAndGetURL(
       {required String uid, required Uint8List file}) async {
     //uuid
@@ -61,7 +62,7 @@ class ProfileModel extends ChangeNotifier {
     });
   }
 
-  ProfileModel() {
+  ProfileController() {
     init();
   }
 
@@ -70,7 +71,7 @@ class ProfileModel extends ChangeNotifier {
     startLoading();
     final qshot = await FirebaseFirestore.instance
         .collection('chari')
-        .where('uid', isEqualTo: mainModel.currentUser!.uid)
+        .where('uid', isEqualTo: mainController.currentUser!.uid)
         // .orderBy("createdAt", descending: true)
         .get();
     chariDocs = qshot.docs;

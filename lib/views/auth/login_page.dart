@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/constants/routes.dart' as routes;
-import '../../models/login_model.dart';
+import '../../viewModels/login_controller.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LoginModel loginModel = ref.watch(loginProvider);
+    final LoginController loginController = ref.watch(loginNotifierProvider);
     //formcontroller
     final TextEditingController emailEditingController =
-        TextEditingController(text: loginModel.email);
+        TextEditingController(text: loginController.email);
     final TextEditingController passwordEditingController =
-        TextEditingController(text: loginModel.password);
+        TextEditingController(text: loginController.password);
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -34,7 +34,7 @@ class LoginPage extends ConsumerWidget {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailEditingController,
-                  onChanged: (text) => loginModel.email = text,
+                  onChanged: (text) => loginController.email = text,
                   decoration: const InputDecoration(labelText: "Email"),
                 ),
               ),
@@ -43,15 +43,15 @@ class LoginPage extends ConsumerWidget {
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
                   controller: passwordEditingController,
-                  onChanged: (text) => loginModel.password = text,
-                  obscureText: loginModel.isObscure,
+                  onChanged: (text) => loginController.password = text,
+                  obscureText: loginController.isObscure,
                   decoration: InputDecoration(
                     labelText: "Password",
                     suffix: InkWell(
-                      child: loginModel.isObscure
+                      child: loginController.isObscure
                           ? const Icon(Icons.visibility_off)
                           : const Icon(Icons.visibility),
-                      onTap: () => loginModel.toggleIsObscure(),
+                      onTap: () => loginController.toggleIsObscure(),
                     ),
                   ),
                 ),
@@ -60,7 +60,7 @@ class LoginPage extends ConsumerWidget {
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () => loginModel.login(context: context),
+                onPressed: () => loginController.login(context: context),
                 child: const Text('ログイン'),
               ),
               const SizedBox(

@@ -5,8 +5,10 @@ import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/constants/routes.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/models/followers_and_follows_model.dart';
-import 'package:yourchari_app/models/main_model.dart';
-import 'package:yourchari_app/models/passive_user_profile_model.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
+
+import '../viewModels/followers_or_follows_controller.dart';
+import '../viewModels/passive_user_page_controller.dart';
 
 class FollowsAndFollowersPage extends ConsumerWidget {
   const FollowsAndFollowersPage(
@@ -18,11 +20,12 @@ class FollowsAndFollowersPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t2 = Tuple2<String, String>(userUid, followingOrFollowers);
-    final userDocs = ref.watch(followersOrFollowsFamily(t2));
-    final PassiveUserModel passiveUserModel = ref.watch(passiveUserProvider);
-    final MainModel mainModel = ref.watch(mainProvider);
-    final FollowersAndFollowsModel followersAndFollowsModel =
-        ref.watch(followersAndFollowsProvider);
+    final userDocs = ref.watch(followersOrFollowsProvider(t2));
+    final PassiveUserController passiveUserController =
+        ref.watch(passiveUserNotifierProvider);
+    final MainController mainController = ref.watch(mainProvider);
+    final FollowersAndFollowsController followersAndFollowsController =
+        ref.watch(followersOrFollowsNotifierProvider);
 
     return Scaffold(
         appBar: AppBar(
@@ -33,11 +36,12 @@ class FollowsAndFollowersPage extends ConsumerWidget {
               enablePullDown: false,
               enablePullUp: true,
               header: const WaterDropHeader(),
-              onLoading: () async => await followersAndFollowsModel.onLoading(
-                  followingOrFollowers: followingOrFollowers,
-                  userDocs: userDocs,
-                  userUid: userUid),
-              controller: followersAndFollowsModel.refreshController,
+              onLoading: () async =>
+                  await followersAndFollowsController.onLoading(
+                      followingOrFollowers: followingOrFollowers,
+                      userDocs: userDocs,
+                      userUid: userUid),
+              controller: followersAndFollowsController.refreshController,
               child: ListView.builder(
                 itemCount: userDocs.length,
                 itemBuilder: (context, index) {
@@ -45,7 +49,7 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                   final FirestoreUser user =
                       FirestoreUser.fromJson(userDoc.data()!);
                   final bool isFollowing =
-                      mainModel.followingUids.contains(user.uid);
+                      mainController.followingUids.contains(user.uid);
                   return ListTile(
                     leading: user.userImageURL.isEmpty
                         ? const CircleAvatar(
@@ -56,7 +60,8 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                           ),
                     title: Text(user.userName),
                     subtitle: const Text('Id: tasochan'),
-                    trailing: user.uid == mainModel.currentFirestoreUser.uid
+                    trailing: user.uid ==
+                            mainController.currentFirestoreUser.uid
                         ? const Text('')
                         : isFollowing
                             ? ElevatedButton(
@@ -67,8 +72,9 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                                     width: 1, //枠線！
                                   ),
                                 ),
-                                onPressed: () => passiveUserModel.unfollow(
-                                    mainModel: mainModel, passiveUser: user),
+                                onPressed: () => passiveUserController.unfollow(
+                                    mainController: mainController,
+                                    passiveUser: user),
                                 child: const Text('following'),
                               )
                             : ElevatedButton(
@@ -76,8 +82,9 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                                   backgroundColor: Colors.white,
                                   //ボタンの背景色
                                 ),
-                                onPressed: () => passiveUserModel.follow(
-                                    mainModel: mainModel, passiveUser: user),
+                                onPressed: () => passiveUserController.follow(
+                                    mainController: mainController,
+                                    passiveUser: user),
                                 child: const Text('follow'),
                               ),
                     onTap: () =>

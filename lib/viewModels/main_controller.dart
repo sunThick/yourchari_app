@@ -10,9 +10,9 @@ import '../constants/enums.dart';
 import '../domain/following_token/following_token.dart';
 import '../domain/like_chari_token/like_chari_token.dart';
 
-final mainProvider = ChangeNotifierProvider((ref) => MainModel());
+final mainProvider = ChangeNotifierProvider((ref) => MainController());
 
-class MainModel extends ChangeNotifier {
+class MainController extends ChangeNotifier {
   bool isLoading = false;
   User? currentUser;
   late DocumentSnapshot<Map<String, dynamic>> currentUserDoc;
@@ -22,7 +22,7 @@ class MainModel extends ChangeNotifier {
   List<String> likeChariIds = [];
   List<LikeChariToken> likeChariTokens = [];
 
-  MainModel() {
+  MainController() {
     init();
   }
 

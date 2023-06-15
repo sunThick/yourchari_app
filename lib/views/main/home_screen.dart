@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/home_tab_model.dart';
+import 'package:yourchari_app/viewModels/home_tab_controller.dart';
 import '../home_charis_list.dart';
 // constants
 
@@ -12,9 +12,9 @@ class HomeScreen extends ConsumerWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final HomeTabModel homeTabModel = ref.watch(homeTabProvider);
+    final HomeTabController homeTabController = ref.watch(homeTabProvider);
     return DefaultTabController(
-        initialIndex: homeTabModel.currentIndex,
+        initialIndex: homeTabController.currentIndex,
         length: 8,
         child: Scaffold(
           appBar: AppBar(
@@ -28,9 +28,7 @@ class HomeScreen extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(50), // Creates border
                   color: Colors.white54), //Change background color from here
               isScrollable: true,
-              onTap: (index) {
-                homeTabModel.changePage(index);
-              },
+              onTap: (index) {},
               tabs: const [
                 Tab(text: 'all'),
                 Tab(text: 'single'),
@@ -44,7 +42,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           body: CharisList(
-            index: homeTabModel.currentIndex,
+            index: homeTabController.currentIndex,
           ),
         ));
   }

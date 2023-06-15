@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/models/login_model.dart';
+import 'package:yourchari_app/viewModels/login_controller.dart';
 
 class NewsScreen extends ConsumerWidget {
   const NewsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LoginModel loginModel = ref.watch(loginProvider);
+    final LoginController loginController = ref.watch(loginNotifierProvider);
     return Center(
       child: ElevatedButton(
-        onPressed: () => loginModel.logout(),
+        onPressed: () => loginController.logout(),
         child: const Text('tomato'),
       ),
     );

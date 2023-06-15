@@ -11,7 +11,7 @@ import 'package:yourchari_app/views/main/search_screen.dart';
 
 // import 'views/components/home_bottom_navigation_bar.dart';
 // import 'models/home_bottom_navigation_bar_model.dart';
-import 'models/main_model.dart';
+import 'viewModels/main_controller.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MainModel mainModel = ref.watch(mainProvider);
+    final MainController mainController = ref.watch(mainProvider);
     PersistentTabController controller;
     controller = PersistentTabController(initialIndex: 0);
 
@@ -84,7 +84,7 @@ class MyHomePage extends ConsumerWidget {
       ];
     }
 
-    return mainModel.isLoading
+    return mainController.isLoading
         ? const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           )
@@ -112,38 +112,8 @@ class MyHomePage extends ConsumerWidget {
               duration: Duration(milliseconds: 20),
               curve: Curves.ease,
             ),
-            // screenTransitionAnimation: const ScreenTransitionAnimation(
-            //   // Screen transition animation on change of selected tab.
-            //   animateTabTransition: true,
-            //   curve: Curves.ease,
-            //   duration: Duration(milliseconds: 200),
-            // ),
             navBarStyle: NavBarStyle
                 .style6, // Choose the nav bar style with this property.
           );
   }
-  // @override
-  // Widget build(BuildContext context, WidgetRef ref) {
-  //   final MainModel mainModel = ref.watch(mainProvider);
-  //   final HomeBottomNavigationBarModel homeBottomNavigationBarModel =
-  //       ref.watch(homeBottomNavigationBarProvider);
-
-  //   const List<Widget> screens = [
-  //     HomeScreen(),
-  //     SearchScreen(),
-  //     NewsScreen(),
-  //     ProfileScreen(),
-  //   ];
-  //   return Scaffold(
-  //     body: mainModel.isLoading
-  //         ? const Center(
-  //             child: Text('loading'),
-  //           )
-  //         : screens[homeBottomNavigationBarModel.currentIndex],
-  //     bottomNavigationBar: SafeArea(
-  //       child: HomeBottomNavigationBar(
-  //           homeBottomNavigationBarModel: homeBottomNavigationBarModel),
-  //     ),
-  //   );
-  // }
 }
