@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final homeTabProvider = ChangeNotifierProvider(((ref) => HomeTabController()));
-
-class HomeTabController extends ChangeNotifier {
-  int currentIndex = 0;
+class HomeTabNotifier extends StateNotifier<int> {
+  HomeTabNotifier() : super(0);
 
   void changePage(index) {
-    currentIndex = index;
-    notifyListeners();
+    state = index;
+    print(state);
   }
 }
+
+final homeTabProvider =
+    StateNotifierProvider<HomeTabNotifier, int>((ref) => HomeTabNotifier());

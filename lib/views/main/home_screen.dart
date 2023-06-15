@@ -12,9 +12,8 @@ class HomeScreen extends ConsumerWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final HomeTabController homeTabController = ref.watch(homeTabProvider);
     return DefaultTabController(
-        initialIndex: homeTabController.currentIndex,
+        initialIndex: ref.watch(homeTabProvider),
         length: 8,
         child: Scaffold(
           appBar: AppBar(
@@ -28,7 +27,9 @@ class HomeScreen extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(50), // Creates border
                   color: Colors.white54), //Change background color from here
               isScrollable: true,
-              onTap: (index) {},
+              onTap: (index) {
+                ref.read(homeTabProvider.notifier).changePage(index);
+              },
               tabs: const [
                 Tab(text: 'all'),
                 Tab(text: 'single'),
@@ -42,7 +43,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           body: CharisList(
-            index: homeTabController.currentIndex,
+            index: ref.watch(homeTabProvider),
           ),
         ));
   }
