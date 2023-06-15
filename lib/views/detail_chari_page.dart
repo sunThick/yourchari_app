@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/models/selected_chari_model.dart';
 import 'package:yourchari_app/viewModels/chari_like_controller.dart';
 import 'package:yourchari_app/models/chari_detail_model.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
@@ -31,6 +32,8 @@ class ChariDetailPage extends ConsumerWidget {
       final chariDoc = chariAndPassiveUser.item1;
       final passiveUser = chariAndPassiveUser.item2;
       final Chari chari = Chari.fromJson(chariDoc.data()!);
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ref.watch(selectedChariProvider.notifier).changeChari(chari));
       final List<Widget> imageSliders = chari.imageURL
           .map((item) => Container(
                 margin: const EdgeInsets.all(5.0),

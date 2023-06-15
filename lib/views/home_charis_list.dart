@@ -6,6 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yourchari_app/models/category_models.dart';
 import 'package:yourchari_app/viewModels/chari_like_controller.dart';
+import 'package:yourchari_app/viewModels/detail_chari_page_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 import 'package:yourchari_app/viewModels/profile_controller.dart';
 import 'package:yourchari_app/views/components/components.dart';
@@ -14,6 +15,7 @@ import '../constants/routes.dart';
 import '../constants/string.dart';
 import '../domain/chari/chari.dart';
 import '../domain/firestore_user/firestore_user.dart';
+import '../models/selected_chari_model.dart';
 import '../viewModels/home_chari_list_controller.dart';
 
 class CharisList extends ConsumerWidget {
@@ -28,6 +30,8 @@ class CharisList extends ConsumerWidget {
     final MainController mainController = ref.watch(mainProvider);
     final ProfileController profileController =
         ref.watch(profileNotifierProvider);
+    // ignore: non_constant_identifier_names, unused_local_variable
+    final ChariDetailPageController = ref.watch(chariDetailNotifierProvider);
     // 渡されたカテゴリーのインデックスから対応したStringのcategoryを取得。
     final Map<int, String> categoryMap = {
       0: 'all',
@@ -100,10 +104,15 @@ class CharisList extends ConsumerWidget {
                                             (BuildContext context, int index) {
                                           final chariDoc = chariDocs[index];
                                           final userDoc = userDocs[index];
-                                          final Chari chari1 =
+                                          Chari chari =
                                               Chari.fromJson(chariDoc.data()!);
-                                          final Chari chari =
-                                              chari1.copyWith(brand: 'a');
+                                          Chari selectedChari =
+                                              ref.watch(selectedChariProvider);
+                                          // 詳細画面に映り、chariの情報が更新されているのであればその新しいchariをcopyWithする。
+                                          if (selectedChari.postId ==
+                                              chari.postId) {
+                                            chari = selectedChari.copyWith();
+                                          }
                                           final FirestoreUser passiveUser =
                                               FirestoreUser.fromJson(
                                                   userDoc.data()!);
@@ -114,146 +123,13 @@ class CharisList extends ConsumerWidget {
                                                     chariUid: chari.postId);
                                               },
                                               onDoubleTap: () {},
-                                              child: Card(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      CachedNetworkImage(
-                                                        imageUrl: chari
-                                                            .imageURL.first,
-                                                        memCacheHeight: 300,
-                                                        // maxHeightDiskCache: 300,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Container(
-                                                          color: Colors.grey,
-                                                          height: 150,
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            const Center(
-                                                                child: Icon(Icons
-                                                                    .error)),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: IntrinsicHeight(
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                      chari
-                                                                          .brand,
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.w500)),
-                                                                  Text(
-                                                                      chari
-                                                                          .frame,
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              13,
-                                                                          color:
-                                                                              Colors.black87))
-                                                                ],
-                                                              ),
-                                                              buildAvatarImage(
-                                                                passiveUser:
-                                                                    passiveUser,
-                                                                currentFirestoreUser:
-                                                                    mainController
-                                                                        .currentFirestoreUser,
-                                                                profileController:
-                                                                    profileController,
-                                                                radius: 15,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Divider(height: 1),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 3,
-                                                                right: 10,
-                                                                bottom: 3,
-                                                                left: 10),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Consumer(builder:
-                                                                    (context,
-                                                                        ref,
-                                                                        _) {
-                                                                  // ignore: unused_local_variable
-                                                                  final ChariLikeController
-                                                                      charisModel =
-                                                                      ref.watch(
-                                                                          chariLikeProvider);
-                                                                  final MainController
-                                                                      mainController =
-                                                                      ref.watch(
-                                                                          mainProvider);
-                                                                  return mainController
-                                                                          .likeChariIds
-                                                                          .contains(
-                                                                              chari.postId)
-                                                                      ? const Icon(
-                                                                          CupertinoIcons
-                                                                              .heart_fill,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.red,
-                                                                        )
-                                                                      : const Icon(
-                                                                          CupertinoIcons
-                                                                              .heart,
-                                                                          size:
-                                                                              15,
-                                                                        );
-                                                                }),
-                                                              ],
-                                                            ),
-                                                            Text(
-                                                                createTimeAgoString(chari
-                                                                    .createdAt
-                                                                    .toDate()),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        15,
-                                                                    color: Colors
-                                                                        .black45))
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  )));
+                                              child: homeCard(
+                                                  chari: chari,
+                                                  passiveUser: passiveUser,
+                                                  mainController:
+                                                      mainController,
+                                                  profileController:
+                                                      profileController));
                                         }),
                                   ),
                                 ),
@@ -262,97 +138,100 @@ class CharisList extends ConsumerWidget {
                 })));
   }
 
-  // Widget homeCard(
-  //     {required Chari chari,
-  //     required FirestoreUser passiveUser,
-  //     required MainController mainController,
-  //     required ProfileController profileController}) {
-  //   return Card(
-  //       clipBehavior: Clip.antiAlias,
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10),
-  //       ),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           CachedNetworkImage(
-  //             imageUrl: chari.imageURL.first,
-  //             memCacheHeight: 300,
-  //             // maxHeightDiskCache: 300,
-  //             placeholder: (context, url) => Container(
-  //               color: Colors.grey,
-  //               height: 150,
-  //             ),
-  //             errorWidget: (context, url, error) =>
-  //                 const Center(child: Icon(Icons.error)),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: IntrinsicHeight(
-  //               child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Text(
-  //                         chari.brand,
-  //                         style: const TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.w500),
-  //                       ),
-  //                       Text(
-  //                         chari.frame,
-  //                         style: const TextStyle(
-  //                             fontSize: 13, color: Colors.black87),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   buildAvatarImage(
-  //                     passiveUser: passiveUser,
-  //                     currentFirestoreUser: mainController.currentFirestoreUser,
-  //                     profileController: profileController,
-  //                     radius: 15,
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //           const Divider(height: 1),
-  //           Padding(
-  //             padding:
-  //                 const EdgeInsets.only(top: 3, right: 10, bottom: 3, left: 10),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 Row(
-  //                   children: [
-  //                     Consumer(builder: (context, ref, _) {
-  //                       // ignore: unused_local_variable
-  //                       final ChariLikeController charisModel =
-  //                           ref.watch(chariLikeProvider);
-  //                       final MainController mainController =
-  //                           ref.watch(mainProvider);
-  //                       return mainController.likeChariIds
-  //                               .contains(chari.postId)
-  //                           ? const Icon(
-  //                               CupertinoIcons.heart_fill,
-  //                               size: 15,
-  //                               color: Colors.red,
-  //                             )
-  //                           : const Icon(
-  //                               CupertinoIcons.heart,
-  //                               size: 15,
-  //                             );
-  //                     }),
-  //                   ],
-  //                 ),
-  //                 Text(createTimeAgoString(chari.createdAt.toDate()),
-  //                     style:
-  //                         const TextStyle(fontSize: 15, color: Colors.black45))
-  //               ],
-  //             ),
-  //           )
-  //         ],
-  //       ));
-  // }
+  Widget homeCard(
+      {required Chari chari,
+      required FirestoreUser passiveUser,
+      required MainController mainController,
+      required ProfileController profileController}) {
+    return Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CachedNetworkImage(
+              imageUrl: chari.imageURL.first,
+              memCacheHeight: 300,
+              // maxHeightDiskCache: 300,
+              placeholder: (context, url) => Container(
+                color: Colors.grey,
+                height: 150,
+              ),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          chari.brand,
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          chari.frame,
+                          style: const TextStyle(
+                              fontSize: 13, color: Colors.black87),
+                        ),
+                      ],
+                    ),
+                    buildAvatarImage(
+                      passiveUser: passiveUser,
+                      currentFirestoreUser: mainController.currentFirestoreUser,
+                      profileController: profileController,
+                      radius: 15,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const Divider(height: 1),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 3, right: 10, bottom: 3, left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Consumer(builder: (context, ref, _) {
+                        // ignore: unused_local_variable
+                        final ChariLikeController charisModel =
+                            ref.watch(chariLikeProvider);
+                        final MainController mainController =
+                            ref.watch(mainProvider);
+                        return mainController.likeChariIds
+                                .contains(chari.postId)
+                            ? const Icon(
+                                CupertinoIcons.heart_fill,
+                                size: 15,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                CupertinoIcons.heart,
+                                size: 15,
+                              );
+                      }),
+                      Text(chari.likeCount.toString(),
+                          style: const TextStyle(
+                              fontSize: 15, color: Colors.black45))
+                    ],
+                  ),
+                  Text(createTimeAgoString(chari.createdAt.toDate()),
+                      style:
+                          const TextStyle(fontSize: 15, color: Colors.black45))
+                ],
+              ),
+            )
+          ],
+        ));
+  }
 }
