@@ -63,11 +63,9 @@ class CharisList extends ConsumerWidget {
                                     controller: categoryChariController
                                         .refreshController,
                                     header: const WaterDropHeader(),
-                                    onRefresh: () async =>
-                                        await categoryChariController.onReload(
-                                            category: category,
-                                            chariDocs: chariDocs,
-                                            userDocs: userDocs),
+                                    onRefresh: () => ref.refresh(
+                                        chariListFromCategoryProvider(
+                                            category)),
                                     child: const Center(
                                         child:
                                             Text('投稿がありません。下に引っ張って更新してください。')),
