@@ -37,37 +37,37 @@ class HomeChariListController extends ChangeNotifier {
     }
   }
 
-  Future<void> onRefresh(chariDocs, userDocs, category) async {
-    startLoading();
-    refreshController.refreshCompleted();
-    if (chariDocs.isNotEmpty) {
-      // categoryがallの時は全ての、ではなきはカテゴリーの自転車のクエリーを取得。　　viewからuserdocsを取得し、その一番目より新しい投稿を取得。
-      final qshot = await returnQuery(category: category)
-          .endBeforeDocument(chariDocs.first)
-          .get();
-      // desで表示するためreversedにする。
-      final reversedChariDocs = qshot.docs.reversed.toList();
-      //上記のreversedされたchariのdocのuseruidを配列で取得。
-      final chariUids = reversedChariDocs
-          .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
-          .toList();
-      List reversedUserDocs = [];
-      //　新しい差分のcharidocsに対応したuserdocsを生成。
-      for (String uid in chariUids) {
-        final qshot =
-            await FirebaseFirestore.instance.collection('users').doc(uid).get();
-        reversedUserDocs.add(qshot);
-      }
-      //以下でchariDocs、userDocsの最初にそれぞれを挿入し、最後にv再描画する。
-      for (final chariDoc in reversedChariDocs) {
-        chariDocs.insert(0, chariDoc);
-      }
-      for (final userDoc in reversedUserDocs) {
-        userDocs.insert(0, userDoc);
-      }
-    }
-    endLoading();
-  }
+  // Future<void> onRefresh(chariDocs, userDocs, category) async {
+  //   startLoading();
+  //   refreshController.refreshCompleted();
+  //   if (chariDocs.isNotEmpty) {
+  //     // categoryがallの時は全ての、ではなきはカテゴリーの自転車のクエリーを取得。　　viewからuserdocsを取得し、その一番目より新しい投稿を取得。
+  //     final qshot = await returnQuery(category: category)
+  //         .endBeforeDocument(chariDocs.first)
+  //         .get();
+  //     // desで表示するためreversedにする。
+  //     final reversedChariDocs = qshot.docs.reversed.toList();
+  //     //上記のreversedされたchariのdocのuseruidを配列で取得。
+  //     final chariUids = reversedChariDocs
+  //         .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
+  //         .toList();
+  //     List reversedUserDocs = [];
+  //     //　新しい差分のcharidocsに対応したuserdocsを生成。
+  //     for (String uid in chariUids) {
+  //       final qshot =
+  //           await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  //       reversedUserDocs.add(qshot);
+  //     }
+  //     //以下でchariDocs、userDocsの最初にそれぞれを挿入し、最後にv再描画する。
+  //     for (final chariDoc in reversedChariDocs) {
+  //       chariDocs.insert(0, chariDoc);
+  //     }
+  //     for (final userDoc in reversedUserDocs) {
+  //       userDocs.insert(0, userDoc);
+  //     }
+  //   }
+  //   endLoading();
+  // }
 
   Future<void> onReload(
       {required String category,
@@ -75,7 +75,8 @@ class HomeChariListController extends ChangeNotifier {
       required dynamic userDocs}) async {
     startLoading();
     refreshController.refreshCompleted();
-
+    chariDocs = [];
+    userDocs = [];
     final qshot = await returnQuery(category: category).limit(10).get();
     final newChariDocs = qshot.docs;
     final newChariUids = newChariDocs
@@ -87,13 +88,13 @@ class HomeChariListController extends ChangeNotifier {
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
       newUserDocs.add(qshot);
     }
+
     for (final chariDoc in newChariDocs) {
       chariDocs.add(chariDoc);
     }
     for (final userDoc in newUserDocs) {
       userDocs.add(userDoc);
     }
-    endLoading();
   }
 
   Future<void> onLoading(chariDocs, userDocs, category) async {

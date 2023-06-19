@@ -63,9 +63,13 @@ class CharisList extends ConsumerWidget {
                                     controller: categoryChariController
                                         .refreshController,
                                     header: const WaterDropHeader(),
-                                    onRefresh: () => ref.refresh(
-                                        chariListFromCategoryProvider(
-                                            category)),
+                                    onRefresh: () {
+                                      categoryChariController.refreshController
+                                          .refreshCompleted();
+                                      chariDocs = ref.refresh(
+                                          chariListFromCategoryProvider(
+                                              category));
+                                    },
                                     child: const Center(
                                         child:
                                             Text('投稿がありません。下に引っ張って更新してください。')),
@@ -83,9 +87,13 @@ class CharisList extends ConsumerWidget {
                                     enablePullDown: true,
                                     enablePullUp: true,
                                     header: const WaterDropHeader(),
-                                    onRefresh: () => ref.refresh(
-                                        chariListFromCategoryProvider(
-                                            category)),
+                                    onRefresh: () {
+                                      categoryChariController.refreshController
+                                          .refreshCompleted();
+                                      chariDocs = ref.refresh(
+                                          chariListFromCategoryProvider(
+                                              category));
+                                    },
                                     onLoading: () async =>
                                         await categoryChariController.onLoading(
                                             chariDocs, userDocs, category),
@@ -98,10 +106,8 @@ class CharisList extends ConsumerWidget {
                                             (BuildContext context, int index) {
                                           final chariDoc = chariDocs[index];
                                           final userDoc = userDocs[index];
-                                          final Chari chari1 =
-                                              Chari.fromJson(chariDoc.data()!);
                                           final Chari chari =
-                                              chari1.copyWith(brand: 'a');
+                                              Chari.fromJson(chariDoc.data()!);
                                           final FirestoreUser passiveUser =
                                               FirestoreUser.fromJson(
                                                   userDoc.data()!);

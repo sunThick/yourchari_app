@@ -9,6 +9,7 @@ import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import '../constants/enums.dart';
 import '../domain/following_token/following_token.dart';
 import '../domain/like_chari_token/like_chari_token.dart';
+import '../domain/mute_user_token/mute_user_token.dart';
 
 final mainProvider = ChangeNotifierProvider((ref) => MainController());
 
@@ -21,7 +22,9 @@ class MainController extends ChangeNotifier {
   List<FollowingToken> followingTokens = [];
   List<String> likeChariIds = [];
   List<LikeChariToken> likeChariTokens = [];
-
+  List<MuteUserToken> muteUserTokens = [];
+  List<String> muteUids = [];
+  
   MainController() {
     init();
   }
@@ -82,6 +85,13 @@ class MainController extends ChangeNotifier {
           likeChariTokens.add(likeChariToken);
           likeChariIds.add(likeChariToken.postId);
           break;
+        case TokenType.muteUser: 
+          final MuteUserToken muteUserToken = MuteUserToken.fromJson(tokenMap);
+          muteUserTokens.add(muteUserToken);
+          muteUids.add(muteUserToken.passiveUid);
+        break;
+        case TokenType.mistake: 
+        break;
       }
     }
   }

@@ -2,6 +2,7 @@
 // package
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -43,3 +44,8 @@ Future<Uint8List> returnCompressAndGetData(
   );
   return result!;
 }
+
+DocumentReference<Map<String, dynamic>> currentUserDocToTokenDocRef(
+        {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc,
+        required String tokenId}) =>
+    currentUserDoc.reference.collection("tokens").doc(tokenId);
