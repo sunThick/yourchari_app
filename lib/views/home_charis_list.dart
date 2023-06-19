@@ -6,7 +6,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yourchari_app/models/category_models.dart';
 import 'package:yourchari_app/viewModels/chari_like_controller.dart';
-import 'package:yourchari_app/viewModels/detail_chari_page_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 import 'package:yourchari_app/viewModels/profile_controller.dart';
 import 'package:yourchari_app/views/components/components.dart';
@@ -15,7 +14,6 @@ import '../constants/routes.dart';
 import '../constants/string.dart';
 import '../domain/chari/chari.dart';
 import '../domain/firestore_user/firestore_user.dart';
-import '../models/selected_chari_model.dart';
 import '../viewModels/home_chari_list_controller.dart';
 
 class CharisList extends ConsumerWidget {
@@ -30,8 +28,6 @@ class CharisList extends ConsumerWidget {
     final MainController mainController = ref.watch(mainProvider);
     final ProfileController profileController =
         ref.watch(profileNotifierProvider);
-    // ignore: non_constant_identifier_names, unused_local_variable
-    final ChariDetailPageController = ref.watch(chariDetailNotifierProvider);
     // 渡されたカテゴリーのインデックスから対応したStringのcategoryを取得。
     final Map<int, String> categoryMap = {
       0: 'all',
@@ -89,9 +85,9 @@ class CharisList extends ConsumerWidget {
                                     enablePullDown: true,
                                     enablePullUp: true,
                                     header: const WaterDropHeader(),
-                                    onRefresh: () async =>
-                                        await categoryChariController.onRefresh(
-                                            chariDocs, userDocs, category),
+                                    onRefresh: () => ref.refresh(
+                                        chariListFromCategoryProvider(
+                                            category)),
                                     onLoading: () async =>
                                         await categoryChariController.onLoading(
                                             chariDocs, userDocs, category),
@@ -104,15 +100,10 @@ class CharisList extends ConsumerWidget {
                                             (BuildContext context, int index) {
                                           final chariDoc = chariDocs[index];
                                           final userDoc = userDocs[index];
-                                          Chari chari =
+                                          final Chari chari1 =
                                               Chari.fromJson(chariDoc.data()!);
-                                          Chari selectedChari =
-                                              ref.watch(selectedChariProvider);
-                                          // 詳細画面に映り、chariの情報が更新されているのであればその新しいchariをcopyWithする。
-                                          if (selectedChari.postId ==
-                                              chari.postId) {
-                                            chari = selectedChari.copyWith();
-                                          }
+                                          final Chari chari =
+                                              chari1.copyWith(brand: 'a');
                                           final FirestoreUser passiveUser =
                                               FirestoreUser.fromJson(
                                                   userDoc.data()!);
@@ -220,9 +211,6 @@ class CharisList extends ConsumerWidget {
                                 size: 15,
                               );
                       }),
-                      Text(chari.likeCount.toString(),
-                          style: const TextStyle(
-                              fontSize: 15, color: Colors.black45))
                     ],
                   ),
                   Text(createTimeAgoString(chari.createdAt.toDate()),

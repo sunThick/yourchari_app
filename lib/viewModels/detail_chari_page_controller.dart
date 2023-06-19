@@ -11,8 +11,4 @@ class ChariDetailPageController extends ChangeNotifier {
     currentIndex = index;
     notifyListeners();
   }
-
-  ChariDetailPageController() {
-    print('object');
-  }
 }
