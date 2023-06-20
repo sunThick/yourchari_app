@@ -6,7 +6,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../domain/chari/chari.dart';
 
 final homeChariListProvider =
-    ChangeNotifierProvider(((ref) => HomeChariListController()));
+    ChangeNotifierProvider.autoDispose(((ref) => HomeChariListController()));
 
 class HomeChariListController extends ChangeNotifier {
   //category別のchariのからリスト
