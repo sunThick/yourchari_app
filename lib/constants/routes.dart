@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
+import 'package:yourchari_app/views/mute_users_page.dart';
 import 'package:yourchari_app/views/passive_user_profile_page.dart';
 
 import '../viewModels/main_controller.dart';
@@ -19,7 +20,8 @@ void toSignupPage({required BuildContext context}) => Navigator.push(
     context, MaterialPageRoute(builder: (context) => const SignupPage()));
 
 void toLoginPage(
-        {required BuildContext context, required MainController mainController}) =>
+        {required BuildContext context,
+        required MainController mainController}) =>
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
 
@@ -52,4 +54,12 @@ void toPassiveUserPage(
         MaterialPageRoute(
             builder: (context) => PassiveUserProfilePage(
                   userId: userId,
+                )));
+
+void toMuteUsersPage({required BuildContext context, required String uid}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MuteUsersPage(
+                  uid: uid,
                 )));

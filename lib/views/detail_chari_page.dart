@@ -19,8 +19,7 @@ class ChariDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(chariDetailProvider(chariUid));
     final MainController mainController = ref.watch(mainProvider);
-    final MuteUsersController muteUsersController =
-        ref.watch(muteUsersProvider);
+    final UserMuteController muteUsersController = ref.watch(userMuteProvider);
     final ChariDetailPageController chariDetailModel =
         ref.watch(chariDetailNotifierProvider);
     final ChariLikeController chariLikeController =
@@ -159,7 +158,7 @@ class ChariDetailPage extends ConsumerWidget {
 
   void _showActionSheet(BuildContext context,
       {required MainController mainController,
-      required MuteUsersController muteUsersController,
+      required UserMuteController muteUsersController,
       required String passiveUid}) {
     showCupertinoModalPopup<void>(
       context: context,
@@ -209,7 +208,7 @@ class ChariDetailPage extends ConsumerWidget {
   }
 
   void _showAlertDialog(BuildContext context,
-      {required MuteUsersController muteUsersController,
+      {required UserMuteController muteUsersController,
       required MainController mainController,
       required String passiveUid}) {
     showCupertinoModalPopup<void>(

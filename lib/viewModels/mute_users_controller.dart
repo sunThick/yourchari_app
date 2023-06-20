@@ -9,10 +9,10 @@ import '../constants/string.dart';
 import '../domain/mute_user_token/mute_user_token.dart';
 import '../domain/user_mute/user_mute.dart';
 
-final muteUsersProvider =
-    ChangeNotifierProvider(((ref) => MuteUsersController()));
+final userMuteProvider =
+    ChangeNotifierProvider(((ref) => UserMuteController()));
 
-class MuteUsersController extends ChangeNotifier {
+class UserMuteController extends ChangeNotifier {
   Future<void> muteUser({
     required MainController mainController,
     required String passiveUid,
@@ -50,7 +50,37 @@ class MuteUsersController extends ChangeNotifier {
         .doc(activeUid)
         .set(userMute.toJson());
   }
+
+  Future<void> unMuteUser(
+      {required MainController mainController,
+      required String passiveUid,
+      required DocumentSnapshot<Map<String, dynamic>> muteUserDoc,
+      required muteUserDocs
+      }) async {
+    // muteUsersModel側の処理
+    muteUserDocs.remove(muteUserDoc);
+    mainController.muteUids.remove(passiveUid);
+    final currentUserDoc = mainController.currentUserDoc;
+    final String activeUid = currentUserDoc.id;
+    final deleteMuteUserToken = mainController.muteUserTokens
+        .where((element) => element.passiveUid == passiveUid)
+        .toList()
+        .first;
+    mainController.muteUserTokens.remove(deleteMuteUserToken);
+    
+    notifyListeners();
+    // 自分がミュートしたことの印を削除
+    await currentUserDocToTokenDocRef(
+            currentUserDoc: currentUserDoc,
+            tokenId: deleteMuteUserToken.tokenId)
+        .delete();
+    // ユーザーのミュートされた印を削除
+    final DocumentReference<Map<String, dynamic>> muteUserRef =
+        FirebaseFirestore.instance.collection("users").doc(passiveUid);
+    await muteUserRef.collection("userMutes").doc(activeUid).delete();
+  }
 }
+
 //     void showDialog(
 //         {required BuildContext context,
 //         required MainController mainController,
