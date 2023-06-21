@@ -94,9 +94,14 @@ class CharisList extends ConsumerWidget {
                                           chariListFromCategoryProvider(
                                               category));
                                     },
-                                    onLoading: () async =>
-                                        await categoryChariController.onLoading(
-                                            chariDocs, userDocs, category),
+                                    onLoading: () async => {
+                                      print('tomato'),
+                                      await categoryChariController.onLoading(
+                                          category: category,
+                                          chariDocs: chariDocs,
+                                          userDocs: userDocs,
+                                          ref: ref)
+                                    },
                                     controller: categoryChariController
                                         .refreshController,
                                     child: MasonryGridView.count(

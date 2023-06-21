@@ -2,13 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
 
+import '../constants/void.dart';
 import '../domain/chari/chari.dart';
 
 final homeChariListProvider =
     ChangeNotifierProvider.autoDispose(((ref) => HomeChariListController()));
 
 class HomeChariListController extends ChangeNotifier {
+  // HomeChariListController({required Ref ref}) {
+  //    MainController mainController = ref.watch(mainProvider);
+  // }
+
   //category別のchariのからリスト
   // List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = [];
   bool isLoading = false;
@@ -69,43 +75,51 @@ class HomeChariListController extends ChangeNotifier {
   //   endLoading();
   // }
 
-  Future<void> onReload(
-      {required String category,
-      required dynamic chariDocs,
-      required dynamic userDocs}) async {
-    startLoading();
-    refreshController.refreshCompleted();
-    chariDocs = [];
-    userDocs = [];
-    final qshot = await returnQuery(category: category).limit(10).get();
-    final newChariDocs = qshot.docs;
-    final newChariUids = newChariDocs
-        .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
-        .toList();
-    List newUserDocs = [];
-    for (String uid in newChariUids) {
-      final qshot =
-          await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      newUserDocs.add(qshot);
-    }
+  // Future<void> onReload(
+  //     {required String category,
+  //     required dynamic chariDocs,
+  //     required dynamic userDocs}) async {
+  //   startLoading();
+  //   refreshController.refreshCompleted();
+  //   chariDocs = [];
+  //   userDocs = [];
+  //   final qshot = await returnQuery(category: category).limit(10).get();
+  //   final newChariDocs = qshot.docs;
+  //   final newChariUids = newChariDocs
+  //       .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
+  //       .toList();
+  //   List newUserDocs = [];
+  //   for (String uid in newChariUids) {
+  //     final qshot =
+  //         await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  //     newUserDocs.add(qshot);
+  //   }
 
-    for (final chariDoc in newChariDocs) {
-      chariDocs.add(chariDoc);
-    }
-    for (final userDoc in newUserDocs) {
-      userDocs.add(userDoc);
-    }
-  }
+  //   for (final chariDoc in newChariDocs) {
+  //     chariDocs.add(chariDoc);
+  //   }
+  //   for (final userDoc in newUserDocs) {
+  //     userDocs.add(userDoc);
+  //   }
+  // }
 
-  Future<void> onLoading(chariDocs, userDocs, category) async {
+  Future<void> onLoading(
+      {required chariDocs,
+      required userDocs,
+      required category,
+      required WidgetRef ref}) async {
+    MainController mainController = ref.watch(mainProvider);
     startLoading();
+    print('object');
     refreshController.loadComplete();
     if (chariDocs.isNotEmpty) {
       final qshot = await returnQuery(category: category)
           .startAfterDocument(chariDocs.last)
           .limit(10)
           .get();
-      final oldChariDocs = qshot.docs;
+      final preOldChariDocs = qshot.docs;
+      final oldChariDocs = chariWithoutMuteUser(
+          chariDocs: preOldChariDocs, mainController: mainController);
       final oldChariUids = oldChariDocs
           .map((dynamic value) => (Chari.fromJson(value.data()!).uid))
           .toList();
