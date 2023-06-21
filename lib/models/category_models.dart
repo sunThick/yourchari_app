@@ -14,7 +14,7 @@ final chariListFromCategoryProvider = FutureProvider.family<
     final chariQshot = await FirebaseFirestore.instance
         .collection('chari')
         .orderBy('createdAt', descending: true)
-        .limit(10)
+        .limit(15)
         .get();
     final preChariDocs = chariQshot.docs;
     final chariDocs = chariWithoutMuteUser(
@@ -35,7 +35,7 @@ final chariListFromCategoryProvider = FutureProvider.family<
         .collection('chari')
         .where('category', isEqualTo: category)
         .orderBy('createdAt', descending: true)
-        .limit(10)
+        .limit(15)
         .get();
     final preChariDocs = chariQshot.docs;
     final chariDocs = chariWithoutMuteUser(

@@ -28,7 +28,7 @@ class HomeChariListController extends ChangeNotifier {
     notifyListeners();
   }
 
-  final RefreshController refreshController = RefreshController();
+  RefreshController refreshController = RefreshController();
 
   Query<Map<String, dynamic>> returnQuery({required String category}) {
     if (category == 'all') {
@@ -110,8 +110,7 @@ class HomeChariListController extends ChangeNotifier {
       required WidgetRef ref}) async {
     MainController mainController = ref.watch(mainProvider);
     startLoading();
-    print('object');
-    refreshController.loadComplete();
+
     if (chariDocs.isNotEmpty) {
       final qshot = await returnQuery(category: category)
           .startAfterDocument(chariDocs.last)
@@ -137,6 +136,7 @@ class HomeChariListController extends ChangeNotifier {
         userDocs.add(chariDoc);
       }
     }
+    refreshController.loadComplete();
     endLoading();
   }
 }

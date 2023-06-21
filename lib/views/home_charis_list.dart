@@ -64,11 +64,13 @@ class CharisList extends ConsumerWidget {
                                         .refreshController,
                                     header: const WaterDropHeader(),
                                     onRefresh: () {
-                                      categoryChariController.refreshController
-                                          .refreshCompleted();
+                                      categoryChariController.startLoading();
                                       chariDocs = ref.refresh(
                                           chariListFromCategoryProvider(
                                               category));
+                                      categoryChariController.refreshController
+                                          .refreshCompleted();
+                                      categoryChariController.endLoading();
                                     },
                                     child: const Center(
                                         child:
@@ -88,14 +90,16 @@ class CharisList extends ConsumerWidget {
                                     enablePullUp: true,
                                     header: const WaterDropHeader(),
                                     onRefresh: () {
-                                      categoryChariController.refreshController
-                                          .refreshCompleted();
+                                      categoryChariController.startLoading();
+
                                       chariDocs = ref.refresh(
                                           chariListFromCategoryProvider(
                                               category));
+                                      categoryChariController.refreshController
+                                          .refreshCompleted();
+                                      categoryChariController.endLoading();
                                     },
                                     onLoading: () async => {
-                                      print('tomato'),
                                       await categoryChariController.onLoading(
                                           category: category,
                                           chariDocs: chariDocs,
