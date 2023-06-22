@@ -50,17 +50,6 @@ class ChariDetailPage extends ConsumerWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                _showActionSheet(context,
-                    mainController: mainController,
-                    muteUsersController: muteUsersController,
-                    passiveUid: passiveUser.uid);
-              },
-              icon: const Icon(Icons.more_vert),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -68,31 +57,36 @@ class ChariDetailPage extends ConsumerWidget {
               if (mainController.muteUids.contains(passiveUser.uid))
                 const Text('このユーザーは現在ミュートしています。'),
               SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: ListTile(
-                      title: Text(chari.brand),
-                      subtitle: Text(chari.frame),
-                      trailing:
-                          mainController.likeChariIds.contains(chari.postId)
-                              ? InkWell(
-                                  onTap: () async => chariLikeController.unlike(
-                                      chari: chari,
-                                      chariDoc: chariDoc,
-                                      chariRef: chariDoc.reference,
-                                      mainController: mainController),
-                                  child: const Icon(
-                                    Icons.heart_broken,
-                                    color: Colors.red,
-                                  ),
-                                )
-                              : InkWell(
-                                  onTap: () async => chariLikeController.like(
-                                      chari: chari,
-                                      chariDoc: chariDoc,
-                                      chariRef: chariDoc.reference,
-                                      mainController: mainController),
-                                  child: const Icon(Icons.favorite),
-                                ))),
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      passiveUser.userImageURL.isEmpty
+                          ? const CircleAvatar(child: Icon(Icons.person))
+                          : CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(passiveUser.userImageURL)),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        child: Text(passiveUser.userName),
+                        onTap: () async => toPassiveUserPage(
+                            context: context, userId: passiveUser.uid),
+                      )
+                    ]),
+                    InkWell(
+                        child: Icon(Icons.more_vert),
+                        onTap: () {
+                          _showActionSheet(context,
+                              mainController: mainController,
+                              muteUsersController: muteUsersController,
+                              passiveUid: passiveUser.uid);
+                        })
+                  ],
+                ),
+              ),
               CarouselSlider(
                 items: imageSliders,
                 carouselController: controller,
@@ -122,18 +116,49 @@ class ChariDetailPage extends ConsumerWidget {
                   );
                 }).toList(),
               ),
-              InkWell(
-                onTap: () async => toPassiveUserPage(
-                    context: context, userId: passiveUser.uid),
-                child: ListTile(
-                  leading: passiveUser.userImageURL.isEmpty
-                      ? const CircleAvatar(child: Icon(Icons.person))
-                      : CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(passiveUser.userImageURL)),
-                  title: Text(passiveUser.userName),
-                ),
-              )
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            chari.brand,
+                            style: const TextStyle(fontSize: 30),
+                          ),
+                          Text(
+                            chari.frame,
+                            style: const TextStyle(fontSize: 23),
+                          )
+                        ],
+                      ),
+                      mainController.likeChariIds.contains(chari.postId)
+                          ? InkWell(
+                              onTap: () async => chariLikeController.unlike(
+                                  chari: chari,
+                                  chariDoc: chariDoc,
+                                  chariRef: chariDoc.reference,
+                                  mainController: mainController),
+                              child: const Icon(
+                                CupertinoIcons.heart_fill,
+                                color: Colors.red,
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () async => chariLikeController.like(
+                                  chari: chari,
+                                  chariDoc: chariDoc,
+                                  chariRef: chariDoc.reference,
+                                  mainController: mainController),
+                              child: const Icon(
+                                CupertinoIcons.heart,
+                              ),
+                            )
+                    ]),
+              ),
+              const Divider(height: 10),
             ],
           ),
         ),
@@ -167,25 +192,11 @@ class ChariDetailPage extends ConsumerWidget {
         // message: const Text('Message'),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            /// This parameter indicates the action would be a default
-            /// default behavior, turns the action's text to bold text.
-            isDefaultAction: true,
-            onPressed: () {},
-            child: const Text('Default Action'),
+            onPressed: () async =>
+                toPassiveUserPage(context: context, userId: passiveUid),
+            child: const Text('ユーザーのプロフィール'),
           ),
           CupertinoActionSheetAction(
-            onPressed: () {
-              mainController.muteUids = [];
-              print(mainController.muteUids);
-            },
-            child: const Text('Action'),
-          ),
-          CupertinoActionSheetAction(
-
-              /// This parameter indicates the action would perform
-              /// a destructive action such as delete or exit and turns
-              /// the action's text color to red.
-              isDestructiveAction: true,
               onPressed: () {
                 Navigator.pop(context);
                 _showAlertDialog(context,
@@ -195,7 +206,12 @@ class ChariDetailPage extends ConsumerWidget {
               },
               child: mainController.muteUids.contains(passiveUid)
                   ? const Text('ミュートを解除')
-                  : const Text('このユーザーをミュート')),
+                  : const Text('このユーザーをミュートする')),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {},
+            child: const Text('この投稿を通報する'),
+          ),
         ],
         cancelButton: CupertinoActionSheetAction(
           child: const Text("Cancel"),
@@ -214,22 +230,15 @@ class ChariDetailPage extends ConsumerWidget {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('ss'),
-        // content: const Text('Proceed with destructive action?'),
+        title: const Text('このユーザーをミュートしますか？'),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
-            /// This parameter indicates this action is the default,
-            /// and turns the action's text to bold text.
-            isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
             },
             child: const Text('No'),
           ),
           CupertinoDialogAction(
-            /// This parameter indicates the action would perform
-            /// a destructive action such as deletion, and turns
-            /// the action's text color to red.
             isDestructiveAction: true,
             onPressed: () {
               Navigator.pop(context);
