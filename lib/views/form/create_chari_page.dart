@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/viewModels/create_chari_model.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
+import '../../constants/list.dart';
+
 class CreateChariPage extends ConsumerWidget {
   const CreateChariPage({Key? key}) : super(key: key);
   @override
@@ -40,24 +42,12 @@ class CreateChariPage extends ConsumerWidget {
                     // physics: NeverScrollableScrollPhysics(),
                   ),
                 )
-              // ? SizedBox(
-              //     height: 100,
-              //     child: Image.file(createChariModel.croppedFile!),
-              // )
               : const SizedBox(
                   height: 100,
                 ),
           const Text('category'),
           DropdownButton(
-              items: [
-                'single',
-                'MTB',
-                'touring',
-                'road',
-                'mini',
-                'mamachari',
-                'others'
-              ].map<DropdownMenuItem<String>>((value) {
+              items: categoryItem.map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem(
                   value: value,
                   child: Text(value),
