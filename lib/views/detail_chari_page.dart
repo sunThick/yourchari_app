@@ -6,6 +6,7 @@ import 'package:yourchari_app/models/chari_detail_model.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 import 'package:yourchari_app/viewModels/mute_users_controller.dart';
 import '../constants/routes.dart';
+import '../constants/dialog.dart';
 import '../domain/chari/chari.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -77,9 +78,9 @@ class ChariDetailPage extends ConsumerWidget {
                       )
                     ]),
                     InkWell(
-                        child: Icon(Icons.more_vert),
+                        child: const Icon(Icons.more_vert),
                         onTap: () {
-                          _showActionSheet(context,
+                          chariPassiveSheet(context,
                               mainController: mainController,
                               muteUsersController: muteUsersController,
                               passiveUid: passiveUser.uid);
@@ -170,85 +171,8 @@ class ChariDetailPage extends ConsumerWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert),
-            ),
-          ],
         ),
       );
     }));
-  }
-
-  void _showActionSheet(BuildContext context,
-      {required MainController mainController,
-      required UserMuteController muteUsersController,
-      required String passiveUid}) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        // title: const Text('Title'),
-        // message: const Text('Message'),
-        actions: <CupertinoActionSheetAction>[
-          CupertinoActionSheetAction(
-            onPressed: () async =>
-                toPassiveUserPage(context: context, userId: passiveUid),
-            child: const Text('ユーザーのプロフィール'),
-          ),
-          CupertinoActionSheetAction(
-              onPressed: () {
-                Navigator.pop(context);
-                _showAlertDialog(context,
-                    mainController: mainController,
-                    muteUsersController: muteUsersController,
-                    passiveUid: passiveUid);
-              },
-              child: mainController.muteUids.contains(passiveUid)
-                  ? const Text('ミュートを解除')
-                  : const Text('このユーザーをミュートする')),
-          CupertinoActionSheetAction(
-            isDestructiveAction: true,
-            onPressed: () {},
-            child: const Text('この投稿を通報する'),
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: const Text("Cancel"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
-
-  void _showAlertDialog(BuildContext context,
-      {required UserMuteController muteUsersController,
-      required MainController mainController,
-      required String passiveUid}) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('このユーザーをミュートしますか？'),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('No'),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-              muteUsersController.muteUser(
-                  mainController: mainController, passiveUid: passiveUid);
-            },
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
-    );
   }
 }
