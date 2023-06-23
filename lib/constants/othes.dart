@@ -27,9 +27,13 @@ Future<File?> returnCroppedFile(
   final File? result = await instance.cropImage(
       aspectRatio: CropAspectRatio(ratioX: ratioX, ratioY: ratioY),
       sourcePath: xFile!.path,
-      androidUiSettings: const AndroidUiSettings(toolbarTitle: 'edit'),
+      androidUiSettings: const AndroidUiSettings(
+          toolbarTitle: 'edit', hideBottomControls: true),
       iosUiSettings: const IOSUiSettings(
         title: 'edit',
+        rotateClockwiseButtonHidden: true,
+        hidesNavigationBar: true,
+        rotateButtonsHidden: true,
       ));
   return result;
 }
