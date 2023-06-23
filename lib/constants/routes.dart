@@ -10,13 +10,14 @@ import '../views/auth/signup_page.dart';
 import '../views/detail_chari_page.dart';
 import '../views/follows_and_followers_page.dart';
 
-void toMyApp({required BuildContext context}) => Navigator.push(
+void toMyApp({required BuildContext context}) => Navigator.pushReplacement(
     context, MaterialPageRoute(builder: (context) => const MyApp()));
 
-void toCreateChariPage({required BuildContext context}) => Navigator.push(
-    context, MaterialPageRoute(builder: (context) => const CreateChariPage()));
+void toCreateChariPage({required BuildContext context}) =>
+    Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute(builder: (context) => const CreateChariPage()));
 
-void toSignupPage({required BuildContext context}) => Navigator.push(
+void toSignupPage({required BuildContext context}) => Navigator.pushReplacement(
     context, MaterialPageRoute(builder: (context) => const SignupPage()));
 
 void toLoginPage(
