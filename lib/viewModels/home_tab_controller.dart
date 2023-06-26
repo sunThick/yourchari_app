@@ -5,7 +5,6 @@ class HomeTabNotifier extends StateNotifier<int> {
 
   void changePage(index) {
     state = index;
-    print(state);
   }
 }
 
