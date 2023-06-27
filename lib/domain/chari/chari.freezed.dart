@@ -30,41 +30,40 @@ mixin _$Chari {
   String get caption => throw _privateConstructorUsedError;
   dynamic get createdAt => throw _privateConstructorUsedError;
   dynamic get updatedAt => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get fork => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get headSet => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get columnSpacer => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get handleBar => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get stem => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get grip => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get saddle => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get seatPost => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get seatClamp => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get tire => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get rim => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get hub => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get cog => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get sprocket => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get lockRing => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get freeWheel => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get crank => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get charinRing => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get chain => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get bottomBrancket =>
-      throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get pedals => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get brake => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get brakeLever => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get shifter => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get shiftLever => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get rack => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get bottle => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get frontLight => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get rearLight => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get lock => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get bell => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get helmet => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get bag => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get baske => throw _privateConstructorUsedError;
+  List<dynamic>? get fork => throw _privateConstructorUsedError;
+  List<dynamic>? get headSet => throw _privateConstructorUsedError;
+  List<dynamic>? get columnSpacer => throw _privateConstructorUsedError;
+  List<dynamic>? get handleBar => throw _privateConstructorUsedError;
+  List<dynamic>? get stem => throw _privateConstructorUsedError;
+  List<dynamic>? get grip => throw _privateConstructorUsedError;
+  List<dynamic>? get saddle => throw _privateConstructorUsedError;
+  List<dynamic>? get seatPost => throw _privateConstructorUsedError;
+  List<dynamic>? get seatClamp => throw _privateConstructorUsedError;
+  List<dynamic>? get tire => throw _privateConstructorUsedError;
+  List<dynamic>? get rim => throw _privateConstructorUsedError;
+  List<dynamic>? get hub => throw _privateConstructorUsedError;
+  List<dynamic>? get cog => throw _privateConstructorUsedError;
+  List<dynamic>? get sprocket => throw _privateConstructorUsedError;
+  List<dynamic>? get lockRing => throw _privateConstructorUsedError;
+  List<dynamic>? get freeWheel => throw _privateConstructorUsedError;
+  List<dynamic>? get crank => throw _privateConstructorUsedError;
+  List<dynamic>? get chainRing => throw _privateConstructorUsedError;
+  List<dynamic>? get chain => throw _privateConstructorUsedError;
+  List<dynamic>? get bottomBrancket => throw _privateConstructorUsedError;
+  List<dynamic>? get pedals => throw _privateConstructorUsedError;
+  List<dynamic>? get brake => throw _privateConstructorUsedError;
+  List<dynamic>? get brakeLever => throw _privateConstructorUsedError;
+  List<dynamic>? get shifter => throw _privateConstructorUsedError;
+  List<dynamic>? get shiftLever => throw _privateConstructorUsedError;
+  List<dynamic>? get rack => throw _privateConstructorUsedError;
+  List<dynamic>? get bottle => throw _privateConstructorUsedError;
+  List<dynamic>? get frontLight => throw _privateConstructorUsedError;
+  List<dynamic>? get rearLight => throw _privateConstructorUsedError;
+  List<dynamic>? get lock => throw _privateConstructorUsedError;
+  List<dynamic>? get bell => throw _privateConstructorUsedError;
+  List<dynamic>? get helmet => throw _privateConstructorUsedError;
+  List<dynamic>? get bag => throw _privateConstructorUsedError;
+  List<dynamic>? get basket => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -87,40 +86,40 @@ abstract class $ChariCopyWith<$Res> {
       String caption,
       dynamic createdAt,
       dynamic updatedAt,
-      Map<dynamic, dynamic>? fork,
-      Map<dynamic, dynamic>? headSet,
-      Map<dynamic, dynamic>? columnSpacer,
-      Map<dynamic, dynamic>? handleBar,
-      Map<dynamic, dynamic>? stem,
-      Map<dynamic, dynamic>? grip,
-      Map<dynamic, dynamic>? saddle,
-      Map<dynamic, dynamic>? seatPost,
-      Map<dynamic, dynamic>? seatClamp,
-      Map<dynamic, dynamic>? tire,
-      Map<dynamic, dynamic>? rim,
-      Map<dynamic, dynamic>? hub,
-      Map<dynamic, dynamic>? cog,
-      Map<dynamic, dynamic>? sprocket,
-      Map<dynamic, dynamic>? lockRing,
-      Map<dynamic, dynamic>? freeWheel,
-      Map<dynamic, dynamic>? crank,
-      Map<dynamic, dynamic>? charinRing,
-      Map<dynamic, dynamic>? chain,
-      Map<dynamic, dynamic>? bottomBrancket,
-      Map<dynamic, dynamic>? pedals,
-      Map<dynamic, dynamic>? brake,
-      Map<dynamic, dynamic>? brakeLever,
-      Map<dynamic, dynamic>? shifter,
-      Map<dynamic, dynamic>? shiftLever,
-      Map<dynamic, dynamic>? rack,
-      Map<dynamic, dynamic>? bottle,
-      Map<dynamic, dynamic>? frontLight,
-      Map<dynamic, dynamic>? rearLight,
-      Map<dynamic, dynamic>? lock,
-      Map<dynamic, dynamic>? bell,
-      Map<dynamic, dynamic>? helmet,
-      Map<dynamic, dynamic>? bag,
-      Map<dynamic, dynamic>? baske});
+      List<dynamic>? fork,
+      List<dynamic>? headSet,
+      List<dynamic>? columnSpacer,
+      List<dynamic>? handleBar,
+      List<dynamic>? stem,
+      List<dynamic>? grip,
+      List<dynamic>? saddle,
+      List<dynamic>? seatPost,
+      List<dynamic>? seatClamp,
+      List<dynamic>? tire,
+      List<dynamic>? rim,
+      List<dynamic>? hub,
+      List<dynamic>? cog,
+      List<dynamic>? sprocket,
+      List<dynamic>? lockRing,
+      List<dynamic>? freeWheel,
+      List<dynamic>? crank,
+      List<dynamic>? chainRing,
+      List<dynamic>? chain,
+      List<dynamic>? bottomBrancket,
+      List<dynamic>? pedals,
+      List<dynamic>? brake,
+      List<dynamic>? brakeLever,
+      List<dynamic>? shifter,
+      List<dynamic>? shiftLever,
+      List<dynamic>? rack,
+      List<dynamic>? bottle,
+      List<dynamic>? frontLight,
+      List<dynamic>? rearLight,
+      List<dynamic>? lock,
+      List<dynamic>? bell,
+      List<dynamic>? helmet,
+      List<dynamic>? bag,
+      List<dynamic>? basket});
 }
 
 /// @nodoc
@@ -163,7 +162,7 @@ class _$ChariCopyWithImpl<$Res, $Val extends Chari>
     Object? lockRing = freezed,
     Object? freeWheel = freezed,
     Object? crank = freezed,
-    Object? charinRing = freezed,
+    Object? chainRing = freezed,
     Object? chain = freezed,
     Object? bottomBrancket = freezed,
     Object? pedals = freezed,
@@ -179,7 +178,7 @@ class _$ChariCopyWithImpl<$Res, $Val extends Chari>
     Object? bell = freezed,
     Object? helmet = freezed,
     Object? bag = freezed,
-    Object? baske = freezed,
+    Object? basket = freezed,
   }) {
     return _then(_value.copyWith(
       brand: null == brand
@@ -225,139 +224,139 @@ class _$ChariCopyWithImpl<$Res, $Val extends Chari>
       fork: freezed == fork
           ? _value.fork
           : fork // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       headSet: freezed == headSet
           ? _value.headSet
           : headSet // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       columnSpacer: freezed == columnSpacer
           ? _value.columnSpacer
           : columnSpacer // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       handleBar: freezed == handleBar
           ? _value.handleBar
           : handleBar // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       stem: freezed == stem
           ? _value.stem
           : stem // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       grip: freezed == grip
           ? _value.grip
           : grip // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       saddle: freezed == saddle
           ? _value.saddle
           : saddle // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       seatPost: freezed == seatPost
           ? _value.seatPost
           : seatPost // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       seatClamp: freezed == seatClamp
           ? _value.seatClamp
           : seatClamp // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       tire: freezed == tire
           ? _value.tire
           : tire // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       rim: freezed == rim
           ? _value.rim
           : rim // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       hub: freezed == hub
           ? _value.hub
           : hub // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       cog: freezed == cog
           ? _value.cog
           : cog // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       sprocket: freezed == sprocket
           ? _value.sprocket
           : sprocket // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       lockRing: freezed == lockRing
           ? _value.lockRing
           : lockRing // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       freeWheel: freezed == freeWheel
           ? _value.freeWheel
           : freeWheel // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       crank: freezed == crank
           ? _value.crank
           : crank // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
-      charinRing: freezed == charinRing
-          ? _value.charinRing
-          : charinRing // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
+      chainRing: freezed == chainRing
+          ? _value.chainRing
+          : chainRing // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
       chain: freezed == chain
           ? _value.chain
           : chain // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bottomBrancket: freezed == bottomBrancket
           ? _value.bottomBrancket
           : bottomBrancket // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       pedals: freezed == pedals
           ? _value.pedals
           : pedals // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       brake: freezed == brake
           ? _value.brake
           : brake // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       brakeLever: freezed == brakeLever
           ? _value.brakeLever
           : brakeLever // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       shifter: freezed == shifter
           ? _value.shifter
           : shifter // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       shiftLever: freezed == shiftLever
           ? _value.shiftLever
           : shiftLever // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       rack: freezed == rack
           ? _value.rack
           : rack // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bottle: freezed == bottle
           ? _value.bottle
           : bottle // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       frontLight: freezed == frontLight
           ? _value.frontLight
           : frontLight // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       rearLight: freezed == rearLight
           ? _value.rearLight
           : rearLight // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       lock: freezed == lock
           ? _value.lock
           : lock // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bell: freezed == bell
           ? _value.bell
           : bell // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       helmet: freezed == helmet
           ? _value.helmet
           : helmet // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bag: freezed == bag
           ? _value.bag
           : bag // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
-      baske: freezed == baske
-          ? _value.baske
-          : baske // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
+      basket: freezed == basket
+          ? _value.basket
+          : basket // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ) as $Val);
   }
 }
@@ -379,40 +378,40 @@ abstract class _$$_ChariCopyWith<$Res> implements $ChariCopyWith<$Res> {
       String caption,
       dynamic createdAt,
       dynamic updatedAt,
-      Map<dynamic, dynamic>? fork,
-      Map<dynamic, dynamic>? headSet,
-      Map<dynamic, dynamic>? columnSpacer,
-      Map<dynamic, dynamic>? handleBar,
-      Map<dynamic, dynamic>? stem,
-      Map<dynamic, dynamic>? grip,
-      Map<dynamic, dynamic>? saddle,
-      Map<dynamic, dynamic>? seatPost,
-      Map<dynamic, dynamic>? seatClamp,
-      Map<dynamic, dynamic>? tire,
-      Map<dynamic, dynamic>? rim,
-      Map<dynamic, dynamic>? hub,
-      Map<dynamic, dynamic>? cog,
-      Map<dynamic, dynamic>? sprocket,
-      Map<dynamic, dynamic>? lockRing,
-      Map<dynamic, dynamic>? freeWheel,
-      Map<dynamic, dynamic>? crank,
-      Map<dynamic, dynamic>? charinRing,
-      Map<dynamic, dynamic>? chain,
-      Map<dynamic, dynamic>? bottomBrancket,
-      Map<dynamic, dynamic>? pedals,
-      Map<dynamic, dynamic>? brake,
-      Map<dynamic, dynamic>? brakeLever,
-      Map<dynamic, dynamic>? shifter,
-      Map<dynamic, dynamic>? shiftLever,
-      Map<dynamic, dynamic>? rack,
-      Map<dynamic, dynamic>? bottle,
-      Map<dynamic, dynamic>? frontLight,
-      Map<dynamic, dynamic>? rearLight,
-      Map<dynamic, dynamic>? lock,
-      Map<dynamic, dynamic>? bell,
-      Map<dynamic, dynamic>? helmet,
-      Map<dynamic, dynamic>? bag,
-      Map<dynamic, dynamic>? baske});
+      List<dynamic>? fork,
+      List<dynamic>? headSet,
+      List<dynamic>? columnSpacer,
+      List<dynamic>? handleBar,
+      List<dynamic>? stem,
+      List<dynamic>? grip,
+      List<dynamic>? saddle,
+      List<dynamic>? seatPost,
+      List<dynamic>? seatClamp,
+      List<dynamic>? tire,
+      List<dynamic>? rim,
+      List<dynamic>? hub,
+      List<dynamic>? cog,
+      List<dynamic>? sprocket,
+      List<dynamic>? lockRing,
+      List<dynamic>? freeWheel,
+      List<dynamic>? crank,
+      List<dynamic>? chainRing,
+      List<dynamic>? chain,
+      List<dynamic>? bottomBrancket,
+      List<dynamic>? pedals,
+      List<dynamic>? brake,
+      List<dynamic>? brakeLever,
+      List<dynamic>? shifter,
+      List<dynamic>? shiftLever,
+      List<dynamic>? rack,
+      List<dynamic>? bottle,
+      List<dynamic>? frontLight,
+      List<dynamic>? rearLight,
+      List<dynamic>? lock,
+      List<dynamic>? bell,
+      List<dynamic>? helmet,
+      List<dynamic>? bag,
+      List<dynamic>? basket});
 }
 
 /// @nodoc
@@ -451,7 +450,7 @@ class __$$_ChariCopyWithImpl<$Res> extends _$ChariCopyWithImpl<$Res, _$_Chari>
     Object? lockRing = freezed,
     Object? freeWheel = freezed,
     Object? crank = freezed,
-    Object? charinRing = freezed,
+    Object? chainRing = freezed,
     Object? chain = freezed,
     Object? bottomBrancket = freezed,
     Object? pedals = freezed,
@@ -467,7 +466,7 @@ class __$$_ChariCopyWithImpl<$Res> extends _$ChariCopyWithImpl<$Res, _$_Chari>
     Object? bell = freezed,
     Object? helmet = freezed,
     Object? bag = freezed,
-    Object? baske = freezed,
+    Object? basket = freezed,
   }) {
     return _then(_$_Chari(
       brand: null == brand
@@ -513,139 +512,139 @@ class __$$_ChariCopyWithImpl<$Res> extends _$ChariCopyWithImpl<$Res, _$_Chari>
       fork: freezed == fork
           ? _value._fork
           : fork // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       headSet: freezed == headSet
           ? _value._headSet
           : headSet // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       columnSpacer: freezed == columnSpacer
           ? _value._columnSpacer
           : columnSpacer // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       handleBar: freezed == handleBar
           ? _value._handleBar
           : handleBar // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       stem: freezed == stem
           ? _value._stem
           : stem // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       grip: freezed == grip
           ? _value._grip
           : grip // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       saddle: freezed == saddle
           ? _value._saddle
           : saddle // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       seatPost: freezed == seatPost
           ? _value._seatPost
           : seatPost // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       seatClamp: freezed == seatClamp
           ? _value._seatClamp
           : seatClamp // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       tire: freezed == tire
           ? _value._tire
           : tire // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       rim: freezed == rim
           ? _value._rim
           : rim // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       hub: freezed == hub
           ? _value._hub
           : hub // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       cog: freezed == cog
           ? _value._cog
           : cog // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       sprocket: freezed == sprocket
           ? _value._sprocket
           : sprocket // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       lockRing: freezed == lockRing
           ? _value._lockRing
           : lockRing // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       freeWheel: freezed == freeWheel
           ? _value._freeWheel
           : freeWheel // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       crank: freezed == crank
           ? _value._crank
           : crank // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
-      charinRing: freezed == charinRing
-          ? _value._charinRing
-          : charinRing // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
+      chainRing: freezed == chainRing
+          ? _value._chainRing
+          : chainRing // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
       chain: freezed == chain
           ? _value._chain
           : chain // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bottomBrancket: freezed == bottomBrancket
           ? _value._bottomBrancket
           : bottomBrancket // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       pedals: freezed == pedals
           ? _value._pedals
           : pedals // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       brake: freezed == brake
           ? _value._brake
           : brake // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       brakeLever: freezed == brakeLever
           ? _value._brakeLever
           : brakeLever // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       shifter: freezed == shifter
           ? _value._shifter
           : shifter // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       shiftLever: freezed == shiftLever
           ? _value._shiftLever
           : shiftLever // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       rack: freezed == rack
           ? _value._rack
           : rack // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bottle: freezed == bottle
           ? _value._bottle
           : bottle // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       frontLight: freezed == frontLight
           ? _value._frontLight
           : frontLight // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       rearLight: freezed == rearLight
           ? _value._rearLight
           : rearLight // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       lock: freezed == lock
           ? _value._lock
           : lock // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bell: freezed == bell
           ? _value._bell
           : bell // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       helmet: freezed == helmet
           ? _value._helmet
           : helmet // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
       bag: freezed == bag
           ? _value._bag
           : bag // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
-      baske: freezed == baske
-          ? _value._baske
-          : baske // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<dynamic>?,
+      basket: freezed == basket
+          ? _value._basket
+          : basket // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ));
   }
 }
@@ -664,40 +663,40 @@ class _$_Chari implements _Chari {
       required this.caption,
       required this.createdAt,
       required this.updatedAt,
-      final Map<dynamic, dynamic>? fork,
-      final Map<dynamic, dynamic>? headSet,
-      final Map<dynamic, dynamic>? columnSpacer,
-      final Map<dynamic, dynamic>? handleBar,
-      final Map<dynamic, dynamic>? stem,
-      final Map<dynamic, dynamic>? grip,
-      final Map<dynamic, dynamic>? saddle,
-      final Map<dynamic, dynamic>? seatPost,
-      final Map<dynamic, dynamic>? seatClamp,
-      final Map<dynamic, dynamic>? tire,
-      final Map<dynamic, dynamic>? rim,
-      final Map<dynamic, dynamic>? hub,
-      final Map<dynamic, dynamic>? cog,
-      final Map<dynamic, dynamic>? sprocket,
-      final Map<dynamic, dynamic>? lockRing,
-      final Map<dynamic, dynamic>? freeWheel,
-      final Map<dynamic, dynamic>? crank,
-      final Map<dynamic, dynamic>? charinRing,
-      final Map<dynamic, dynamic>? chain,
-      final Map<dynamic, dynamic>? bottomBrancket,
-      final Map<dynamic, dynamic>? pedals,
-      final Map<dynamic, dynamic>? brake,
-      final Map<dynamic, dynamic>? brakeLever,
-      final Map<dynamic, dynamic>? shifter,
-      final Map<dynamic, dynamic>? shiftLever,
-      final Map<dynamic, dynamic>? rack,
-      final Map<dynamic, dynamic>? bottle,
-      final Map<dynamic, dynamic>? frontLight,
-      final Map<dynamic, dynamic>? rearLight,
-      final Map<dynamic, dynamic>? lock,
-      final Map<dynamic, dynamic>? bell,
-      final Map<dynamic, dynamic>? helmet,
-      final Map<dynamic, dynamic>? bag,
-      final Map<dynamic, dynamic>? baske})
+      final List<dynamic>? fork,
+      final List<dynamic>? headSet,
+      final List<dynamic>? columnSpacer,
+      final List<dynamic>? handleBar,
+      final List<dynamic>? stem,
+      final List<dynamic>? grip,
+      final List<dynamic>? saddle,
+      final List<dynamic>? seatPost,
+      final List<dynamic>? seatClamp,
+      final List<dynamic>? tire,
+      final List<dynamic>? rim,
+      final List<dynamic>? hub,
+      final List<dynamic>? cog,
+      final List<dynamic>? sprocket,
+      final List<dynamic>? lockRing,
+      final List<dynamic>? freeWheel,
+      final List<dynamic>? crank,
+      final List<dynamic>? chainRing,
+      final List<dynamic>? chain,
+      final List<dynamic>? bottomBrancket,
+      final List<dynamic>? pedals,
+      final List<dynamic>? brake,
+      final List<dynamic>? brakeLever,
+      final List<dynamic>? shifter,
+      final List<dynamic>? shiftLever,
+      final List<dynamic>? rack,
+      final List<dynamic>? bottle,
+      final List<dynamic>? frontLight,
+      final List<dynamic>? rearLight,
+      final List<dynamic>? lock,
+      final List<dynamic>? bell,
+      final List<dynamic>? helmet,
+      final List<dynamic>? bag,
+      final List<dynamic>? basket})
       : _imageURL = imageURL,
         _fork = fork,
         _headSet = headSet,
@@ -716,7 +715,7 @@ class _$_Chari implements _Chari {
         _lockRing = lockRing,
         _freeWheel = freeWheel,
         _crank = crank,
-        _charinRing = charinRing,
+        _chainRing = chainRing,
         _chain = chain,
         _bottomBrancket = bottomBrancket,
         _pedals = pedals,
@@ -732,7 +731,7 @@ class _$_Chari implements _Chari {
         _bell = bell,
         _helmet = helmet,
         _bag = bag,
-        _baske = baske;
+        _basket = basket;
 
   factory _$_Chari.fromJson(Map<String, dynamic> json) =>
       _$$_ChariFromJson(json);
@@ -763,349 +762,349 @@ class _$_Chari implements _Chari {
   final dynamic createdAt;
   @override
   final dynamic updatedAt;
-  final Map<dynamic, dynamic>? _fork;
+  final List<dynamic>? _fork;
   @override
-  Map<dynamic, dynamic>? get fork {
+  List<dynamic>? get fork {
     final value = _fork;
     if (value == null) return null;
-    if (_fork is EqualUnmodifiableMapView) return _fork;
+    if (_fork is EqualUnmodifiableListView) return _fork;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _headSet;
+  final List<dynamic>? _headSet;
   @override
-  Map<dynamic, dynamic>? get headSet {
+  List<dynamic>? get headSet {
     final value = _headSet;
     if (value == null) return null;
-    if (_headSet is EqualUnmodifiableMapView) return _headSet;
+    if (_headSet is EqualUnmodifiableListView) return _headSet;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _columnSpacer;
+  final List<dynamic>? _columnSpacer;
   @override
-  Map<dynamic, dynamic>? get columnSpacer {
+  List<dynamic>? get columnSpacer {
     final value = _columnSpacer;
     if (value == null) return null;
-    if (_columnSpacer is EqualUnmodifiableMapView) return _columnSpacer;
+    if (_columnSpacer is EqualUnmodifiableListView) return _columnSpacer;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _handleBar;
+  final List<dynamic>? _handleBar;
   @override
-  Map<dynamic, dynamic>? get handleBar {
+  List<dynamic>? get handleBar {
     final value = _handleBar;
     if (value == null) return null;
-    if (_handleBar is EqualUnmodifiableMapView) return _handleBar;
+    if (_handleBar is EqualUnmodifiableListView) return _handleBar;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _stem;
+  final List<dynamic>? _stem;
   @override
-  Map<dynamic, dynamic>? get stem {
+  List<dynamic>? get stem {
     final value = _stem;
     if (value == null) return null;
-    if (_stem is EqualUnmodifiableMapView) return _stem;
+    if (_stem is EqualUnmodifiableListView) return _stem;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _grip;
+  final List<dynamic>? _grip;
   @override
-  Map<dynamic, dynamic>? get grip {
+  List<dynamic>? get grip {
     final value = _grip;
     if (value == null) return null;
-    if (_grip is EqualUnmodifiableMapView) return _grip;
+    if (_grip is EqualUnmodifiableListView) return _grip;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _saddle;
+  final List<dynamic>? _saddle;
   @override
-  Map<dynamic, dynamic>? get saddle {
+  List<dynamic>? get saddle {
     final value = _saddle;
     if (value == null) return null;
-    if (_saddle is EqualUnmodifiableMapView) return _saddle;
+    if (_saddle is EqualUnmodifiableListView) return _saddle;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _seatPost;
+  final List<dynamic>? _seatPost;
   @override
-  Map<dynamic, dynamic>? get seatPost {
+  List<dynamic>? get seatPost {
     final value = _seatPost;
     if (value == null) return null;
-    if (_seatPost is EqualUnmodifiableMapView) return _seatPost;
+    if (_seatPost is EqualUnmodifiableListView) return _seatPost;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _seatClamp;
+  final List<dynamic>? _seatClamp;
   @override
-  Map<dynamic, dynamic>? get seatClamp {
+  List<dynamic>? get seatClamp {
     final value = _seatClamp;
     if (value == null) return null;
-    if (_seatClamp is EqualUnmodifiableMapView) return _seatClamp;
+    if (_seatClamp is EqualUnmodifiableListView) return _seatClamp;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _tire;
+  final List<dynamic>? _tire;
   @override
-  Map<dynamic, dynamic>? get tire {
+  List<dynamic>? get tire {
     final value = _tire;
     if (value == null) return null;
-    if (_tire is EqualUnmodifiableMapView) return _tire;
+    if (_tire is EqualUnmodifiableListView) return _tire;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _rim;
+  final List<dynamic>? _rim;
   @override
-  Map<dynamic, dynamic>? get rim {
+  List<dynamic>? get rim {
     final value = _rim;
     if (value == null) return null;
-    if (_rim is EqualUnmodifiableMapView) return _rim;
+    if (_rim is EqualUnmodifiableListView) return _rim;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _hub;
+  final List<dynamic>? _hub;
   @override
-  Map<dynamic, dynamic>? get hub {
+  List<dynamic>? get hub {
     final value = _hub;
     if (value == null) return null;
-    if (_hub is EqualUnmodifiableMapView) return _hub;
+    if (_hub is EqualUnmodifiableListView) return _hub;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _cog;
+  final List<dynamic>? _cog;
   @override
-  Map<dynamic, dynamic>? get cog {
+  List<dynamic>? get cog {
     final value = _cog;
     if (value == null) return null;
-    if (_cog is EqualUnmodifiableMapView) return _cog;
+    if (_cog is EqualUnmodifiableListView) return _cog;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _sprocket;
+  final List<dynamic>? _sprocket;
   @override
-  Map<dynamic, dynamic>? get sprocket {
+  List<dynamic>? get sprocket {
     final value = _sprocket;
     if (value == null) return null;
-    if (_sprocket is EqualUnmodifiableMapView) return _sprocket;
+    if (_sprocket is EqualUnmodifiableListView) return _sprocket;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _lockRing;
+  final List<dynamic>? _lockRing;
   @override
-  Map<dynamic, dynamic>? get lockRing {
+  List<dynamic>? get lockRing {
     final value = _lockRing;
     if (value == null) return null;
-    if (_lockRing is EqualUnmodifiableMapView) return _lockRing;
+    if (_lockRing is EqualUnmodifiableListView) return _lockRing;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _freeWheel;
+  final List<dynamic>? _freeWheel;
   @override
-  Map<dynamic, dynamic>? get freeWheel {
+  List<dynamic>? get freeWheel {
     final value = _freeWheel;
     if (value == null) return null;
-    if (_freeWheel is EqualUnmodifiableMapView) return _freeWheel;
+    if (_freeWheel is EqualUnmodifiableListView) return _freeWheel;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _crank;
+  final List<dynamic>? _crank;
   @override
-  Map<dynamic, dynamic>? get crank {
+  List<dynamic>? get crank {
     final value = _crank;
     if (value == null) return null;
-    if (_crank is EqualUnmodifiableMapView) return _crank;
+    if (_crank is EqualUnmodifiableListView) return _crank;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _charinRing;
+  final List<dynamic>? _chainRing;
   @override
-  Map<dynamic, dynamic>? get charinRing {
-    final value = _charinRing;
+  List<dynamic>? get chainRing {
+    final value = _chainRing;
     if (value == null) return null;
-    if (_charinRing is EqualUnmodifiableMapView) return _charinRing;
+    if (_chainRing is EqualUnmodifiableListView) return _chainRing;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _chain;
+  final List<dynamic>? _chain;
   @override
-  Map<dynamic, dynamic>? get chain {
+  List<dynamic>? get chain {
     final value = _chain;
     if (value == null) return null;
-    if (_chain is EqualUnmodifiableMapView) return _chain;
+    if (_chain is EqualUnmodifiableListView) return _chain;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _bottomBrancket;
+  final List<dynamic>? _bottomBrancket;
   @override
-  Map<dynamic, dynamic>? get bottomBrancket {
+  List<dynamic>? get bottomBrancket {
     final value = _bottomBrancket;
     if (value == null) return null;
-    if (_bottomBrancket is EqualUnmodifiableMapView) return _bottomBrancket;
+    if (_bottomBrancket is EqualUnmodifiableListView) return _bottomBrancket;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _pedals;
+  final List<dynamic>? _pedals;
   @override
-  Map<dynamic, dynamic>? get pedals {
+  List<dynamic>? get pedals {
     final value = _pedals;
     if (value == null) return null;
-    if (_pedals is EqualUnmodifiableMapView) return _pedals;
+    if (_pedals is EqualUnmodifiableListView) return _pedals;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _brake;
+  final List<dynamic>? _brake;
   @override
-  Map<dynamic, dynamic>? get brake {
+  List<dynamic>? get brake {
     final value = _brake;
     if (value == null) return null;
-    if (_brake is EqualUnmodifiableMapView) return _brake;
+    if (_brake is EqualUnmodifiableListView) return _brake;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _brakeLever;
+  final List<dynamic>? _brakeLever;
   @override
-  Map<dynamic, dynamic>? get brakeLever {
+  List<dynamic>? get brakeLever {
     final value = _brakeLever;
     if (value == null) return null;
-    if (_brakeLever is EqualUnmodifiableMapView) return _brakeLever;
+    if (_brakeLever is EqualUnmodifiableListView) return _brakeLever;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _shifter;
+  final List<dynamic>? _shifter;
   @override
-  Map<dynamic, dynamic>? get shifter {
+  List<dynamic>? get shifter {
     final value = _shifter;
     if (value == null) return null;
-    if (_shifter is EqualUnmodifiableMapView) return _shifter;
+    if (_shifter is EqualUnmodifiableListView) return _shifter;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _shiftLever;
+  final List<dynamic>? _shiftLever;
   @override
-  Map<dynamic, dynamic>? get shiftLever {
+  List<dynamic>? get shiftLever {
     final value = _shiftLever;
     if (value == null) return null;
-    if (_shiftLever is EqualUnmodifiableMapView) return _shiftLever;
+    if (_shiftLever is EqualUnmodifiableListView) return _shiftLever;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _rack;
+  final List<dynamic>? _rack;
   @override
-  Map<dynamic, dynamic>? get rack {
+  List<dynamic>? get rack {
     final value = _rack;
     if (value == null) return null;
-    if (_rack is EqualUnmodifiableMapView) return _rack;
+    if (_rack is EqualUnmodifiableListView) return _rack;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _bottle;
+  final List<dynamic>? _bottle;
   @override
-  Map<dynamic, dynamic>? get bottle {
+  List<dynamic>? get bottle {
     final value = _bottle;
     if (value == null) return null;
-    if (_bottle is EqualUnmodifiableMapView) return _bottle;
+    if (_bottle is EqualUnmodifiableListView) return _bottle;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _frontLight;
+  final List<dynamic>? _frontLight;
   @override
-  Map<dynamic, dynamic>? get frontLight {
+  List<dynamic>? get frontLight {
     final value = _frontLight;
     if (value == null) return null;
-    if (_frontLight is EqualUnmodifiableMapView) return _frontLight;
+    if (_frontLight is EqualUnmodifiableListView) return _frontLight;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _rearLight;
+  final List<dynamic>? _rearLight;
   @override
-  Map<dynamic, dynamic>? get rearLight {
+  List<dynamic>? get rearLight {
     final value = _rearLight;
     if (value == null) return null;
-    if (_rearLight is EqualUnmodifiableMapView) return _rearLight;
+    if (_rearLight is EqualUnmodifiableListView) return _rearLight;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _lock;
+  final List<dynamic>? _lock;
   @override
-  Map<dynamic, dynamic>? get lock {
+  List<dynamic>? get lock {
     final value = _lock;
     if (value == null) return null;
-    if (_lock is EqualUnmodifiableMapView) return _lock;
+    if (_lock is EqualUnmodifiableListView) return _lock;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _bell;
+  final List<dynamic>? _bell;
   @override
-  Map<dynamic, dynamic>? get bell {
+  List<dynamic>? get bell {
     final value = _bell;
     if (value == null) return null;
-    if (_bell is EqualUnmodifiableMapView) return _bell;
+    if (_bell is EqualUnmodifiableListView) return _bell;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _helmet;
+  final List<dynamic>? _helmet;
   @override
-  Map<dynamic, dynamic>? get helmet {
+  List<dynamic>? get helmet {
     final value = _helmet;
     if (value == null) return null;
-    if (_helmet is EqualUnmodifiableMapView) return _helmet;
+    if (_helmet is EqualUnmodifiableListView) return _helmet;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _bag;
+  final List<dynamic>? _bag;
   @override
-  Map<dynamic, dynamic>? get bag {
+  List<dynamic>? get bag {
     final value = _bag;
     if (value == null) return null;
-    if (_bag is EqualUnmodifiableMapView) return _bag;
+    if (_bag is EqualUnmodifiableListView) return _bag;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<dynamic, dynamic>? _baske;
+  final List<dynamic>? _basket;
   @override
-  Map<dynamic, dynamic>? get baske {
-    final value = _baske;
+  List<dynamic>? get basket {
+    final value = _basket;
     if (value == null) return null;
-    if (_baske is EqualUnmodifiableMapView) return _baske;
+    if (_basket is EqualUnmodifiableListView) return _basket;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'Chari(brand: $brand, category: $category, frame: $frame, imageURL: $imageURL, likeCount: $likeCount, postId: $postId, uid: $uid, caption: $caption, createdAt: $createdAt, updatedAt: $updatedAt, fork: $fork, headSet: $headSet, columnSpacer: $columnSpacer, handleBar: $handleBar, stem: $stem, grip: $grip, saddle: $saddle, seatPost: $seatPost, seatClamp: $seatClamp, tire: $tire, rim: $rim, hub: $hub, cog: $cog, sprocket: $sprocket, lockRing: $lockRing, freeWheel: $freeWheel, crank: $crank, charinRing: $charinRing, chain: $chain, bottomBrancket: $bottomBrancket, pedals: $pedals, brake: $brake, brakeLever: $brakeLever, shifter: $shifter, shiftLever: $shiftLever, rack: $rack, bottle: $bottle, frontLight: $frontLight, rearLight: $rearLight, lock: $lock, bell: $bell, helmet: $helmet, bag: $bag, baske: $baske)';
+    return 'Chari(brand: $brand, category: $category, frame: $frame, imageURL: $imageURL, likeCount: $likeCount, postId: $postId, uid: $uid, caption: $caption, createdAt: $createdAt, updatedAt: $updatedAt, fork: $fork, headSet: $headSet, columnSpacer: $columnSpacer, handleBar: $handleBar, stem: $stem, grip: $grip, saddle: $saddle, seatPost: $seatPost, seatClamp: $seatClamp, tire: $tire, rim: $rim, hub: $hub, cog: $cog, sprocket: $sprocket, lockRing: $lockRing, freeWheel: $freeWheel, crank: $crank, chainRing: $chainRing, chain: $chain, bottomBrancket: $bottomBrancket, pedals: $pedals, brake: $brake, brakeLever: $brakeLever, shifter: $shifter, shiftLever: $shiftLever, rack: $rack, bottle: $bottle, frontLight: $frontLight, rearLight: $rearLight, lock: $lock, bell: $bell, helmet: $helmet, bag: $bag, basket: $basket)';
   }
 
   @override
@@ -1147,7 +1146,7 @@ class _$_Chari implements _Chari {
                 .equals(other._freeWheel, _freeWheel) &&
             const DeepCollectionEquality().equals(other._crank, _crank) &&
             const DeepCollectionEquality()
-                .equals(other._charinRing, _charinRing) &&
+                .equals(other._chainRing, _chainRing) &&
             const DeepCollectionEquality().equals(other._chain, _chain) &&
             const DeepCollectionEquality()
                 .equals(other._bottomBrancket, _bottomBrancket) &&
@@ -1168,7 +1167,7 @@ class _$_Chari implements _Chari {
             const DeepCollectionEquality().equals(other._bell, _bell) &&
             const DeepCollectionEquality().equals(other._helmet, _helmet) &&
             const DeepCollectionEquality().equals(other._bag, _bag) &&
-            const DeepCollectionEquality().equals(other._baske, _baske));
+            const DeepCollectionEquality().equals(other._basket, _basket));
   }
 
   @JsonKey(ignore: true)
@@ -1202,7 +1201,7 @@ class _$_Chari implements _Chari {
         const DeepCollectionEquality().hash(_lockRing),
         const DeepCollectionEquality().hash(_freeWheel),
         const DeepCollectionEquality().hash(_crank),
-        const DeepCollectionEquality().hash(_charinRing),
+        const DeepCollectionEquality().hash(_chainRing),
         const DeepCollectionEquality().hash(_chain),
         const DeepCollectionEquality().hash(_bottomBrancket),
         const DeepCollectionEquality().hash(_pedals),
@@ -1218,7 +1217,7 @@ class _$_Chari implements _Chari {
         const DeepCollectionEquality().hash(_bell),
         const DeepCollectionEquality().hash(_helmet),
         const DeepCollectionEquality().hash(_bag),
-        const DeepCollectionEquality().hash(_baske)
+        const DeepCollectionEquality().hash(_basket)
       ]);
 
   @JsonKey(ignore: true)
@@ -1247,40 +1246,40 @@ abstract class _Chari implements Chari {
       required final String caption,
       required final dynamic createdAt,
       required final dynamic updatedAt,
-      final Map<dynamic, dynamic>? fork,
-      final Map<dynamic, dynamic>? headSet,
-      final Map<dynamic, dynamic>? columnSpacer,
-      final Map<dynamic, dynamic>? handleBar,
-      final Map<dynamic, dynamic>? stem,
-      final Map<dynamic, dynamic>? grip,
-      final Map<dynamic, dynamic>? saddle,
-      final Map<dynamic, dynamic>? seatPost,
-      final Map<dynamic, dynamic>? seatClamp,
-      final Map<dynamic, dynamic>? tire,
-      final Map<dynamic, dynamic>? rim,
-      final Map<dynamic, dynamic>? hub,
-      final Map<dynamic, dynamic>? cog,
-      final Map<dynamic, dynamic>? sprocket,
-      final Map<dynamic, dynamic>? lockRing,
-      final Map<dynamic, dynamic>? freeWheel,
-      final Map<dynamic, dynamic>? crank,
-      final Map<dynamic, dynamic>? charinRing,
-      final Map<dynamic, dynamic>? chain,
-      final Map<dynamic, dynamic>? bottomBrancket,
-      final Map<dynamic, dynamic>? pedals,
-      final Map<dynamic, dynamic>? brake,
-      final Map<dynamic, dynamic>? brakeLever,
-      final Map<dynamic, dynamic>? shifter,
-      final Map<dynamic, dynamic>? shiftLever,
-      final Map<dynamic, dynamic>? rack,
-      final Map<dynamic, dynamic>? bottle,
-      final Map<dynamic, dynamic>? frontLight,
-      final Map<dynamic, dynamic>? rearLight,
-      final Map<dynamic, dynamic>? lock,
-      final Map<dynamic, dynamic>? bell,
-      final Map<dynamic, dynamic>? helmet,
-      final Map<dynamic, dynamic>? bag,
-      final Map<dynamic, dynamic>? baske}) = _$_Chari;
+      final List<dynamic>? fork,
+      final List<dynamic>? headSet,
+      final List<dynamic>? columnSpacer,
+      final List<dynamic>? handleBar,
+      final List<dynamic>? stem,
+      final List<dynamic>? grip,
+      final List<dynamic>? saddle,
+      final List<dynamic>? seatPost,
+      final List<dynamic>? seatClamp,
+      final List<dynamic>? tire,
+      final List<dynamic>? rim,
+      final List<dynamic>? hub,
+      final List<dynamic>? cog,
+      final List<dynamic>? sprocket,
+      final List<dynamic>? lockRing,
+      final List<dynamic>? freeWheel,
+      final List<dynamic>? crank,
+      final List<dynamic>? chainRing,
+      final List<dynamic>? chain,
+      final List<dynamic>? bottomBrancket,
+      final List<dynamic>? pedals,
+      final List<dynamic>? brake,
+      final List<dynamic>? brakeLever,
+      final List<dynamic>? shifter,
+      final List<dynamic>? shiftLever,
+      final List<dynamic>? rack,
+      final List<dynamic>? bottle,
+      final List<dynamic>? frontLight,
+      final List<dynamic>? rearLight,
+      final List<dynamic>? lock,
+      final List<dynamic>? bell,
+      final List<dynamic>? helmet,
+      final List<dynamic>? bag,
+      final List<dynamic>? basket}) = _$_Chari;
 
   factory _Chari.fromJson(Map<String, dynamic> json) = _$_Chari.fromJson;
 
@@ -1305,73 +1304,73 @@ abstract class _Chari implements Chari {
   @override
   dynamic get updatedAt;
   @override
-  Map<dynamic, dynamic>? get fork;
+  List<dynamic>? get fork;
   @override
-  Map<dynamic, dynamic>? get headSet;
+  List<dynamic>? get headSet;
   @override
-  Map<dynamic, dynamic>? get columnSpacer;
+  List<dynamic>? get columnSpacer;
   @override
-  Map<dynamic, dynamic>? get handleBar;
+  List<dynamic>? get handleBar;
   @override
-  Map<dynamic, dynamic>? get stem;
+  List<dynamic>? get stem;
   @override
-  Map<dynamic, dynamic>? get grip;
+  List<dynamic>? get grip;
   @override
-  Map<dynamic, dynamic>? get saddle;
+  List<dynamic>? get saddle;
   @override
-  Map<dynamic, dynamic>? get seatPost;
+  List<dynamic>? get seatPost;
   @override
-  Map<dynamic, dynamic>? get seatClamp;
+  List<dynamic>? get seatClamp;
   @override
-  Map<dynamic, dynamic>? get tire;
+  List<dynamic>? get tire;
   @override
-  Map<dynamic, dynamic>? get rim;
+  List<dynamic>? get rim;
   @override
-  Map<dynamic, dynamic>? get hub;
+  List<dynamic>? get hub;
   @override
-  Map<dynamic, dynamic>? get cog;
+  List<dynamic>? get cog;
   @override
-  Map<dynamic, dynamic>? get sprocket;
+  List<dynamic>? get sprocket;
   @override
-  Map<dynamic, dynamic>? get lockRing;
+  List<dynamic>? get lockRing;
   @override
-  Map<dynamic, dynamic>? get freeWheel;
+  List<dynamic>? get freeWheel;
   @override
-  Map<dynamic, dynamic>? get crank;
+  List<dynamic>? get crank;
   @override
-  Map<dynamic, dynamic>? get charinRing;
+  List<dynamic>? get chainRing;
   @override
-  Map<dynamic, dynamic>? get chain;
+  List<dynamic>? get chain;
   @override
-  Map<dynamic, dynamic>? get bottomBrancket;
+  List<dynamic>? get bottomBrancket;
   @override
-  Map<dynamic, dynamic>? get pedals;
+  List<dynamic>? get pedals;
   @override
-  Map<dynamic, dynamic>? get brake;
+  List<dynamic>? get brake;
   @override
-  Map<dynamic, dynamic>? get brakeLever;
+  List<dynamic>? get brakeLever;
   @override
-  Map<dynamic, dynamic>? get shifter;
+  List<dynamic>? get shifter;
   @override
-  Map<dynamic, dynamic>? get shiftLever;
+  List<dynamic>? get shiftLever;
   @override
-  Map<dynamic, dynamic>? get rack;
+  List<dynamic>? get rack;
   @override
-  Map<dynamic, dynamic>? get bottle;
+  List<dynamic>? get bottle;
   @override
-  Map<dynamic, dynamic>? get frontLight;
+  List<dynamic>? get frontLight;
   @override
-  Map<dynamic, dynamic>? get rearLight;
+  List<dynamic>? get rearLight;
   @override
-  Map<dynamic, dynamic>? get lock;
+  List<dynamic>? get lock;
   @override
-  Map<dynamic, dynamic>? get bell;
+  List<dynamic>? get bell;
   @override
-  Map<dynamic, dynamic>? get helmet;
+  List<dynamic>? get helmet;
   @override
-  Map<dynamic, dynamic>? get bag;
+  List<dynamic>? get bag;
   @override
-  Map<dynamic, dynamic>? get baske;
+  List<dynamic>? get basket;
   @override
   @JsonKey(ignore: true)
   _$$_ChariCopyWith<_$_Chari> get copyWith =>
