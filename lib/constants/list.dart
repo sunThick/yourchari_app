@@ -7,3 +7,50 @@ final List<String> categoryItem = [
   'mamachari',
   'others'
 ];
+
+final List<String> components = [
+  "fork",
+  "headSet",
+  "columnSpacer",
+  "handleBar",
+  "stem",
+  "grip",
+  "saddle",
+  "seatPost",
+  "seatClamp",
+  "tire",
+  "rim",
+  "hub",
+  "cog",
+  "sprocket",
+  "lockRing",
+  "freeWheel",
+  "crank",
+  "chainRing",
+  "chain",
+  "bottomBrancket",
+  "pedals",
+  "brake",
+  "brakeLever",
+  "shifter",
+  "shiftLever",
+  "rack",
+  "bottle",
+  "frontLight",
+  "rearLight",
+  "lock",
+  "bell",
+  "helmet",
+  "bag",
+  "basket"
+];
+
+final partsCategories = [
+  {"Frame, HeadSet": components.sublist(0, 3)},
+  {"Handle, Stem, Grip": components.sublist(3, 6)},
+  {"Saddle, SeatPost": components.sublist(6, 9)},
+  {"Wheel": components.sublist(9, 12)},
+  {"Crank": components.sublist(12, 21)},
+  {"Brake, Shifter": components.sublist(21, 25)},
+  {"Rack, Accesories": components.sublist(25)},
+];
