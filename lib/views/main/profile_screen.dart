@@ -12,7 +12,13 @@ class ProfileScreen extends ConsumerWidget {
     final userId = mainController.currentFirestoreUser.uid;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('passive')),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          mainController.currentFirestoreUser.userName,
+        ),
+      ),
       endDrawer: Drawer(
         child: ListView(
           children: [
