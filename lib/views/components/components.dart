@@ -65,7 +65,6 @@ Widget profileAndPassiveBody({
     final MainController mainController = ref.watch(mainProvider);
     final ProfileController profileController =
         ref.watch(profileNotifierProvider);
-
     final bool themOrPassiveUser =
         userId == mainController.currentFirestoreUser.uid;
     const double headerHeight = 90;
@@ -79,6 +78,11 @@ Widget profileAndPassiveBody({
         }
         final FirestoreUser passiveUser =
             FirestoreUser.fromJson(passiveUserDoc.data()!);
+        if (mainController.muteUids.contains(passiveUser.uid)) {
+          return const Center(
+            child: Text('このユーザーは現在ミュートしています。'),
+          );
+        }
         final bool isFollowing =
             mainController.followingUids.contains(passiveUser.uid);
         final int followerCount = passiveUser.followerCount;
