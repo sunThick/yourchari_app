@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/constants/dialog.dart';
-import 'package:yourchari_app/viewModels/create_chari_model.dart';
+import 'package:yourchari_app/viewModels/create_chari_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
 import '../../constants/list.dart';
