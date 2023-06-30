@@ -1,8 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
 
 import '../domain/firestore_user/firestore_user.dart';
 import '../domain/following_token/following_token.dart';
@@ -25,11 +25,11 @@ class FollowersAndFollowsController extends ChangeNotifier {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
-  Future<void> onLoading({
-    required List<DocumentSnapshot<Map<String, dynamic>>> userDocs,
-    required String followingOrFollowers,
-    required String userUid,
-  }) async {
+  Future<void> onLoading(
+      {required List<DocumentSnapshot<Map<String, dynamic>>> userDocs,
+      required String followingOrFollowers,
+      required String userUid,
+      required MainController mainController}) async {
     startLoading();
     refreshController.loadComplete();
     // final lastDoc = userDocs.last;
@@ -55,11 +55,14 @@ class FollowersAndFollowsController extends ChangeNotifier {
             .get();
         final followersDocs = followersQshot.docs;
         for (final followerDoc in followersDocs) {
-          final oldFollowerDoc = await FirebaseFirestore.instance
-              .collection("users")
-              .doc(followerDoc.id)
-              .get();
-          userDocs.add(oldFollowerDoc);
+          //  muteしているユーザーは追加しない
+          if (!mainController.muteUids.contains(followerDoc.id)) {
+            final oldFollowerDoc = await FirebaseFirestore.instance
+                .collection("users")
+                .doc(followerDoc.id)
+                .get();
+            userDocs.add(oldFollowerDoc);
+          }
         }
       }
       if (followingOrFollowers == "following") {
@@ -83,13 +86,16 @@ class FollowersAndFollowsController extends ChangeNotifier {
 
         final oldFollowingDocs = oldFollowingQshot.docs;
         for (final oldFollowingDoc in oldFollowingDocs) {
+          //  muteしているユーザーは追加しない
           final FollowingToken followingToken =
               FollowingToken.fromJson(oldFollowingDoc.data());
-          final userQshot = await FirebaseFirestore.instance
-              .collection('users')
-              .doc(followingToken.passiveUid)
-              .get();
-          userDocs.add(userQshot);
+          if (!mainController.muteUids.contains(followingToken.passiveUid)) {
+            final userQshot = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(followingToken.passiveUid)
+                .get();
+            userDocs.add(userQshot);
+          }
         }
       }
     }

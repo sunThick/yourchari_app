@@ -40,7 +40,8 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                   await followersAndFollowsController.onLoading(
                       followingOrFollowers: followingOrFollowers,
                       userDocs: userDocs,
-                      userUid: userUid),
+                      userUid: userUid,
+                      mainController: mainController),
               controller: followersAndFollowsController.refreshController,
               child: ListView.builder(
                 itemCount: userDocs.length,

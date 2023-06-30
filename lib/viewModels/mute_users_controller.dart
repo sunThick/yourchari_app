@@ -55,7 +55,7 @@ class UserMuteController extends ChangeNotifier {
       {required MainController mainController,
       required String passiveUid,
       required DocumentSnapshot<Map<String, dynamic>> muteUserDoc,
-      required muteUserDocs
+      required List<DocumentSnapshot<Map<String, dynamic>>> muteUserDocs
       }) async {
     // muteUsersModel側の処理
     muteUserDocs.remove(muteUserDoc);

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/chari_like_controller.dart';
 import 'package:yourchari_app/models/chari_detail_model.dart';
+import 'package:yourchari_app/viewModels/create_chari_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 import 'package:yourchari_app/viewModels/mute_users_controller.dart';
 import '../constants/routes.dart';
@@ -22,14 +23,16 @@ class ChariDetailPage extends ConsumerWidget {
     final state = ref.watch(chariDetailProvider(chariUid));
     final MainController mainController = ref.watch(mainProvider);
     final UserMuteController muteUsersController = ref.watch(userMuteProvider);
-    final ChariDetailPageController chariDetailModel =
+    final DetailChariPageController detailChariPageController =
         ref.watch(chariDetailNotifierProvider);
     final ChariLikeController chariLikeController =
         ref.watch(chariLikeProvider);
+    final CreateChariController createChariController =
+        ref.watch(createChariProvider);
 
     final CarouselController controller = CarouselController();
 
-    int current = chariDetailModel.currentIndex;
+    int current = detailChariPageController.currentIndex;
 
     return Scaffold(
         body: state.when(data: (chariAndPassiveUser) {
@@ -44,6 +47,8 @@ class ChariDetailPage extends ConsumerWidget {
       final Chari chari = Chari.fromJson(chariDoc.data()!);
       final FirestoreUser passiveUser =
           FirestoreUser.fromJson(passiveUserDoc.data()!);
+
+      //  写真
       final List<Widget> imageSliders = chari.imageURL
           .map((item) => Container(
                 margin: const EdgeInsets.all(5.0),
@@ -56,122 +61,155 @@ class ChariDetailPage extends ConsumerWidget {
               ))
           .toList();
 
-      return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              if (mainController.muteUids.contains(passiveUser.uid))
-                const Text('このユーザーは現在ミュートしています。'),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [
-                      passiveUser.userImageURL.isEmpty
-                          ? const CircleAvatar(child: Icon(Icons.person))
-                          : CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(passiveUser.userImageURL)),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                        child: Text(passiveUser.userName),
-                        onTap: () async => toPassiveUserPage(
-                            context: context, userId: passiveUser.uid),
-                      )
-                    ]),
-                    InkWell(
-                        child: const Icon(Icons.more_vert),
-                        onTap: () {
-                          chariPassiveSheet(context,
-                              mainController: mainController,
-                              muteUsersController: muteUsersController,
-                              passiveUid: passiveUser.uid);
-                        })
-                  ],
-                ),
-              ),
-              CarouselSlider(
-                items: imageSliders,
-                carouselController: controller,
-                options: CarouselOptions(
-                    enlargeCenterPage: true,
-                    onPageChanged: (index, reason) {
-                      chariDetailModel.changeImage(index);
-                    }),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: chari.imageURL.asMap().entries.map((entry) {
-                  return GestureDetector(
-                    child: Container(
-                      width: 12.0,
-                      height: 12.0,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 4.0),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: (Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black)
-                              .withOpacity(current == entry.key ? 0.9 : 0.4)),
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            chari.brand,
-                            style: const TextStyle(fontSize: 30),
+      return Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (mainController.muteUids.contains(passiveUser.uid))
+                    const Text('このユーザーは現在ミュートしています。'),
+
+//----------------------ユーザー情報-----------------------------------------------
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(children: [
+                          passiveUser.userImageURL.isEmpty
+                              ? const CircleAvatar(child: Icon(Icons.person))
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(passiveUser.userImageURL)),
+                          const SizedBox(
+                            width: 10,
                           ),
-                          Text(
-                            chari.frame,
-                            style: const TextStyle(fontSize: 23),
+                          InkWell(
+                            child: Text(passiveUser.userName),
+                            onTap: () async => toPassiveUserPage(
+                                context: context, userId: passiveUser.uid),
                           )
-                        ],
-                      ),
-                      mainController.likeChariIds.contains(chari.postId)
-                          ? InkWell(
-                              onTap: () async => chariLikeController.unlike(
+                        ]),
+                        InkWell(
+                            child: const Icon(Icons.more_vert),
+                            onTap: () {
+                              chariPassiveSheet(context,
+                                  mainController: mainController,
+                                  muteUsersController: muteUsersController,
+                                  passiveUid: passiveUser.uid,
                                   chari: chari,
-                                  chariDoc: chariDoc,
-                                  chariRef: chariDoc.reference,
-                                  mainController: mainController),
-                              child: const Icon(
-                                CupertinoIcons.heart_fill,
-                                color: Colors.red,
+                                  createChariController: createChariController,
+                                  detailChariPageContext: context);
+                            })
+                      ],
+                    ),
+                  ),
+
+//-----------------------写真のスライダー--------------------------------//
+                  CarouselSlider(
+                    items: imageSliders,
+                    carouselController: controller,
+                    options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        onPageChanged: (index, reason) {
+                          detailChariPageController.changeImage(index);
+                        }),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: chari.imageURL.asMap().entries.map((entry) {
+                      return GestureDetector(
+                        child: Container(
+                          width: 12.0,
+                          height: 12.0,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 4.0),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black)
+                                  .withOpacity(
+                                      current == entry.key ? 0.9 : 0.4)),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+
+//-----------------------自転車の情報------------------------//
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                chari.brand,
+                                style: const TextStyle(fontSize: 30),
                               ),
-                            )
-                          : InkWell(
-                              onTap: () async => chariLikeController.like(
-                                  chari: chari,
-                                  chariDoc: chariDoc,
-                                  chariRef: chariDoc.reference,
-                                  mainController: mainController),
-                              child: const Icon(
-                                CupertinoIcons.heart,
-                              ),
-                            )
-                    ]),
+                              Text(
+                                chari.frame,
+                                style: const TextStyle(fontSize: 23),
+                              )
+                            ],
+                          ),
+
+                          //  いいね------------------------------------------
+                          mainController.likeChariIds.contains(chari.postId)
+                              ? InkWell(
+                                  onTap: () async => chariLikeController.unlike(
+                                      chari: chari,
+                                      chariDoc: chariDoc,
+                                      chariRef: chariDoc.reference,
+                                      mainController: mainController),
+                                  child: const Icon(
+                                    CupertinoIcons.heart_fill,
+                                    color: Colors.red,
+                                  ),
+                                )
+                              : InkWell(
+                                  onTap: () async => chariLikeController.like(
+                                      chari: chari,
+                                      chariDoc: chariDoc,
+                                      chariRef: chariDoc.reference,
+                                      mainController: mainController),
+                                  child: const Icon(
+                                    CupertinoIcons.heart,
+                                  ),
+                                )
+                        ]),
+                  ),
+                  const Divider(height: 10),
+                ],
               ),
-              const Divider(height: 10),
-            ],
+            ),
           ),
-        ),
+          if (createChariController.isDeleting)
+            ColoredBox(
+              color: Colors.black54,
+              child: Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  createChariController.isDeleted
+                      ? const Icon(
+                          Icons.done,
+                          size: 100,
+                          color: Colors.blue,
+                        )
+                      : const CircularProgressIndicator()
+                ],
+              )),
+            ),
+        ],
       );
     }, error: (Object error, StackTrace stackTrace) {
       return null;

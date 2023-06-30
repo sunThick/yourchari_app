@@ -11,7 +11,8 @@ class PassiveUserProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
-      body: profileAndPassiveBody(
+      body: 
+      profileAndPassiveBody(
         context: context,
         userId: userId,
       ),

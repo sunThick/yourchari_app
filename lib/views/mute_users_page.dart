@@ -38,13 +38,12 @@ class MuteUsersPage extends ConsumerWidget {
                         ),
                   title: Text(muteUser.userName),
                   trailing: ElevatedButton(
-                    child: Text('ミュートを解除'),
+                    child: const Text('ミュートを解除'),
                     onPressed: () {
                       userMuteController.unMuteUser(
-                          mainController: mainController,
-                          passiveUid: muteUser.uid,
-                          muteUserDoc: muteUserDoc,
-                          muteUserDocs: muteUserDocs);
+                        mainController: mainController,
+                        passiveUid: muteUser.uid, muteUserDoc: muteUserDoc, muteUserDocs: muteUserDocs,
+                      );
                     },
                   ),
                 );
