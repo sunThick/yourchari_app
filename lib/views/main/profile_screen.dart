@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/constants/routes.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
-import 'package:yourchari_app/viewModels/passive_user_page_controller.dart';
 import '../components/components.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -10,7 +9,6 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MainController mainController = ref.watch(mainProvider);
-    ref.watch(passiveUserNotifierProvider);
     final userId = mainController.currentFirestoreUser.uid;
 
     return Scaffold(
