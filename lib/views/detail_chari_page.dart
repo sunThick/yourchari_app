@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/chari_like_controller.dart';
 import 'package:yourchari_app/models/chari_detail_model.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
@@ -33,8 +34,16 @@ class ChariDetailPage extends ConsumerWidget {
     return Scaffold(
         body: state.when(data: (chariAndPassiveUser) {
       final chariDoc = chariAndPassiveUser.item1;
-      final passiveUser = chariAndPassiveUser.item2;
+      final passiveUserDoc = chariAndPassiveUser.item2;
+      if (chariDoc.data() == null) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: const Center(child: Text("この投稿は削除されています")),
+        );
+      }
       final Chari chari = Chari.fromJson(chariDoc.data()!);
+      final FirestoreUser passiveUser =
+          FirestoreUser.fromJson(passiveUserDoc.data()!);
       final List<Widget> imageSliders = chari.imageURL
           .map((item) => Container(
                 margin: const EdgeInsets.all(5.0),
