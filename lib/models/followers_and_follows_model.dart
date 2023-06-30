@@ -3,12 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/domain/follower/follower.dart';
 import 'package:yourchari_app/domain/following_token/following_token.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
+
+import '../constants/void.dart';
 
 final followersOrFollowsProvider = FutureProvider.autoDispose.family<
     List<DocumentSnapshot<Map<String, dynamic>>>,
     Tuple2<String, String>>(((ref, state) async {
   final String uid = state.item1;
   final String followingOrFollowers = state.item2;
+  final MainController mainController = ref.watch(mainProvider);
   List<DocumentSnapshot<Map<String, dynamic>>> userDocs = [];
 
   if (followingOrFollowers == "followers") {
@@ -50,5 +54,8 @@ final followersOrFollowsProvider = FutureProvider.autoDispose.family<
       userDocs.add(userQshot);
     }
   }
+
+  userDocs = userListWithoutMuteUser(
+      mainController: mainController, userDocs: userDocs);
   return userDocs;
 }));
