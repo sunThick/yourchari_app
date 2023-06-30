@@ -25,6 +25,8 @@ class CreateChariController extends ChangeNotifier {
   Uint8List? compress;
   bool isCreating = false;
   bool isCreated = false;
+  bool isDeleting = false;
+  bool isDeleted = false;
   bool requireImage = false;
   bool requireCategory = false;
   bool requireBrand = false;
@@ -51,6 +53,17 @@ class CreateChariController extends ChangeNotifier {
     notifyListeners();
     await Future.delayed(const Duration(seconds: 1));
     Navigator.of(context).pop();
+  }
+
+  void startDeleting() {
+    isDeleting = true;
+    notifyListeners();
+  }
+
+  Future<void> endDeleting({required context}) async {
+    isDeleted = true;
+    notifyListeners();
+    await Future.delayed(const Duration(seconds: 1));
   }
 
 // viewから渡されたstringを元にclassを作成
@@ -216,7 +229,49 @@ class CreateChariController extends ChangeNotifier {
       createdAt: now,
       updatedAt: Timestamp.now(),
     );
-    for (final formChariText in partsTextEditingControllerList) {
+
+    //  パーツをセット
+    chari = setPartsChari(
+        partsTextEditingControllerList: partsTextEditingControllerList,
+        chari: chari);
+
+    //  imagesを圧縮
+    for (var element in images) {
+      compress = await returnCompressAndGetData(
+          file: element, minWidth: 600, minHeight: 450);
+      compressImages.add(compress!);
+    }
+    for (var element in compressImages) {
+      final String url =
+          await uploadImageAndGetURL(postId: postId, compress: element);
+      imageURL.add(url);
+    }
+
+    chariCollection.doc(postId).set(chari.toJson());
+    endCreating(context: context);
+  }
+
+  /// chariを削除----------------------------------------------------------------
+
+  Future<void> deleteChari({required Chari chari, required context}) async {
+    startDeleting();
+    await FirebaseFirestore.instance
+        .collection('chari')
+        .doc(chari.postId)
+        .delete();
+    for (final imageURL in chari.imageURL) {
+      final storageReference = FirebaseStorage.instance.refFromURL(imageURL);
+      await storageReference.delete();
+    }
+    await endDeleting(context: context);
+    Navigator.of(context).pop();
+  }
+
+  ///   パーツをセットし、chariをreturnする関数
+  Chari setPartsChari(
+      {required List<FormChariText> partsTextEditingControllerList,
+      required Chari chari}) {
+    for (FormChariText formChariText in partsTextEditingControllerList) {
       if (formChariText.part == "fork") {
         chari = chari.copyWith(fork: [
           formChariText.brandEditingController.text.trim(),
@@ -389,20 +444,6 @@ class CreateChariController extends ChangeNotifier {
         ]);
       }
     }
-
-    //  imagesを圧縮
-    for (var element in images) {
-      compress = await returnCompressAndGetData(
-          file: element, minWidth: 600, minHeight: 450);
-      compressImages.add(compress!);
-    }
-    for (var element in compressImages) {
-      final String url =
-          await uploadImageAndGetURL(postId: postId, compress: element);
-      imageURL.add(url);
-    }
-
-    chariCollection.doc(postId).set(chari.toJson());
-    endCreating(context: context);
+    return chari;
   }
 }
