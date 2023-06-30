@@ -18,6 +18,7 @@ class ProfileController extends ChangeNotifier {
   File? croppedFile;
   Uint8List? compressData;
   MainController mainController = MainController();
+  
   Future<String> uploadImageAndGetURL(
       {required String uid, required Uint8List file}) async {
     //uuid
@@ -62,30 +63,6 @@ class ProfileController extends ChangeNotifier {
     });
   }
 
-  ProfileController() {
-    init();
-  }
 
-  List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = [];
-  Future<void> init() async {
-    startLoading();
-    final qshot = await FirebaseFirestore.instance
-        .collection('chari')
-        .where('uid', isEqualTo: mainController.currentUser!.uid)
-        // .orderBy("createdAt", descending: true)
-        .get();
-    chariDocs = qshot.docs;
-    endLoading();
-  }
 
-  bool isLoading = false;
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
-  }
 }
