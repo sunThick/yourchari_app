@@ -6,7 +6,7 @@ import '../constants/void.dart';
 import '../domain/chari/chari.dart';
 
 final chariListFromCategoryProvider = FutureProvider.family<
-    Tuple2<List<QueryDocumentSnapshot<Map<String, dynamic>>>,
+    Tuple2<List<DocumentSnapshot<Map<String, dynamic>>>,
         List<DocumentSnapshot<Map<String, dynamic>>>>,
     String>(((ref, category) async {
   final MainController mainController = ref.watch(mainProvider);
