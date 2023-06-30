@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yourchari_app/domain/like_chari_token/like_chari_token.dart';
+import 'package:yourchari_app/viewModels/main_controller.dart';
+
+import '../constants/void.dart';
 
 final passiveUserProvider = FutureProvider.autoDispose
     .family<DocumentSnapshot<Map<String, dynamic>>, String>(((ref, uid) async {
@@ -13,6 +16,7 @@ final passiveUserProvider = FutureProvider.autoDispose
 final passiveUserChariProvider = FutureProvider.autoDispose.family<
     List<DocumentSnapshot<Map<String, dynamic>>>,
     Tuple2<String, String>>(((ref, data) async {
+  final MainController mainController = ref.watch(mainProvider);
   final uid = data.item1;
   final chariOrLikes = data.item2;
   List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = [];
@@ -44,6 +48,7 @@ final passiveUserChariProvider = FutureProvider.autoDispose.family<
       chariDocs.add(likedChariDoc);
     }
   }
+  chariDocs = chariWithoutMuteUser(chariDocs: chariDocs, mainController: mainController);
   return chariDocs;
 }));
 
