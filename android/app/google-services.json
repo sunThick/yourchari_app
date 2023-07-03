@@ -29,6 +29,13 @@
             {
               "client_id": "644207087062-n3oo4ibon2hv5b5g3l8r2vsa4ah2o79s.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yourchariApp"
+              }
             }
           ]
         }
