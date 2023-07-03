@@ -7,13 +7,15 @@ import '../domain/chari/chari.dart';
 List<DocumentSnapshot<Map<String, dynamic>>> chariWithoutMuteUser(
     {required List<DocumentSnapshot<Map<String, dynamic>>> chariDocs,
     required MainController mainController}) {
-  final List<DocumentSnapshot<Map<String, dynamic>>>
-      chariWithoutMuteUserDocs = [];
+  final List<DocumentSnapshot<Map<String, dynamic>>> chariWithoutMuteUserDocs =
+      [];
   final List<String> muteUids = mainController.muteUids;
   for (final chariDoc in chariDocs) {
-    final Chari chari = Chari.fromJson(chariDoc.data()!);
-    if (!muteUids.contains(chari.uid)) {
-      chariWithoutMuteUserDocs.add(chariDoc);
+    if (chariDoc.data() != null) {
+      final Chari chari = Chari.fromJson(chariDoc.data()!);
+      if (!muteUids.contains(chari.uid)) {
+        chariWithoutMuteUserDocs.add(chariDoc);
+      }
     }
   }
   return chariWithoutMuteUserDocs;
