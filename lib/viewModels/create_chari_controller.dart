@@ -225,7 +225,7 @@ class CreateChariController extends ChangeNotifier {
       likeCount: 0,
       postId: postId,
       uid: activeUid,
-      caption: frameNameEditingController.text.trim(),
+      caption: captionEditingController.text.trim(),
       createdAt: now,
       updatedAt: Timestamp.now(),
     );
