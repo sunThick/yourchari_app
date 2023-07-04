@@ -10,9 +10,11 @@ import '../domain/like_chari_token/like_chari_token.dart';
 import 'main_controller.dart';
 
 final chariLikeProvider =
-    ChangeNotifierProvider(((ref) => ChariLikeController()));
+    ChangeNotifierProvider.autoDispose(((ref) => ChariLikeController()));
 
 class ChariLikeController extends ChangeNotifier {
+ 
+
   Future<void> like(
       {required Chari chari,
       required DocumentSnapshot<Map<String, dynamic>> chariDoc,
@@ -26,6 +28,7 @@ class ChariLikeController extends ChangeNotifier {
     final Timestamp now = Timestamp.now();
     final String activeUid = currentUserDoc.id;
     final String passiveUid = chari.uid;
+
     notifyListeners();
     // 自分がいいねしたことの印
     final LikeChariToken likeChariToken = LikeChariToken(
@@ -63,6 +66,7 @@ class ChariLikeController extends ChangeNotifier {
     mainController.likeChariIds.remove(postId);
     final currentUserDoc = mainController.currentUserDoc;
     final String activeUid = currentUserDoc.id;
+   
     notifyListeners();
     // 自分がいいねしたことの印を削除
     final QuerySnapshot<Map<String, dynamic>> qshot = await FirebaseFirestore
