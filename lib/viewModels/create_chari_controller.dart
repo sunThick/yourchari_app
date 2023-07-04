@@ -258,6 +258,17 @@ class CreateChariController extends ChangeNotifier {
     await FirebaseFirestore.instance
         .collection('chari')
         .doc(chari.postId)
+        .collection('chariLikes')
+        .get()
+        .asStream()
+        .forEach((element) {
+      for (var element in element.docs) {
+        element.reference.delete();
+      }
+    });
+    await FirebaseFirestore.instance
+        .collection('chari')
+        .doc(chari.postId)
         .delete();
     for (final imageURL in chari.imageURL) {
       final storageReference = FirebaseStorage.instance.refFromURL(imageURL);
