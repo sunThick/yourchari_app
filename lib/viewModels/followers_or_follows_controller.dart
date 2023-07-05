@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
 import '../domain/firestore_user/firestore_user.dart';
@@ -22,14 +21,14 @@ class FollowersAndFollowsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  final RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+
 
   Future<void> onLoading(
       {required List<DocumentSnapshot<Map<String, dynamic>>> userDocs,
       required String followingOrFollowers,
       required String userUid,
-      required MainController mainController}) async {
+      required MainController mainController
+      ,required refreshController}) async {
     startLoading();
     refreshController.loadComplete();
     // final lastDoc = userDocs.last;

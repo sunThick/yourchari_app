@@ -26,7 +26,8 @@ class FollowsAndFollowersPage extends ConsumerWidget {
     final MainController mainController = ref.watch(mainProvider);
     final FollowersAndFollowsController followersAndFollowsController =
         ref.watch(followersOrFollowsNotifierProvider);
-
+    final RefreshController refreshController =
+        RefreshController(initialRefresh: false);
     return Scaffold(
         appBar: AppBar(
           title: Text(followingOrFollowers),
@@ -41,8 +42,9 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                       followingOrFollowers: followingOrFollowers,
                       userDocs: userDocs,
                       userUid: userUid,
-                      mainController: mainController),
-              controller: followersAndFollowsController.refreshController,
+                      mainController: mainController,
+                      refreshController: refreshController),
+              controller: refreshController,
               child: ListView.builder(
                 itemCount: userDocs.length,
                 itemBuilder: (context, index) {
