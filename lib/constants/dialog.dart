@@ -42,11 +42,6 @@ void chariPassiveSheet(BuildContext context,
               ),
             ]
           : <CupertinoActionSheetAction>[
-              // CupertinoActionSheetAction(
-              //   onPressed: () async =>
-              //       toPassiveUserPage(context: context, userId: passiveUid),
-              //   child: const Text('ユーザーのプロフィール'),
-              // ),
               CupertinoActionSheetAction(
                   onPressed: () {}, child: const Text('編集')),
               CupertinoActionSheetAction(
@@ -69,6 +64,65 @@ void chariPassiveSheet(BuildContext context,
           Navigator.pop(context);
         },
       ),
+    ),
+  );
+}
+
+void passiveUserSheet(BuildContext context,
+    {required MainController mainController,
+    required String passiveUid,
+    required UserMuteController userMuteController}) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoActionSheet(
+      actions: <CupertinoActionSheetAction>[
+        CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () {
+            Navigator.pop(context);
+            _muteUserDialog(context,
+                mainController: mainController,
+                passiveUid: passiveUid,
+                userMuteController: userMuteController);
+          },
+          child: const Text('このユーザーをミュートする'),
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: const Text("Cancel"),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    ),
+  );
+}
+
+void _muteUserDialog(BuildContext context,
+    {required UserMuteController userMuteController,
+    required String passiveUid,
+    required MainController mainController}) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: const Text('このユーザーをミュートしますか？'),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('No'),
+        ),
+        CupertinoDialogAction(
+          isDestructiveAction: true,
+          onPressed: () async {
+            Navigator.pop(context);
+            await userMuteController.muteUser(
+                mainController: mainController, passiveUid: passiveUid);
+          },
+          child: const Text('Yes'),
+        ),
+      ],
     ),
   );
 }

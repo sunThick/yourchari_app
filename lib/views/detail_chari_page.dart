@@ -131,10 +131,12 @@ class ChariDetailPage extends ConsumerWidget {
                           items: imageSliders,
                           carouselController: controller,
                           options: CarouselOptions(
-                              enlargeCenterPage: true,
-                              onPageChanged: (index, reason) {
-                                detailChariPageController.changeImage(index);
-                              }),
+                            enlargeCenterPage: true,
+                            onPageChanged: (index, reason) {
+                              detailChariPageController.changeImage(index);
+                            },
+                            enableInfiniteScroll: false,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
