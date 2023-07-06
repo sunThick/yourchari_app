@@ -36,6 +36,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
       body: profileAndPassiveBody(
         context: context,
         userId: userId,
+        isProfile: false
       ),
     );
   }

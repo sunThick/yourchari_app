@@ -56,10 +56,9 @@ Widget buildButton({
       )
     ]);
 
-Widget profileAndPassiveBody({
-  required context,
-  required String userId,
-}) {
+
+Widget profileAndPassiveBody(
+    {required context, required String userId, required bool isProfile}) {
   return Consumer(builder: (context, ref, _) {
     final userDocs = ref.watch(passiveUserProvider(userId));
     final PassiveUserController passiveUserController =
@@ -80,9 +79,9 @@ Widget profileAndPassiveBody({
         }
         FirestoreUser passiveUser =
             FirestoreUser.fromJson(passiveUserDoc.data()!);
-        // if (passiveUser.uid == mainController.currentFirestoreUser.uid) {
-        //   passiveUser = mainController.currentFirestoreUser;
-        // }
+        if (isProfile) {
+          passiveUser = mainController.currentFirestoreUser;
+        }
         if (mainController.muteUids.contains(passiveUser.uid)) {
           return const Center(
             child: Text('このユーザーは現在ミュートしています。'),
@@ -96,9 +95,13 @@ Widget profileAndPassiveBody({
         return RefreshIndicator(
           onRefresh: () async {
             ref.refresh(passiveUserProvider(userId));
+            if (isProfile) {
+              ref.refresh(passiveUserChariDocsProvider(userId));
+              ref.refresh(passiveUserLikeChariDocsProvider(userId));
+            }
           },
           child: SingleChildScrollView(
-            // physics: const AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               // mainAxisSize: MainAxisSize.min,
               children: [
@@ -150,6 +153,7 @@ Widget profileAndPassiveBody({
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             // buildButton(text: 'chari', value: chariDocs.length),
+                            buildButton(text: 'chari', value: 3),
                             InkWell(
                               onTap: () => {
                                 toFollowsAndFollowersPage(
@@ -221,27 +225,23 @@ Widget profileAndPassiveBody({
                   ),
                 ),
                 const Divider(color: Colors.black),
-                StickyHeader(
-                    header: DefaultTabController(
-                        initialIndex: passiveUserController.currentIndex,
-                        length: 2,
-                        child: Container(
-                          color: Colors.white,
-                          child: TabBar(
-                            labelColor: Colors.black,
-                            unselectedLabelColor: Colors.black12,
-                            tabs: const [
-                              Tab(text: "Chari"),
-                              Tab(text: "Likes")
-                            ],
-                            onTap: (index) {
-                              passiveUserController.changePage(index);
-                            },
-                          ),
-                        )),
-                    content: passiveUserController.currentIndex == 0
-                        ? passiveUserChariList(uid: userId)
-                        : passiveUserLikeChariList(uid: userId))
+                DefaultTabController(
+                    initialIndex: passiveUserController.currentIndex,
+                    length: 2,
+                    child: Container(
+                      color: Colors.white,
+                      child: TabBar(
+                        labelColor: Colors.black,
+                        unselectedLabelColor: Colors.black12,
+                        tabs: const [Tab(text: "Chari"), Tab(text: "Likes")],
+                        onTap: (index) {
+                          passiveUserController.changePage(index);
+                        },
+                      ),
+                    )),
+                passiveUserController.currentIndex == 0
+                    ? passiveUserChariList(uid: userId)
+                    : passiveUserLikeChariList(uid: userId)
               ],
             ),
           ),
@@ -272,70 +272,84 @@ Widget passiveUserLikeChariList({required String uid}) {
 Widget chariList(
     {required AsyncValue<List<DocumentSnapshot<Map<String, dynamic>>>>
         asyncChariDocs}) {
-  return Container(
-      child: asyncChariDocs.when(
-          error: (err, _) => Text(err.toString()), //エラー時
-          loading: () => const CircularProgressIndicator(),
-          data: (data) {
-            final chariDocs = data;
-            return ListView.builder(
-              primary: false,
-              shrinkWrap: true,
-              itemCount: chariDocs.length,
-              itemBuilder: (BuildContext context, int index) {
-                final DocumentSnapshot<Map<String, dynamic>> chariDoc =
-                    chariDocs[index];
-                if (chariDoc.data() == null) {
-                  return null;
-                }
-                final Chari chari = Chari.fromJson(chariDoc.data()!);
-                return InkWell(
-                  onTap: () async => toChariDetailPage(
-                      context: context, chariUid: chari.postId),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Stack(children: [
-                      Image.network(
-                        (chari.imageURL[0]),
-                        fit: BoxFit.fill,
-                      ),
-                      Positioned(
-                          bottom: 0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.black.withOpacity(0.4),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    chari.brand,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30.0,
-                                    ),
-                                  ),
-                                  Text(
-                                    chari.frame,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ))
-                    ]),
+  return asyncChariDocs.when(
+      error: (err, _) => Text(err.toString()), //エラー時
+      loading: () => const CircularProgressIndicator(),
+      data: (data) {
+        final chariDocs = data;
+        if (chariDocs.isEmpty) {
+          return const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 150,
+              ),
+              Text('no chari'),
+              SizedBox(
+                height: 150,
+              ),
+            ],
+          );
+        }
+        return ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: chariDocs.length,
+          itemBuilder: (BuildContext context, int index) {
+            final DocumentSnapshot<Map<String, dynamic>> chariDoc =
+                chariDocs[index];
+            if (chariDoc.data() == null) {
+              return null;
+            }
+            final Chari chari = Chari.fromJson(chariDoc.data()!);
+            return InkWell(
+              onTap: () async =>
+                  toChariDetailPage(context: context, chariUid: chari.postId),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Stack(children: [
+                  Image.network(
+                    (chari.imageURL[0]),
+                    fit: BoxFit.fill,
                   ),
-                );
-              },
+                  Positioned(
+                      bottom: 0,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.black.withOpacity(0.4),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                chari.brand,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30.0,
+                                ),
+                              ),
+                              Text(
+                                chari.frame,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.0,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ))
+                ]),
+              ),
             );
-          }));
+          },
+        );
+      });
 }
 
 Widget homeCard(

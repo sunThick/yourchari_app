@@ -55,6 +55,7 @@ class ProfileScreen extends ConsumerWidget {
         // asyncValue: asyncValue,
         context: context,
         userId: userId,
+        isProfile: true
       ),
     );
   }
