@@ -13,89 +13,45 @@ final passiveUserProvider = FutureProvider.autoDispose
   return userDoc;
 }));
 
-final passiveUserChariProvider = FutureProvider.autoDispose.family<
-    List<DocumentSnapshot<Map<String, dynamic>>>,
-    Tuple2<String, String>>(((ref, data) async {
-  final MainController mainController = ref.watch(mainProvider);
-  final uid = data.item1;
-  final chariOrLikes = data.item2;
-  List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = [];
-  if (chariOrLikes == 'chari') {
-    final chariQshot = await FirebaseFirestore.instance
-        .collection('chari')
-        .where('uid', isEqualTo: uid)
-        .orderBy("createdAt", descending: true)
-        .limit(10)
-        .get();
-    chariDocs = chariQshot.docs;
-  } else if (chariOrLikes == 'likes') {
-    final likeChariTokenQshot = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
-        .collection("tokens")
-        .where("tokenType", isEqualTo: "likeChari")
-        .orderBy("createdAt", descending: true)
-        .limit(10)
-        .get();
-    final likeChariTokenDocs = likeChariTokenQshot.docs;
-    for (final likeChariTokenDoc in likeChariTokenDocs) {
-      final LikeChariToken likeChariToken =
-          LikeChariToken.fromJson(likeChariTokenDoc.data());
-      final likedChariDoc = await FirebaseFirestore.instance
-          .collection("chari")
-          .doc(likeChariToken.postId)
-          .get();
-      chariDocs.add(likedChariDoc);
-    }
-  }
-  chariDocs = chariWithoutMuteUser(chariDocs: chariDocs, mainController: mainController);
+final passiveUserChariDocsProvider =
+    FutureProvider.family<List<DocumentSnapshot<Map<String, dynamic>>>, String>(
+        ((ref, uid) async {
+  final usercharisQshot = await FirebaseFirestore.instance
+      .collection('chari')
+      .where('uid', isEqualTo: uid)
+      .orderBy("createdAt", descending: true)
+      .limit(10)
+      .get();
+
+  List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = usercharisQshot.docs;
+
   return chariDocs;
 }));
 
-// final passiveUserChariDocsProvider = FutureProvider.family<
-//     List<DocumentSnapshot<Map<String, dynamic>>>,
-//     Tuple2<String, String>>(((ref, t2) async {
-//   final String uid = t2.item1;
-//   final String chariOrLikes = t2.item2;
+final passiveUserLikeChariDocsProvider =
+    FutureProvider.family<List<DocumentSnapshot<Map<String, dynamic>>>, String>(
+        ((ref, uid) async {
+  final likeChariTokenQshot = await FirebaseFirestore.instance
+      .collection("users")
+      .doc(uid)
+      .collection("tokens")
+      .where("tokenType", isEqualTo: "likeChari")
+      .orderBy("createdAt", descending: true)
+      .limit(10)
+      .get();
+  final likeChariTokenDocs = likeChariTokenQshot.docs;
 
-//   final usercharisQshot = await FirebaseFirestore.instance
-//       .collection('chari')
-//       .where('uid', isEqualTo: uid)
-//       .orderBy("createdAt", descending: true)
-//       .limit(10)
-//       .get();
-//   final likeChariTokenQshot = await FirebaseFirestore.instance
-//       .collection("users")
-//       .doc(uid)
-//       .collection("tokens")
-//       .where("tokenType", isEqualTo: "likeChari")
-//       .orderBy("createdAt", descending: true)
-//       .limit(10)
-//       .get();
-//   final likeChariTokenDocs = likeChariTokenQshot.docs;
+  List<DocumentSnapshot<Map<String, dynamic>>> likeChariDocs = [];
 
-//   List<DocumentSnapshot<Map<String, dynamic>>> likeChariDocs = [];
+  for (final likeChariTokenDoc in likeChariTokenDocs) {
+    final LikeChariToken likeChariToken =
+        LikeChariToken.fromJson(likeChariTokenDoc.data());
+    final likedChariDoc = await FirebaseFirestore.instance
+        .collection("chari")
+        .doc(likeChariToken.postId)
+        .get();
+    likeChariDocs.add(likedChariDoc);
+  }
 
-//   for (final likeChariTokenDoc in likeChariTokenDocs) {
-//     // if(likeChariTokenDoc.data() != null)
-//     final LikeChariToken likeChariToken =
-//         LikeChariToken.fromJson(likeChariTokenDoc.data());
-//     final likedChariDoc = await FirebaseFirestore.instance
-//         .collection("chari")
-//         .doc(likeChariToken.postId)
-//         .get();
-//     likeChariDocs.add(likedChariDoc);
-//   }
-
-//   final userchariDocs = usercharisQshot.docs;
-
-//   List<DocumentSnapshot<Map<String, dynamic>>> chariDocs = [];
-
-//   if (chariOrLikes == "chari") {
-//     chariDocs = userchariDocs;
-//   } else {
-//     chariDocs = likeChariDocs;
-//   }
-
-//   return chariDocs;
-// }));
+  return likeChariDocs;
+}));

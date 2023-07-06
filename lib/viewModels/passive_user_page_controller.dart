@@ -10,7 +10,7 @@ import '../domain/following_token/following_token.dart';
 import 'main_controller.dart';
 
 final passiveUserNotifierProvider =
-    ChangeNotifierProvider.autoDispose(((ref) => PassiveUserController()));
+    ChangeNotifierProvider(((ref) => PassiveUserController()));
 
 class PassiveUserController extends ChangeNotifier {
   int currentIndex = 0;
