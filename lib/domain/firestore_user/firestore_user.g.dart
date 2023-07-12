@@ -8,24 +8,26 @@ part of 'firestore_user.dart';
 
 _$_FirestoreUser _$$_FirestoreUserFromJson(Map<String, dynamic> json) =>
     _$_FirestoreUser(
+      uid: json['uid'] as String,
+      userName: json['userName'] as String,
+      displayName: json['displayName'] as String,
+      userImageURL: json['userImageURL'] as String,
+      introduction: json['introduction'] as String,
       createdAt: json['createdAt'],
-      email: json['email'] as String,
+      updatedAt: json['updatedAt'],
       followerCount: json['followerCount'] as int,
       followingCount: json['followingCount'] as int,
-      userName: json['userName'] as String,
-      userImageURL: json['userImageURL'] as String,
-      uid: json['uid'] as String,
-      updatedAt: json['updatedAt'],
     );
 
 Map<String, dynamic> _$$_FirestoreUserToJson(_$_FirestoreUser instance) =>
     <String, dynamic>{
+      'uid': instance.uid,
+      'userName': instance.userName,
+      'displayName': instance.displayName,
+      'userImageURL': instance.userImageURL,
+      'introduction': instance.introduction,
       'createdAt': instance.createdAt,
-      'email': instance.email,
+      'updatedAt': instance.updatedAt,
       'followerCount': instance.followerCount,
       'followingCount': instance.followingCount,
-      'userName': instance.userName,
-      'userImageURL': instance.userImageURL,
-      'uid': instance.uid,
-      'updatedAt': instance.updatedAt,
     };
