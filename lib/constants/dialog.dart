@@ -42,8 +42,8 @@ void chariPassiveSheet(BuildContext context,
               ),
             ]
           : <CupertinoActionSheetAction>[
-              CupertinoActionSheetAction(
-                  onPressed: () {}, child: const Text('編集')),
+              // CupertinoActionSheetAction(
+              //     onPressed: () {}, child: const Text('編集')),
               CupertinoActionSheetAction(
                 isDestructiveAction: true,
                 onPressed: () {
