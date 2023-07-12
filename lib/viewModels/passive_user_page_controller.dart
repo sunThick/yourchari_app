@@ -13,12 +13,6 @@ final passiveUserNotifierProvider =
     ChangeNotifierProvider(((ref) => PassiveUserController()));
 
 class PassiveUserController extends ChangeNotifier {
-  int currentIndex = 0;
-
-  void changePage(index) {
-    currentIndex = index;
-    notifyListeners();
-  }
 
   // passiveUserPageに訪れた際、そのuserをfollowしているかどうかで、followersのcountのplusOrMinusを判断
   // userをfollowしている場合、先にunfollowが実行されるためfollowersはminusOne

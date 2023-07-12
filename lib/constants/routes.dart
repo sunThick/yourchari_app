@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
+import 'package:yourchari_app/views/like_chari_list_page.dart';
 import 'package:yourchari_app/views/mute_users_page.dart';
 import 'package:yourchari_app/views/passive_user_profile_page.dart';
-
 
 import '../app.dart';
 import '../views/auth/login_page.dart';
@@ -62,5 +62,14 @@ void toMuteUsersPage({required BuildContext context, required String uid}) =>
         context,
         MaterialPageRoute(
             builder: (context) => MuteUsersPage(
+                  uid: uid,
+                )));
+
+void toLikechariListPage(
+        {required BuildContext context, required String uid}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LikeChariListPage(
                   uid: uid,
                 )));
