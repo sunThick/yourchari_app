@@ -56,7 +56,7 @@ class CharisList extends ConsumerWidget {
                               children: [
                                 SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.8,
+                                      MediaQuery.of(context).size.height * 0.75,
                                   child: SmartRefresher(
                                     enablePullDown: true,
                                     enablePullUp: true,
@@ -84,7 +84,7 @@ class CharisList extends ConsumerWidget {
                               children: [
                                 SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.8,
+                                      MediaQuery.of(context).size.height * 0.75,
                                   child: SmartRefresher(
                                     enablePullDown: true,
                                     enablePullUp: true,
@@ -190,7 +190,6 @@ class CharisList extends ConsumerWidget {
                     buildAvatarImage(
                       passiveUser: passiveUser,
                       currentFirestoreUser: mainController.currentFirestoreUser,
-                      profileController: profileController,
                       radius: 15,
                     )
                   ],
