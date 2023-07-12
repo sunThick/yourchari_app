@@ -8,3 +8,17 @@ class SignupPage extends ConsumerWidget {
     return Scaffold();
   }
 }
+
+
+
+Widget build(BuildContext context, WidgetRef ref) {
+  AsyncValue<Configuration> config = ref.watch(configProvider);
+
+  return config.when(
+    loading: () => const CircularProgressIndicator(),
+    error: (err, stack) => Text('Error: $err'),
+    data: (config) {
+      return Text(config.host);
+    },
+  );
+}
