@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
-import 'package:yourchari_app/viewModels/profile_controller.dart';
 
 import '../../constants/routes.dart';
 import '../../constants/string.dart';
@@ -19,18 +18,12 @@ import '../../viewModels/passive_user_page_controller.dart';
 Widget buildAvatarImage(
     {required FirestoreUser passiveUser,
     required FirestoreUser currentFirestoreUser,
-    required ProfileController profileController,
     required double radius}) {
   return passiveUser.uid == currentFirestoreUser.uid
-      ? profileController.croppedFile == null
-          ? currentFirestoreUser.userImageURL.isEmpty
-              ? CircleAvatar(radius: radius, child: const Icon(Icons.person))
-              : CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(currentFirestoreUser.userImageURL),
-                  radius: radius)
+      ? currentFirestoreUser.userImageURL.isEmpty
+          ? CircleAvatar(radius: radius, child: const Icon(Icons.person))
           : CircleAvatar(
-              backgroundImage: Image.file(profileController.croppedFile!).image,
+              backgroundImage: NetworkImage(currentFirestoreUser.userImageURL),
               radius: radius)
       : passiveUser.userImageURL.isEmpty
           ? CircleAvatar(radius: radius, child: const Icon(Icons.person))
@@ -55,7 +48,6 @@ Widget buildButton({
       )
     ]);
 
-
 Widget profileAndPassiveBody(
     {required context, required String userId, required bool isProfile}) {
   return Consumer(builder: (context, ref, _) {
@@ -63,8 +55,6 @@ Widget profileAndPassiveBody(
     final PassiveUserController passiveUserController =
         ref.watch(passiveUserNotifierProvider);
     final MainController mainController = ref.watch(mainProvider);
-    final ProfileController profileController =
-        ref.watch(profileNotifierProvider);
     final bool themOrPassiveUser =
         userId == mainController.currentFirestoreUser.uid;
     const double headerHeight = 90;
@@ -94,10 +84,7 @@ Widget profileAndPassiveBody(
         return RefreshIndicator(
           onRefresh: () async {
             ref.refresh(passiveUserProvider(userId));
-            if (isProfile) {
-              ref.refresh(passiveUserChariDocsProvider(userId));
-              ref.refresh(passiveUserLikeChariDocsProvider(userId));
-            }
+            ref.refresh(passiveUserChariDocsProvider(userId));
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -116,7 +103,6 @@ Widget profileAndPassiveBody(
                                 passiveUser: passiveUser,
                                 currentFirestoreUser:
                                     mainController.currentFirestoreUser,
-                                profileController: profileController,
                                 radius: headerHeight / 2)),
                         const SizedBox(
                           width: 10,
@@ -125,16 +111,20 @@ Widget profileAndPassiveBody(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              passiveUser.userName,
+                              passiveUser.displayName == ""
+                                  ? passiveUser.userName
+                                  : passiveUser.displayName,
                               style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w500),
                             ),
-                            const Text('ID: taso_club7'),
+                            Text(passiveUser.userName),
                             Container(
                                 alignment: Alignment.center,
-                                child: const Text(
-                                  '徒然なるままに自転車で旅をしています。',
-                                  style: TextStyle(fontSize: 12),
+                                child: Flexible(
+                                  child: Text(
+                                    passiveUser.introduction,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
                                 ))
                           ],
                         )
@@ -151,8 +141,7 @@ Widget profileAndPassiveBody(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            // buildButton(text: 'chari', value: chariDocs.length),
-                            buildButton(text: 'chari', value: 3),
+                            // buildButton(text: 'chari', value: 3),
                             InkWell(
                               onTap: () => {
                                 toFollowsAndFollowersPage(
@@ -224,23 +213,7 @@ Widget profileAndPassiveBody(
                   ),
                 ),
                 const Divider(color: Colors.black),
-                DefaultTabController(
-                    initialIndex: passiveUserController.currentIndex,
-                    length: 2,
-                    child: Container(
-                      color: Colors.white,
-                      child: TabBar(
-                        labelColor: Colors.black,
-                        unselectedLabelColor: Colors.black12,
-                        tabs: const [Tab(text: "Chari"), Tab(text: "Likes")],
-                        onTap: (index) {
-                          passiveUserController.changePage(index);
-                        },
-                      ),
-                    )),
-                passiveUserController.currentIndex == 0
-                    ? passiveUserChariList(uid: userId)
-                    : passiveUserLikeChariList(uid: userId)
+                passiveUserChariList(uid: userId)
               ],
             ),
           ),
@@ -257,105 +230,102 @@ Widget profileAndPassiveBody(
 Widget passiveUserChariList({required String uid}) {
   return Consumer(builder: (context, ref, _) {
     final chariDocs = ref.watch(passiveUserChariDocsProvider(uid));
-    return chariList(asyncChariDocs: chariDocs);
-  });
-}
-
-Widget passiveUserLikeChariList({required String uid}) {
-  return Consumer(builder: (context, ref, _) {
-    final chariDocs = ref.watch(passiveUserLikeChariDocsProvider(uid));
-    return chariList(asyncChariDocs: chariDocs);
+    return chariList(asyncChariDocs: chariDocs, context: context);
   });
 }
 
 Widget chariList(
     {required AsyncValue<List<DocumentSnapshot<Map<String, dynamic>>>>
-        asyncChariDocs}) {
-  return asyncChariDocs.when(
-      error: (err, _) => Text(err.toString()), //エラー時
-      loading: () => const CircularProgressIndicator(),
-      data: (data) {
-        final chariDocs = data;
-        if (chariDocs.isEmpty) {
-          return const Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 150,
-              ),
-              Text('no chari'),
-              SizedBox(
-                height: 150,
-              ),
-            ],
-          );
-        }
-        return ListView.builder(
-          primary: false,
-          shrinkWrap: true,
-          itemCount: chariDocs.length,
-          itemBuilder: (BuildContext context, int index) {
-            final DocumentSnapshot<Map<String, dynamic>> chariDoc =
-                chariDocs[index];
-            if (chariDoc.data() == null) {
-              return null;
-            }
-            final Chari chari = Chari.fromJson(chariDoc.data()!);
-            return InkWell(
-              onTap: () async =>
-                  toChariDetailPage(context: context, chariUid: chari.postId),
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+        asyncChariDocs,
+    required context}) {
+  return SizedBox(
+    height: MediaQuery.of(context).size.height,
+    child: asyncChariDocs.when(
+        error: (err, _) => Text(err.toString()), //エラー時
+        loading: () => const CircularProgressIndicator(),
+        data: (data) {
+          final chariDocs = data;
+          if (chariDocs.isEmpty) {
+            return const Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 150,
                 ),
-                child: Stack(children: [
-                  Image.network(
-                    (chari.imageURL[0]),
-                    fit: BoxFit.fill,
-                  ),
-                  Positioned(
-                      bottom: 0,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.black.withOpacity(0.4),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                chari.brand,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30.0,
-                                ),
-                              ),
-                              Text(
-                                chari.frame,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25.0,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ))
-                ]),
-              ),
+                Text('no chari'),
+                SizedBox(
+                  height: 150,
+                ),
+              ],
             );
-          },
-        );
-      });
+          }
+          return ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: chariDocs.length,
+            itemBuilder: (BuildContext context, int index) {
+              final DocumentSnapshot<Map<String, dynamic>> chariDoc =
+                  chariDocs[index];
+              if (chariDoc.data() == null) {
+                return null;
+              }
+              final Chari chari = Chari.fromJson(chariDoc.data()!);
+              return InkWell(
+                onTap: () async =>
+                    toChariDetailPage(context: context, chariUid: chari.postId),
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Stack(children: [
+                    Image.network(
+                      (chari.imageURL[0]),
+                      fit: BoxFit.fill,
+                    ),
+                    Positioned(
+                        bottom: 0,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: Colors.black.withOpacity(0.4),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  chari.brand,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30.0,
+                                  ),
+                                ),
+                                Text(
+                                  chari.frame,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25.0,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ))
+                  ]),
+                ),
+              );
+            },
+          );
+        }),
+  );
 }
 
-Widget homeCard(
-    {required Chari chari,
-    required FirestoreUser passiveUser,
-    required MainController mainController,
-    required ProfileController profileController}) {
+Widget homeCard({
+  required Chari chari,
+  required FirestoreUser passiveUser,
+  required MainController mainController,
+}) {
   return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
@@ -399,7 +369,6 @@ Widget homeCard(
                   buildAvatarImage(
                     passiveUser: passiveUser,
                     currentFirestoreUser: mainController.currentFirestoreUser,
-                    profileController: profileController,
                     radius: 15,
                   )
                 ],

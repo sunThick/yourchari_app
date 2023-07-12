@@ -31,9 +31,13 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                toLikechariListPage(
+                    context: context,
+                    uid: mainController.currentFirestoreUser.uid);
+              },
               child: const ListTile(
-                title: Text("Item 1"),
+                title: Text('いいねした投稿'),
               ),
             ),
             InkWell(
@@ -52,11 +56,10 @@ class ProfileScreen extends ConsumerWidget {
         ),
       ),
       body: profileAndPassiveBody(
-        // asyncValue: asyncValue,
-        context: context,
-        userId: userId,
-        isProfile: true
-      ),
+          // asyncValue: asyncValue,
+          context: context,
+          userId: userId,
+          isProfile: true),
     );
   }
 }
