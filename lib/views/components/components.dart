@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 import 'package:yourchari_app/viewModels/profile_controller.dart';

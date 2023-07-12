@@ -3,7 +3,7 @@ import 'package:yourchari_app/views/form/create_chari_page.dart';
 import 'package:yourchari_app/views/mute_users_page.dart';
 import 'package:yourchari_app/views/passive_user_profile_page.dart';
 
-import '../viewModels/main_controller.dart';
+
 import '../app.dart';
 import '../views/auth/login_page.dart';
 import '../views/auth/signup_page.dart';
@@ -20,10 +20,10 @@ void toCreateChariPage({required BuildContext context}) =>
 void toSignupPage({required BuildContext context}) => Navigator.pushReplacement(
     context, MaterialPageRoute(builder: (context) => const SignupPage()));
 
-void toLoginPage(
-        {required BuildContext context,
-        required MainController mainController}) =>
-    Navigator.push(
+void toLoginPage({
+  required BuildContext context,
+}) =>
+    Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
 
 void toChariDetailPage(

@@ -18,13 +18,14 @@ class MainController extends ChangeNotifier {
   User? currentUser;
   late DocumentSnapshot<Map<String, dynamic>> currentUserDoc;
   late FirestoreUser currentFirestoreUser;
+  bool isFirestoreUserExist = false;
   List<String> followingUids = [];
   List<FollowingToken> followingTokens = [];
   List<String> likeChariIds = [];
   List<LikeChariToken> likeChariTokens = [];
   List<MuteUserToken> muteUserTokens = [];
   List<String> muteUids = [];
-  
+
   MainController() {
     init();
   }
@@ -32,15 +33,17 @@ class MainController extends ChangeNotifier {
   Future<void> init() async {
     startLoading();
     currentUser = FirebaseAuth.instance.currentUser;
-    notifyListeners();
     //上記のdocumentsnapshotでデータを参照、取得
     currentUserDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser!.uid)
         .get();
     //classの形にして呼び出せるようにする  firestoreUser.____
-    distributeTokens();
-    currentFirestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
+    if (currentUserDoc.data() != null) {
+      currentFirestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
+      isFirestoreUserExist = true;
+      distributeTokens();
+    }
     endLoading();
   }
 
@@ -85,13 +88,13 @@ class MainController extends ChangeNotifier {
           likeChariTokens.add(likeChariToken);
           likeChariIds.add(likeChariToken.postId);
           break;
-        case TokenType.muteUser: 
+        case TokenType.muteUser:
           final MuteUserToken muteUserToken = MuteUserToken.fromJson(tokenMap);
           muteUserTokens.add(muteUserToken);
           muteUids.add(muteUserToken.passiveUid);
-        break;
-        case TokenType.mistake: 
-        break;
+          break;
+        case TokenType.mistake:
+          break;
       }
     }
   }

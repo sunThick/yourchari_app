@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../viewModels/auth/login_controller.dart';
 import '/constants/routes.dart' as routes;
-import '../../viewModels/login_controller.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
