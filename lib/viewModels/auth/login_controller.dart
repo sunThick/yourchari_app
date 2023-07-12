@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:yourchari_app/constants/routes.dart' as routes;
+import 'package:yourchari_app/viewModels/main_controller.dart';
 
 final loginNotifierProvider =
     ChangeNotifierProvider(((ref) => LoginController()));
@@ -57,9 +58,11 @@ class LoginController extends ChangeNotifier {
     }
   }
 
-  Future<void> logout({required context}) async {
+  Future<void> logout(
+      {required context, required MainController mainController}) async {
     await FirebaseAuth.instance.signOut();
     currentUser = FirebaseAuth.instance.currentUser;
+    mainController.isFirestoreUserExist = false;
     notifyListeners();
     routes.toMyApp(context: context);
   }
