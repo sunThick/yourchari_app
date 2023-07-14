@@ -61,8 +61,8 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                         : CircleAvatar(
                             backgroundImage: NetworkImage(user.userImageURL),
                           ),
-                    title: Text(user.userName),
-                    subtitle: const Text('Id: tasochan'),
+                    title: Text(user.displayName),
+                    subtitle: Text(user.userName),
                     trailing: user.uid ==
                             mainController.currentFirestoreUser.uid
                         ? const Text('')
@@ -78,7 +78,10 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                                 onPressed: () => passiveUserController.unfollow(
                                     mainController: mainController,
                                     passiveUser: user),
-                                child: const Text('following'),
+                                child: const Text(
+                                  'following',
+                                  style: TextStyle(color: Colors.black),
+                                ),
                               )
                             : ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -88,7 +91,10 @@ class FollowsAndFollowersPage extends ConsumerWidget {
                                 onPressed: () => passiveUserController.follow(
                                     mainController: mainController,
                                     passiveUser: user),
-                                child: const Text('follow'),
+                                child: const Text(
+                                  'follow',
+                                  style: TextStyle(color: Colors.black),
+                                ),
                               ),
                     onTap: () =>
                         toPassiveUserPage(context: context, userId: user.uid),

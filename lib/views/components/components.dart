@@ -103,147 +103,154 @@ Widget profileAndPassiveBody(
             ref.refresh(passiveUserProvider(userId));
             ref.refresh(passiveUserChariDocsProvider(userId));
           },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              // mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: headerHeight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: headerHeight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              child: buildAvatarImage(
+                                  passiveUser: passiveUser,
+                                  currentFirestoreUser:
+                                      mainController.currentFirestoreUser,
+                                  radius: headerHeight / 2)),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                passiveUser.displayName == ""
+                                    ? passiveUser.userName
+                                    : passiveUser.displayName,
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
+                              ),
+                              Text(passiveUser.userName),
+                              Container(
+                                  alignment: Alignment.center,
+                                  child: Flexible(
+                                    child: Text(
+                                      passiveUser.introduction,
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                  ))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                            child: buildAvatarImage(
-                                passiveUser: passiveUser,
-                                currentFirestoreUser:
-                                    mainController.currentFirestoreUser,
-                                radius: headerHeight / 2)),
-                        const SizedBox(
-                          width: 10,
+                        Expanded(
+                          flex: 7,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              // buildButton(text: 'chari', value: 3),
+                              InkWell(
+                                onTap: () => {
+                                  toFollowsAndFollowersPage(
+                                      context: context,
+                                      followingOrFollowers: "following",
+                                      userUid: passiveUser.uid)
+                                },
+                                child: buildButton(
+                                    text: 'follwing',
+                                    value: passiveUser.followingCount),
+                              ),
+                              InkWell(
+                                onTap: () => {
+                                  toFollowsAndFollowersPage(
+                                      context: context,
+                                      followingOrFollowers: "followers",
+                                      userUid: passiveUser.uid)
+                                },
+                                child: buildButton(
+                                    text: 'follwers', value: followerCount),
+                              )
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              passiveUser.displayName == ""
-                                  ? passiveUser.userName
-                                  : passiveUser.displayName,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500),
-                            ),
-                            Text(passiveUser.userName),
-                            Container(
-                                alignment: Alignment.center,
-                                child: Flexible(
-                                  child: Text(
-                                    passiveUser.introduction,
-                                    style: const TextStyle(fontSize: 12),
+                        Expanded(
+                          flex: 3,
+                          child: themOrPassiveUser
+                              ? ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    side: const BorderSide(
+                                      color: Colors.black, //枠線!
+                                      width: 1, //枠線！
+                                    ),
                                   ),
-                                ))
-                          ],
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'edit profile',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                )
+                              : Container(
+                                  child: isFollowing
+                                      ? ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            side: const BorderSide(
+                                              color: Colors.black, //枠線!
+                                              width: 1, //枠線！
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              passiveUserController.unfollow(
+                                                  mainController:
+                                                      mainController,
+                                                  passiveUser: passiveUser),
+                                          child: const Text(
+                                            'following',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        )
+                                      : ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            //ボタンの背景色
+                                          ),
+                                          onPressed: () =>
+                                              passiveUserController.follow(
+                                                  mainController:
+                                                      mainController,
+                                                  passiveUser: passiveUser),
+                                          child: const Text(
+                                            'follow',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                ),
                         )
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 7,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            // buildButton(text: 'chari', value: 3),
-                            InkWell(
-                              onTap: () => {
-                                toFollowsAndFollowersPage(
-                                    context: context,
-                                    followingOrFollowers: "following",
-                                    userUid: passiveUser.uid)
-                              },
-                              child: buildButton(
-                                  text: 'follwing',
-                                  value: passiveUser.followingCount),
-                            ),
-                            InkWell(
-                              onTap: () => {
-                                toFollowsAndFollowersPage(
-                                    context: context,
-                                    followingOrFollowers: "followers",
-                                    userUid: passiveUser.uid)
-                              },
-                              child: buildButton(
-                                  text: 'follwers', value: followerCount),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: themOrPassiveUser
-                            ? ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  side: const BorderSide(
-                                    color: Colors.black, //枠線!
-                                    width: 1, //枠線！
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  'edit profile',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              )
-                            : Container(
-                                child: isFollowing
-                                    ? ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          side: const BorderSide(
-                                            color: Colors.black, //枠線!
-                                            width: 1, //枠線！
-                                          ),
-                                        ),
-                                        onPressed: () =>
-                                            passiveUserController.unfollow(
-                                                mainController: mainController,
-                                                passiveUser: passiveUser),
-                                        child: const Text(
-                                          'following',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                      )
-                                    : ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          //ボタンの背景色
-                                        ),
-                                        onPressed: () =>
-                                            passiveUserController.follow(
-                                                mainController: mainController,
-                                                passiveUser: passiveUser),
-                                        child: const Text(
-                                          'follow',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                      ),
-                              ),
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(color: Colors.black),
-                passiveUserChariList(uid: userId)
-              ],
+                  const Divider(color: Colors.black),
+                  passiveUserChariList(uid: userId)
+                ],
+              ),
             ),
           ),
         );
@@ -267,87 +274,84 @@ Widget chariList(
     {required AsyncValue<List<DocumentSnapshot<Map<String, dynamic>>>>
         asyncChariDocs,
     required context}) {
-  return SizedBox(
-    height: MediaQuery.of(context).size.height,
-    child: asyncChariDocs.when(
-        error: (err, _) => Text(err.toString()), //エラー時
-        loading: () => const CircularProgressIndicator(),
-        data: (data) {
-          final chariDocs = data;
-          if (chariDocs.isEmpty) {
-            return const Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 150,
-                ),
-                Text('no chari'),
-                SizedBox(
-                  height: 150,
-                ),
-              ],
-            );
-          }
-          return ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: chariDocs.length,
-            itemBuilder: (BuildContext context, int index) {
-              final DocumentSnapshot<Map<String, dynamic>> chariDoc =
-                  chariDocs[index];
-              if (chariDoc.data() == null) {
-                return null;
-              }
-              final Chari chari = Chari.fromJson(chariDoc.data()!);
-              return InkWell(
-                onTap: () async =>
-                    toChariDetailPage(context: context, chariUid: chari.postId),
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Stack(children: [
-                    Image.network(
-                      (chari.imageURL[0]),
-                      fit: BoxFit.fill,
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          color: Colors.black.withOpacity(0.4),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  chari.brand,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30.0,
-                                  ),
-                                ),
-                                Text(
-                                  chari.frame,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25.0,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ))
-                  ]),
-                ),
-              );
-            },
+  return asyncChariDocs.when(
+      error: (err, _) => Text(err.toString()), //エラー時
+      loading: () => const CircularProgressIndicator(),
+      data: (data) {
+        final chariDocs = data;
+        if (chariDocs.isEmpty) {
+          return const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 150,
+              ),
+              Text('no chari'),
+              SizedBox(
+                height: 150,
+              ),
+            ],
           );
-        }),
-  );
+        }
+        return ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: chariDocs.length,
+          itemBuilder: (BuildContext context, int index) {
+            final DocumentSnapshot<Map<String, dynamic>> chariDoc =
+                chariDocs[index];
+            if (chariDoc.data() == null) {
+              return null;
+            }
+            final Chari chari = Chari.fromJson(chariDoc.data()!);
+            return InkWell(
+              onTap: () async =>
+                  toChariDetailPage(context: context, chariUid: chari.postId),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Stack(children: [
+                  Image.network(
+                    (chari.imageURL[0]),
+                    fit: BoxFit.fill,
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.black.withOpacity(0.4),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                chari.brand,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30.0,
+                                ),
+                              ),
+                              Text(
+                                chari.frame,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.0,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ))
+                ]),
+              ),
+            );
+          },
+        );
+      });
 }
 
 Widget homeCard({

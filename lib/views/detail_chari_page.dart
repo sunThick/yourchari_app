@@ -74,224 +74,236 @@ class ChariDetailPage extends ConsumerWidget {
                 // ignore: unused_result
                 ref.refresh(chariDetailProvider(chariUid));
               },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    if (mainController.muteUids.contains(passiveUser.uid))
-                      const Text('このユーザーは現在ミュートしています。'),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      if (mainController.muteUids.contains(passiveUser.uid))
+                        const Text('このユーザーは現在ミュートしています。'),
 
-                    //----------------------ユーザー情報-----------------------------------------------
-                    StickyHeader(
-                      header: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, bottom: 10, left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(children: [
-                              buildAvatarImage(
-                                  passiveUser: passiveUser,
-                                  currentFirestoreUser:
-                                      mainController.currentFirestoreUser,
-                                  radius: 20),
-                              const SizedBox(
-                                width: 10,
-                              ),
+                      //----------------------ユーザー情報-----------------------------------------------
+                      StickyHeader(
+                        header: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, bottom: 10, left: 15, right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(children: [
+                                buildAvatarImage(
+                                    passiveUser: passiveUser,
+                                    currentFirestoreUser:
+                                        mainController.currentFirestoreUser,
+                                    radius: 20),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                InkWell(
+                                  child: Text(passiveUser.userName),
+                                  onTap: () async => toPassiveUserPage(
+                                      context: context,
+                                      userId: passiveUser.uid),
+                                )
+                              ]),
                               InkWell(
-                                child: Text(passiveUser.userName),
-                                onTap: () async => toPassiveUserPage(
-                                    context: context, userId: passiveUser.uid),
-                              )
-                            ]),
-                            InkWell(
-                                child: const Icon(Icons.more_vert),
-                                onTap: () {
-                                  chariPassiveSheet(context,
-                                      mainController: mainController,
-                                      muteUsersController: muteUsersController,
-                                      passiveUid: passiveUser.uid,
-                                      chari: chari,
-                                      createChariController:
-                                          createChariController,
-                                      detailChariPageContext: context);
-                                })
-                          ],
-                        ),
-                      ),
-                      content: Column(children: [
-                        CarouselSlider(
-                          items: imageSliders,
-                          carouselController: controller,
-                          options: CarouselOptions(
-                            enlargeCenterPage: true,
-                            onPageChanged: (index, reason) {
-                              detailChariPageController.changeImage(index);
-                            },
-                            enableInfiniteScroll: false,
+                                  child: const Icon(Icons.more_vert),
+                                  onTap: () {
+                                    chariPassiveSheet(context,
+                                        mainController: mainController,
+                                        muteUsersController:
+                                            muteUsersController,
+                                        passiveUid: passiveUser.uid,
+                                        chari: chari,
+                                        createChariController:
+                                            createChariController,
+                                        detailChariPageContext: context);
+                                  })
+                            ],
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: chari.imageURL.asMap().entries.map((entry) {
-                            return GestureDetector(
-                              child: Container(
-                                width: 12.0,
-                                height: 12.0,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 4.0),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: (Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? Colors.white
-                                            : Colors.black)
-                                        .withOpacity(
-                                            current == entry.key ? 0.9 : 0.4)),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-
-                        //-----------------------自転車の情報------------------------//
-                        Column(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Flexible(
-                                child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        '"${chari.brand}"',
-                                        style: const TextStyle(fontSize: 25),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        chari.frame,
-                                        style: const TextStyle(fontSize: 20),
-                                      ),
-                                    ]),
-                              ),
+                        content: Column(children: [
+                          CarouselSlider(
+                            items: imageSliders,
+                            carouselController: controller,
+                            options: CarouselOptions(
+                              enlargeCenterPage: true,
+                              onPageChanged: (index, reason) {
+                                detailChariPageController.changeImage(index);
+                              },
+                              enableInfiniteScroll: false,
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                      createTimeAgoString(
-                                          chari.createdAt.toDate()),
-                                      style: const TextStyle(
-                                          color: Colors.black45)),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  mainController.likeChariIds
-                                          .contains(chari.postId)
-                                      ? InkWell(
-                                          onTap: () async => {
-                                            chariLikeController.unlike(
-                                                chari: chari,
-                                                chariDoc: chariDoc,
-                                                chariRef: chariDoc.reference,
-                                                mainController: mainController),
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3, right: 3),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                const Icon(
-                                                  CupertinoIcons.heart_fill,
-                                                  color: Colors.red,
-                                                ),
-                                                Text(chari.likeCount.toString())
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : InkWell(
-                                          onTap: () async =>
-                                              chariLikeController.like(
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children:
+                                chari.imageURL.asMap().entries.map((entry) {
+                              return GestureDetector(
+                                child: Container(
+                                  width: 12.0,
+                                  height: 12.0,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 4.0),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: (Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? Colors.white
+                                              : Colors.black)
+                                          .withOpacity(current == entry.key
+                                              ? 0.9
+                                              : 0.4)),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+
+                          //-----------------------自転車の情報------------------------//
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Flexible(
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '"${chari.brand}"',
+                                          style: const TextStyle(fontSize: 25),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          chari.frame,
+                                          style: const TextStyle(fontSize: 20),
+                                        ),
+                                      ]),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                        createTimeAgoString(
+                                            chari.createdAt.toDate()),
+                                        style: const TextStyle(
+                                            color: Colors.black45)),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    mainController.likeChariIds
+                                            .contains(chari.postId)
+                                        ? InkWell(
+                                            onTap: () async => {
+                                              chariLikeController.unlike(
                                                   chari: chari,
                                                   chariDoc: chariDoc,
                                                   chariRef: chariDoc.reference,
                                                   mainController:
                                                       mainController),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3, right: 3),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                const Icon(
-                                                  CupertinoIcons.heart,
-                                                ),
-                                                Text(chari.likeCount.toString())
-                                              ],
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 3, right: 3),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  const Icon(
+                                                    CupertinoIcons.heart_fill,
+                                                    color: Colors.red,
+                                                  ),
+                                                  Text(chari.likeCount
+                                                      .toString())
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : InkWell(
+                                            onTap: () async =>
+                                                chariLikeController.like(
+                                                    chari: chari,
+                                                    chariDoc: chariDoc,
+                                                    chariRef:
+                                                        chariDoc.reference,
+                                                    mainController:
+                                                        mainController),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 3, right: 3),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  const Icon(
+                                                    CupertinoIcons.heart,
+                                                  ),
+                                                  Text(chari.likeCount
+                                                      .toString())
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        const Divider(height: 30),
-                        if (chari.caption != "")
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            child: Column(
-                              children: [
-                                const Row(
-                                  children: [
-                                    Text(
-                                      'caption',
-                                      style: TextStyle(
-                                          fontSize: 30, color: Colors.grey),
-                                    )
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Flexible(child: Text(chari.caption)),
-                                  ],
-                                ),
-                                const Divider(height: 30),
-                              ],
-                            ),
-                          ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: const Row(
-                            children: [
-                              Text(
-                                'parts list',
-                                style:
-                                    TextStyle(fontSize: 30, color: Colors.grey),
                               )
                             ],
                           ),
-                        ),
-                        partsList(chari: chari, context: context),
-                        const SizedBox(
-                          height: 50,
-                        )
-                      ]),
-                    ),
-                    // const SizedBox(height: 10),
-                    //-----------------------写真のスライダー--------------------------------//
-                  ],
+                          const Divider(height: 30),
+                          if (chari.caption != "")
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: Column(
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Text(
+                                        'caption',
+                                        style: TextStyle(
+                                            fontSize: 30, color: Colors.grey),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Flexible(child: Text(chari.caption)),
+                                    ],
+                                  ),
+                                  const Divider(height: 30),
+                                ],
+                              ),
+                            ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'parts list',
+                                  style: TextStyle(
+                                      fontSize: 30, color: Colors.grey),
+                                )
+                              ],
+                            ),
+                          ),
+                          partsList(chari: chari, context: context),
+                          const SizedBox(
+                            height: 50,
+                          )
+                        ]),
+                      ),
+                      // const SizedBox(height: 10),
+                      //-----------------------写真のスライダー--------------------------------//
+                    ],
+                  ),
                 ),
               ),
             ),

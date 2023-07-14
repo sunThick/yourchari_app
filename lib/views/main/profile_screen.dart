@@ -23,6 +23,15 @@ class ProfileScreen extends ConsumerWidget {
       endDrawer: Drawer(
         child: ListView(
           children: [
+            Container(
+              color: Colors.blueGrey,
+              child: ListTile(
+                title: Text(
+                  mainController.currentFirestoreUser.userName,
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ),
+            ),
             InkWell(
               onTap: () {
                 toMuteUsersPage(context: context, uid: userId);
@@ -41,11 +50,10 @@ class ProfileScreen extends ConsumerWidget {
                 title: Text('いいねした投稿'),
               ),
             ),
-            
             InkWell(
               onTap: () {},
               child: const ListTile(
-                title: Text("Item 1"),
+                title: Text("ログアウト"),
               ),
             ),
           ],
