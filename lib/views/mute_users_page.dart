@@ -20,7 +20,7 @@ class MuteUsersPage extends ConsumerWidget {
       data: (muteUserDocs) {
         return Scaffold(
             appBar: AppBar(
-              title: const Text('ミュートしたユーザー'),
+              title: const Text('ミュートしているユーザー'),
             ),
             body: ListView.builder(
               itemCount: muteUserDocs.length,
@@ -42,7 +42,9 @@ class MuteUsersPage extends ConsumerWidget {
                     onPressed: () {
                       userMuteController.unMuteUser(
                         mainController: mainController,
-                        passiveUid: muteUser.uid, muteUserDoc: muteUserDoc, muteUserDocs: muteUserDocs,
+                        passiveUid: muteUser.uid,
+                        muteUserDoc: muteUserDoc,
+                        muteUserDocs: muteUserDocs,
                       );
                     },
                   ),

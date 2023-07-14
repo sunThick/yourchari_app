@@ -16,8 +16,6 @@ class PassiveUserProfilePage extends ConsumerWidget {
     final UserMuteController userMuteController = ref.watch(userMuteProvider);
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
         title: const Text('プロフィール'),
         actions: [
           if (!mainController.muteUids.contains(userId) &&
@@ -34,10 +32,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
         ],
       ),
       body: profileAndPassiveBody(
-        context: context,
-        userId: userId,
-        isProfile: false
-      ),
+          context: context, userId: userId, isProfile: false),
     );
   }
 }

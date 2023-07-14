@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ import 'package:yourchari_app/views/main/search_screen.dart';
 
 // import 'views/components/home_bottom_navigation_bar.dart';
 // import 'models/home_bottom_navigation_bar_model.dart';
+import 'constants/themes.dart';
 import 'viewModels/main_controller.dart';
 
 class MyApp extends ConsumerWidget {
@@ -29,8 +29,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'yourchari',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
-      ),
+          primarySwatch: Colors.blueGrey, secondaryHeaderColor: Colors.amber),
       // home: onceUser == null
       //     ? const LoginPage()
       //     : // ユーザーが存在していない

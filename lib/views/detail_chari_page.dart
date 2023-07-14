@@ -8,6 +8,7 @@ import 'package:yourchari_app/models/chari_detail_model.dart';
 import 'package:yourchari_app/viewModels/create_chari_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 import 'package:yourchari_app/viewModels/mute_users_controller.dart';
+import 'package:yourchari_app/views/components/components.dart';
 import '../constants/routes.dart';
 import '../constants/dialog.dart';
 import '../constants/string.dart';
@@ -66,8 +67,6 @@ class ChariDetailPage extends ConsumerWidget {
         children: [
           Scaffold(
             appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
               title: const Text('投稿'),
             ),
             body: RefreshIndicator(
@@ -84,46 +83,40 @@ class ChariDetailPage extends ConsumerWidget {
 
                     //----------------------ユーザー情報-----------------------------------------------
                     StickyHeader(
-                      header: Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, bottom: 10, left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(children: [
-                                passiveUser.userImageURL.isEmpty
-                                    ? const CircleAvatar(
-                                        child: Icon(Icons.person))
-                                    : CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                            passiveUser.userImageURL)),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                  child: Text(passiveUser.userName),
-                                  onTap: () async => toPassiveUserPage(
-                                      context: context,
-                                      userId: passiveUser.uid),
-                                )
-                              ]),
+                      header: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10, bottom: 10, left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(children: [
+                              buildAvatarImage(
+                                  passiveUser: passiveUser,
+                                  currentFirestoreUser:
+                                      mainController.currentFirestoreUser,
+                                  radius: 20),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               InkWell(
-                                  child: const Icon(Icons.more_vert),
-                                  onTap: () {
-                                    chariPassiveSheet(context,
-                                        mainController: mainController,
-                                        muteUsersController:
-                                            muteUsersController,
-                                        passiveUid: passiveUser.uid,
-                                        chari: chari,
-                                        createChariController:
-                                            createChariController,
-                                        detailChariPageContext: context);
-                                  })
-                            ],
-                          ),
+                                child: Text(passiveUser.userName),
+                                onTap: () async => toPassiveUserPage(
+                                    context: context, userId: passiveUser.uid),
+                              )
+                            ]),
+                            InkWell(
+                                child: const Icon(Icons.more_vert),
+                                onTap: () {
+                                  chariPassiveSheet(context,
+                                      mainController: mainController,
+                                      muteUsersController: muteUsersController,
+                                      passiveUid: passiveUser.uid,
+                                      chari: chari,
+                                      createChariController:
+                                          createChariController,
+                                      detailChariPageContext: context);
+                                })
+                          ],
                         ),
                       ),
                       content: Column(children: [
@@ -326,10 +319,7 @@ class ChariDetailPage extends ConsumerWidget {
       return null;
     }, loading: () {
       return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
+        appBar: AppBar(),
       );
     }));
   }

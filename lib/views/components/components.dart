@@ -21,15 +21,32 @@ Widget buildAvatarImage(
     required double radius}) {
   return passiveUser.uid == currentFirestoreUser.uid
       ? currentFirestoreUser.userImageURL.isEmpty
-          ? CircleAvatar(radius: radius, child: const Icon(Icons.person))
+          ? CircleAvatar(
+              radius: radius,
+              backgroundColor: Colors.grey,
+              child: const Icon(
+                Icons.person,
+                color: Colors.white70,
+              ))
           : CircleAvatar(
+              radius: radius,
+              backgroundColor: Colors.grey,
               backgroundImage: NetworkImage(currentFirestoreUser.userImageURL),
-              radius: radius)
+            )
       : passiveUser.userImageURL.isEmpty
-          ? CircleAvatar(radius: radius, child: const Icon(Icons.person))
+          ? CircleAvatar(
+              radius: radius,
+              backgroundColor: Colors.grey,
+              child: const Icon(
+                Icons.person,
+                color: Colors.white70,
+              ),
+            )
           : CircleAvatar(
+              radius: radius,
+              backgroundColor: Colors.grey,
               backgroundImage: NetworkImage(passiveUser.userImageURL),
-              radius: radius);
+            );
 }
 
 Widget buildButton({
@@ -91,6 +108,9 @@ Widget profileAndPassiveBody(
             child: Column(
               // mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(
+                  height: 20,
+                ),
                 SizedBox(
                   height: headerHeight,
                   child: Padding(
@@ -178,7 +198,10 @@ Widget profileAndPassiveBody(
                                   ),
                                 ),
                                 onPressed: () {},
-                                child: const Text('edit profile'),
+                                child: const Text(
+                                  'edit profile',
+                                  style: TextStyle(color: Colors.black),
+                                ),
                               )
                             : Container(
                                 child: isFollowing
@@ -194,7 +217,10 @@ Widget profileAndPassiveBody(
                                             passiveUserController.unfollow(
                                                 mainController: mainController,
                                                 passiveUser: passiveUser),
-                                        child: const Text('following'),
+                                        child: const Text(
+                                          'following',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
                                       )
                                     : ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -205,7 +231,10 @@ Widget profileAndPassiveBody(
                                             passiveUserController.follow(
                                                 mainController: mainController,
                                                 passiveUser: passiveUser),
-                                        child: const Text('follow'),
+                                        child: const Text(
+                                          'follow',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
                                       ),
                               ),
                       )
