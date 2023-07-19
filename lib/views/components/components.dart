@@ -203,7 +203,9 @@ Widget profileAndPassiveBody(
                                       width: 1, //枠線！
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    toEditProfilePage(context: context);
+                                  },
                                   child: const Text(
                                     'edit profile',
                                     style: TextStyle(color: Colors.black),
@@ -261,7 +263,7 @@ Widget profileAndPassiveBody(
       }, error: (Object error, StackTrace stackTrace) {
         return null;
       }, loading: () {
-        return const CircularProgressIndicator();
+        return Center(child: const CircularProgressIndicator());
       }),
     );
   });
