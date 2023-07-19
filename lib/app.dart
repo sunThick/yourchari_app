@@ -63,7 +63,9 @@ class MyHomePage extends ConsumerWidget {
         const HomeScreen(),
         const SearchScreen(),
         const NewsScreen(),
-        const ProfileScreen(),
+        ProfileScreen(
+          homeContext: context,
+        ),
       ];
     }
 

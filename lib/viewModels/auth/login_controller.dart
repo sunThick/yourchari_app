@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/constants/othes.dart';
 
 import 'package:yourchari_app/constants/routes.dart' as routes;
 import 'package:yourchari_app/viewModels/main_controller.dart';
@@ -65,6 +66,7 @@ class LoginController extends ChangeNotifier {
     mainController.isFirestoreUserExist = false;
     notifyListeners();
     routes.toMyApp(context: context);
+    showToast(message: 'ログアウトしました');
   }
 
   void toggleIsObscure() {

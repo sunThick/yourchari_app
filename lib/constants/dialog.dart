@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/constants/list.dart';
 import 'package:yourchari_app/constants/routes.dart';
+import 'package:yourchari_app/viewModels/auth/login_controller.dart';
 import 'package:yourchari_app/viewModels/create_chari_controller.dart';
 
 import '../domain/chari/chari.dart';
@@ -321,5 +322,35 @@ void createChariPreviewImage(BuildContext context,
         ],
       );
     },
+  );
+}
+
+// logout
+void logoutDialog(BuildContext context,
+    {required homeContext,
+    required MainController mainController,
+    required LoginController loginController}) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: const Text('ログアウトしますか？'),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('No'),
+        ),
+        CupertinoDialogAction(
+          isDestructiveAction: true,
+          onPressed: () {
+            Navigator.pop(context);
+            loginController.logout(
+                context: homeContext, mainController: mainController);
+          },
+          child: const Text('Yes'),
+        ),
+      ],
+    ),
   );
 }

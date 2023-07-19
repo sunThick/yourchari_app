@@ -1,17 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yourchari_app/constants/dialog.dart';
 import 'package:yourchari_app/constants/routes.dart';
+import 'package:yourchari_app/viewModels/auth/login_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
 import '../components/components.dart';
 
 class ProfileScreen extends ConsumerWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key, required this.homeContext}) : super(key: key);
+
+  final BuildContext homeContext;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MainController mainController = ref.watch(mainProvider);
-
+    final LoginController loginController = ref.watch(loginNotifierProvider);
     final userId = mainController.currentFirestoreUser.uid;
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +62,12 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                logoutDialog(context,
+                    homeContext: homeContext,
+                    mainController: mainController,
+                    loginController: loginController);
+              },
               child: const ListTile(
                 title: Text("ログアウト"),
               ),
