@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yourchari_app/views/edit_profile_page.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
 import 'package:yourchari_app/views/like_chari_list_page.dart';
 import 'package:yourchari_app/views/mute_users_page.dart';
@@ -73,3 +74,11 @@ void toLikechariListPage(
             builder: (context) => LikeChariListPage(
                   uid: uid,
                 )));
+
+// void toEditProfilePage({required BuildContext context, rootNavigator = true}) =>
+//     Navigator.push(context,
+//         MaterialPageRoute(builder: (context) => const EditProfilePage()));
+
+void toEditProfilePage({required BuildContext context}) =>
+    Navigator.of(context, rootNavigator: true)
+        .push(MaterialPageRoute(builder: (context) => const EditProfilePage()));

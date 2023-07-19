@@ -3,6 +3,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -53,3 +55,14 @@ DocumentReference<Map<String, dynamic>> currentUserDocToTokenDocRef(
         {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc,
         required String tokenId}) =>
     currentUserDoc.reference.collection("tokens").doc(tokenId);
+
+showToast({required String message}) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.blueGrey,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}

@@ -72,7 +72,7 @@ Widget profileAndPassiveBody(
     final PassiveUserController passiveUserController =
         ref.watch(passiveUserNotifierProvider);
     final MainController mainController = ref.watch(mainProvider);
-    final currentFirestoreUser = mainController.currentFirestoreUser;
+    FirestoreUser currentFirestoreUser = mainController.currentFirestoreUser;
     final bool themOrPassiveUser =
         userId == mainController.currentFirestoreUser.uid;
     const double headerHeight = 90;
@@ -89,7 +89,8 @@ Widget profileAndPassiveBody(
         if (isProfile) {
           passiveUser = passiveUser.copyWith(
               displayName: currentFirestoreUser.displayName,
-              userName: currentFirestoreUser.userName);
+              userName: currentFirestoreUser.userName,
+              introduction: currentFirestoreUser.introduction);
         }
         if (mainController.muteUids.contains(passiveUser.uid)) {
           return const Center(

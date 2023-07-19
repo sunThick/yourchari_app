@@ -1,4 +1,3 @@
-// flutter
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -97,5 +96,18 @@ class MainController extends ChangeNotifier {
           break;
       }
     }
+  }
+
+  void updateImageURL({required String newImageURL}) {
+    currentFirestoreUser =
+        currentFirestoreUser.copyWith(userImageURL: newImageURL);
+    notifyListeners();
+  }
+
+  void updateProfile(
+      {required String newDisplayName, required String newIntroduction}) {
+    currentFirestoreUser = currentFirestoreUser.copyWith(
+        displayName: newDisplayName, introduction: newIntroduction);
+    notifyListeners();
   }
 }
