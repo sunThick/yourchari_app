@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,8 +48,10 @@ class CharisList extends ConsumerWidget {
                 error: (err, _) => Text(err.toString()), //エラー時
                 loading: () => const CircularProgressIndicator(),
                 data: (data) {
-                  dynamic chariDocs = data.item1;
-                  dynamic userDocs = data.item2;
+                  List<DocumentSnapshot<Map<String, dynamic>>> chariDocs =
+                      data.item1;
+                  List<DocumentSnapshot<Map<String, dynamic>>> userDocs =
+                      data.item2;
                   return Scaffold(
                       body: chariDocs.isEmpty
                           ? Column(
@@ -65,9 +68,8 @@ class CharisList extends ConsumerWidget {
                                     header: const WaterDropHeader(),
                                     onRefresh: () {
                                       categoryChariController.startLoading();
-                                      chariDocs = ref.refresh(
-                                          chariListFromCategoryProvider(
-                                              category));
+                                      ref.refresh(chariListFromCategoryProvider(
+                                          category));
                                       categoryChariController.refreshController
                                           .refreshCompleted();
                                       categoryChariController.endLoading();
@@ -91,10 +93,8 @@ class CharisList extends ConsumerWidget {
                                     header: const WaterDropHeader(),
                                     onRefresh: () {
                                       categoryChariController.startLoading();
-
-                                      chariDocs = ref.refresh(
-                                          chariListFromCategoryProvider(
-                                              category));
+                                      ref.refresh(chariListFromCategoryProvider(
+                                          category));
                                       categoryChariController.refreshController
                                           .refreshCompleted();
                                       categoryChariController.endLoading();
