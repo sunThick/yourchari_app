@@ -22,7 +22,7 @@ class LikeChariListPage extends ConsumerWidget {
                 List<DocumentSnapshot<Map<String, dynamic>>>>> config =
         ref.watch(likeChariDocsProvider(uid));
     return config.when(
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const Center(child: CircularProgressIndicator()),
       error: (err, stack) => Text('Error: $err'),
       data: (data) {
         final chariDocs = data.item1;

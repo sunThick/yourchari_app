@@ -5,9 +5,10 @@ import 'package:yourchari_app/viewModels/main_controller.dart';
 
 import '../domain/like_chari_token/like_chari_token.dart';
 
-final likeChariDocsProvider =
-    FutureProvider.family<Tuple2<List<DocumentSnapshot<Map<String, dynamic>>>, List<DocumentSnapshot<Map<String, dynamic>>>> , String>(
-        ((ref, uid) async {
+final likeChariDocsProvider = FutureProvider.family<
+    Tuple2<List<DocumentSnapshot<Map<String, dynamic>>>,
+        List<DocumentSnapshot<Map<String, dynamic>>>>,
+    String>(((ref, uid) async {
   final MainController mainController = ref.watch(mainProvider);
   final likeChariTokenQshot = await FirebaseFirestore.instance
       .collection("users")
