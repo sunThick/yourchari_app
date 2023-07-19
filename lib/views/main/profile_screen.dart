@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/constants/routes.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
-import '../../constants/string.dart';
 import '../components/components.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -30,6 +29,14 @@ class ProfileScreen extends ConsumerWidget {
                   mainController.currentFirestoreUser.userName,
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                toEditProfilePage(context: context);
+              },
+              child: const ListTile(
+                title: Text("プロフィールを編集"),
               ),
             ),
             InkWell(
