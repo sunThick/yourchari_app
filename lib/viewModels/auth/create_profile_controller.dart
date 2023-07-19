@@ -86,6 +86,7 @@ class CreateProfileController extends ChangeNotifier {
       mainController.isFirestoreUserExist = true;
       notifyListeners();
       routes.toMyApp(context: context);
+      showToast(message: 'プロフィールが完成しました');
     }).then(
       (value) => print("DocumentSnapshot successfully updated!"),
       onError: (e) => print("Error updating document $e"),
