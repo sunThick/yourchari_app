@@ -22,11 +22,13 @@ class CreateProfilePage extends ConsumerWidget {
               onTap: () {
                 createProfileController.selectImage();
               },
-              child: CircleAvatar(
-                  radius: 50,
-                  child: createProfileController.compress == null
-                      ? const Icon(Icons.add_a_photo_outlined)
-                      : Image.memory(createProfileController.compress!)),
+              child: createProfileController.compress == null
+                  ? const CircleAvatar(
+                      radius: 50, child: Icon(Icons.add_a_photo_outlined))
+                  : CircleAvatar(
+                      radius: 50,
+                      backgroundImage:
+                          MemoryImage(createProfileController.compress!)),
             ),
             const SizedBox(
               height: 10,
@@ -85,7 +87,8 @@ class CreateProfilePage extends ConsumerWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  createProfileController.createFirestoreUser(context: context, ref: ref);
+                  createProfileController.createFirestoreUser(
+                      context: context, ref: ref);
                 },
                 child: const Text('保存'))
           ]),
