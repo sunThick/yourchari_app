@@ -108,6 +108,7 @@ class HomeChariListController extends ChangeNotifier {
       required userDocs,
       required category,
       required WidgetRef ref}) async {
+    refreshController.loadComplete();
     MainController mainController = ref.watch(mainProvider);
     startLoading();
 
@@ -136,7 +137,7 @@ class HomeChariListController extends ChangeNotifier {
         userDocs.add(chariDoc);
       }
     }
-    refreshController.loadComplete();
+
     endLoading();
   }
 }

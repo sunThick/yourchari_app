@@ -68,6 +68,7 @@ class CharisList extends ConsumerWidget {
                                     header: const WaterDropHeader(),
                                     onRefresh: () {
                                       categoryChariController.startLoading();
+                                      // ignore: unused_result
                                       ref.refresh(chariListFromCategoryProvider(
                                           category));
                                       categoryChariController.refreshController
@@ -93,6 +94,7 @@ class CharisList extends ConsumerWidget {
                                     header: const WaterDropHeader(),
                                     onRefresh: () {
                                       categoryChariController.startLoading();
+                                      // ignore: unused_result
                                       ref.refresh(chariListFromCategoryProvider(
                                           category));
                                       categoryChariController.refreshController
