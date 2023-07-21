@@ -37,6 +37,18 @@ class ProfileScreen extends ConsumerWidget {
             ),
             InkWell(
               onTap: () {
+                toCreateChariPage(context: context);
+              },
+              child: const ListTile(
+                leading: Icon(Icons.add_circle),
+                title: Text("自転車を投稿"),
+              ),
+            ),
+            const Divider(
+              thickness: 10,
+            ),
+            InkWell(
+              onTap: () {
                 toEditProfilePage(context: context);
               },
               child: const ListTile(
@@ -59,6 +71,23 @@ class ProfileScreen extends ConsumerWidget {
               },
               child: const ListTile(
                 title: Text('いいねした投稿'),
+              ),
+            ),
+            const Divider(
+              thickness: 10,
+            ),
+            InkWell(
+              onTap: () {
+                toAccountPage(context: context);
+              },
+              child: const ListTile(
+                title: Text("アカウント設定"),
+              ),
+            ),
+            InkWell(
+              onTap: () {},
+              child: const ListTile(
+                title: Text("お問い合わせ"),
               ),
             ),
             InkWell(
