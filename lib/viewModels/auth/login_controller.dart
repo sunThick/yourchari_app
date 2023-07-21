@@ -66,7 +66,7 @@ class LoginController extends ChangeNotifier {
     mainController.isFirestoreUserExist = false;
     notifyListeners();
     routes.toMyApp(context: context);
-    showToast(message: 'ログアウトしました');
+    showToast(msg: 'ログアウトしました');
   }
 
   void toggleIsObscure() {

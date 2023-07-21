@@ -56,9 +56,9 @@ DocumentReference<Map<String, dynamic>> currentUserDocToTokenDocRef(
         required String tokenId}) =>
     currentUserDoc.reference.collection("tokens").doc(tokenId);
 
-showToast({required String message}) {
+showToast({required String msg}) {
   Fluttertoast.showToast(
-      msg: message,
+      msg: msg,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,

@@ -16,7 +16,7 @@ import '../../constants/othes.dart';
 import '../../domain/firestore_user/firestore_user.dart';
 
 final createProfileNotifierProvider =
-    ChangeNotifierProvider(((ref) => CreateProfileController()));
+    ChangeNotifierProvider.autoDispose(((ref) => CreateProfileController()));
 
 class CreateProfileController extends ChangeNotifier {
   File? croppedFile;
@@ -86,7 +86,7 @@ class CreateProfileController extends ChangeNotifier {
       mainController.isFirestoreUserExist = true;
       notifyListeners();
       routes.toMyApp(context: context);
-      showToast(message: 'プロフィールが完成しました');
+      showToast(msg: 'プロフィールが完成しました');
     }).then(
       (value) => print("DocumentSnapshot successfully updated!"),
       onError: (e) => print("Error updating document $e"),
