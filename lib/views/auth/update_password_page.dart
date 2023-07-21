@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yourchari_app/views/auth/password_field_and_button_scrreen.dart';
+import 'package:yourchari_app/views/auth/components/password_field_and_button_scrreen.dart';
 
 import '../../viewModels/auth/update_password_controller.dart';
 

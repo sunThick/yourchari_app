@@ -11,6 +11,7 @@ import '../app.dart';
 import '../viewModels/auth/reauthentication_page.dart';
 import '../views/auth/login_page.dart';
 import '../views/auth/signup_page.dart';
+import '../views/auth/update_email_page.dart';
 import '../views/auth/update_password_page.dart';
 import '../views/detail_chari_page.dart';
 import '../views/follows_and_followers_page.dart';
@@ -102,3 +103,7 @@ void toUpdatePasswordPage({required BuildContext context}) => Navigator.push(
 
 void toAccountPage({required BuildContext context}) => Navigator.push(
     context, MaterialPageRoute(builder: ((context) => const AccountPage())));
+
+void toUpdateEmailPage({required BuildContext context}) => Navigator.push(
+    context,
+    MaterialPageRoute(builder: ((context) => const UpdateEmailPage())));

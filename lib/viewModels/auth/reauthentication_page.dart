@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/viewModels/auth/account_controller.dart';
 
 import '../../constants/enums.dart';
-import '../../views/auth/password_field_and_button_scrreen.dart';
+import '../../views/auth/components/password_field_and_button_scrreen.dart';
 
 class ReauthenticationPage extends ConsumerWidget {
   const ReauthenticationPage({

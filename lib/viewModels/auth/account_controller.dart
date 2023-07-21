@@ -33,6 +33,7 @@ class AccountController extends ChangeNotifier {
           toUpdatePasswordPage(context: context);
           break;
         case ReauthenticationState.updateEmail:
+          toUpdateEmailPage(context: context);
           break;
       }
     } on FirebaseAuthException catch (e) {

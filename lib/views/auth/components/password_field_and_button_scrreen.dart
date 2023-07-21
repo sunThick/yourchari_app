@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../viewModels/form_obsucure_controller.dart';
+import '../../../viewModels/form_obsucure_controller.dart';
 
 class PasswordFieldAndButtonScreen extends ConsumerWidget {
   const PasswordFieldAndButtonScreen(
