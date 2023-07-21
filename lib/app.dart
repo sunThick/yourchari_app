@@ -61,8 +61,8 @@ class MyHomePage extends ConsumerWidget {
     List<Widget> buildScreens() {
       return [
         const HomeScreen(),
-        const SearchScreen(),
-        const NewsScreen(),
+        // const SearchScreen(),
+        // const NewsScreen(),
         ProfileScreen(
           homeContext: context,
         ),
@@ -77,18 +77,18 @@ class MyHomePage extends ConsumerWidget {
           activeColorPrimary: CupertinoColors.systemGrey,
           // inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
-        PersistentBottomNavBarItem(
-            icon: const Icon(CupertinoIcons.search),
-            title: ("Search"),
-            activeColorPrimary: CupertinoColors.systemGrey
-            // inactiveColorPrimary: CupertinoColors.systemGrey,
-            ),
-        PersistentBottomNavBarItem(
-            icon: const Icon(CupertinoIcons.news),
-            title: ("News"),
-            activeColorPrimary: CupertinoColors.systemGrey
-            // inactiveColorPrimary: CupertinoColors.systemGrey,
-            ),
+        // PersistentBottomNavBarItem(
+        //     icon: const Icon(CupertinoIcons.search),
+        //     title: ("Search"),
+        //     activeColorPrimary: CupertinoColors.systemGrey
+        //     // inactiveColorPrimary: CupertinoColors.systemGrey,
+        //     ),
+        // PersistentBottomNavBarItem(
+        //     icon: const Icon(CupertinoIcons.news),
+        //     title: ("News"),
+        //     activeColorPrimary: CupertinoColors.systemGrey
+        //     // inactiveColorPrimary: CupertinoColors.systemGrey,
+        //     ),
         PersistentBottomNavBarItem(
             icon: const Icon(CupertinoIcons.profile_circled),
             title: ("Profile"),
