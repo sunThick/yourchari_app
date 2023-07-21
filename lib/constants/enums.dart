@@ -26,3 +26,5 @@ TokenType mapToTokenType({required Map<String, dynamic> tokenMap}) {
     return TokenType.mistake;
   }
 }
+
+enum ReauthenticationState { initialValue, updatePassword, updateEmail }

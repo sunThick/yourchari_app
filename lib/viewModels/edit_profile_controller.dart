@@ -110,6 +110,6 @@ class EditProfileController extends ChangeNotifier {
           newDisplayName: newDisplayName, newIntroduction: newIntroduction);
     }
     endUpdating(context: context);
-    showToast(message: '保存しました');
+    showToast(msg: '保存しました');
   }
 }

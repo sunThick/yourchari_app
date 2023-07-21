@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
 import '../domain/chari/chari.dart';
+
+User? returnAuthUser() {
+  return FirebaseAuth.instance.currentUser;
+}
 
 List<DocumentSnapshot<Map<String, dynamic>>> chariWithoutMuteUser(
     {required List<DocumentSnapshot<Map<String, dynamic>>> chariDocs,

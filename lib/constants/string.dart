@@ -119,8 +119,6 @@ String returnReportContentString(
   return reportContentString;
 }
 
-
-
 String createTimeAgoString(DateTime postDateTime) {
   final now = DateTime.now();
   final difference = now.difference(postDateTime);
