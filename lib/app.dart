@@ -21,12 +21,10 @@ class MyApp extends ConsumerWidget {
     // MyAppが起動した最初の時にユーザーがログインしているかどうかの確認
     // この変数を1回きり
     final User? onceUser = FirebaseAuth.instance.currentUser;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'yourchari',
-      theme: ThemeData(
-          primarySwatch: Colors.blueGrey, secondaryHeaderColor: Colors.amber),
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
       // home: onceUser == null
       //     ? const LoginPage()
       //     : // ユーザーが存在していない
@@ -37,7 +35,7 @@ class MyApp extends ConsumerWidget {
           ? const LoginPage()
           : // ユーザーが存在していない
           onceUser.emailVerified
-              ? const MyHomePage() // ユーザーは存在していて、メールアドレスが認証されている
+              ? const MyHomePage()
               : const MyHomePage(),
       // home: NewsScreen(),
     );
@@ -52,8 +50,8 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MainController mainController = ref.watch(mainProvider);
-    PersistentTabController controller;
-    controller = PersistentTabController(initialIndex: 0);
+    PersistentTabController controller =
+        PersistentTabController(initialIndex: 0);
 
     List<Widget> buildScreens() {
       return [

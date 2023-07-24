@@ -68,6 +68,14 @@ class LoginPage extends ConsumerWidget {
               ),
               TextButton(
                   onPressed: () {
+                    routes.toVerifyPasswordResetPage(context: context);
+                  },
+                  child: const Text('パスワードをお忘れですか？')),
+              const SizedBox(
+                height: 15,
+              ),
+              TextButton(
+                  onPressed: () {
                     routes.toSignupPage(context: context);
                   },
                   child: const Text('初めての方はこちら')),

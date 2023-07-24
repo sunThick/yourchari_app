@@ -6,7 +6,6 @@ class CreateProfilePage extends ConsumerWidget {
   const CreateProfilePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final SignupController createProfileController = ref.watch(signupNotifierProvider);
     final CreateProfileController createProfileController =
         ref.watch(createProfileNotifierProvider);
     return Scaffold(

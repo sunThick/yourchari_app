@@ -23,24 +23,29 @@ class TextFieldAndButtonScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(appbarTitle),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: TextField(
-              onChanged: onChanged,
-              controller: controller,
-              decoration: InputDecoration(hintText: hintText),
-            ),
+      body: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(hintText),
+              Center(
+                child: TextField(
+                  onChanged: onChanged,
+                  controller: controller,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 64.0),
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  child: Text(buttonText),
+                ),
+              )
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 64.0),
-            child: ElevatedButton(
-              onPressed: onPressed,
-              child: Text(buttonText),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

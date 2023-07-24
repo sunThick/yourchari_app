@@ -27,6 +27,7 @@ class MainController extends ChangeNotifier {
 
   MainController() {
     init();
+    print('init');
   }
 
   Future<void> init() async {
@@ -37,10 +38,12 @@ class MainController extends ChangeNotifier {
         .collection('users')
         .doc(currentUser!.uid)
         .get();
+
     //classの形にして呼び出せるようにする  firestoreUser.____
     if (currentUserDoc.data() != null) {
       currentFirestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
       isFirestoreUserExist = true;
+      notifyListeners();
       distributeTokens();
     }
     endLoading();

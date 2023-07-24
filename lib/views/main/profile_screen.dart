@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/constants/dialog.dart';
 import 'package:yourchari_app/constants/routes.dart';
+import 'package:yourchari_app/constants/void.dart';
 import 'package:yourchari_app/viewModels/auth/login_controller.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
@@ -99,6 +100,15 @@ class ProfileScreen extends ConsumerWidget {
               },
               child: const ListTile(
                 title: Text("ログアウト"),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                print(mainController.currentFirestoreUser.displayName);
+                print(returnAuthUser());
+              },
+              child: const ListTile(
+                title: Text("tomato"),
               ),
             ),
           ],

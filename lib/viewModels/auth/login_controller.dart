@@ -24,6 +24,7 @@ class LoginController extends ChangeNotifier {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       routes.toMyApp(context: context);
+      showToast(msg: 'ログインしました');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -63,9 +64,8 @@ class LoginController extends ChangeNotifier {
       {required context, required MainController mainController}) async {
     await FirebaseAuth.instance.signOut();
     currentUser = FirebaseAuth.instance.currentUser;
-    mainController.isFirestoreUserExist = false;
+    // main();
     notifyListeners();
-    routes.toMyApp(context: context);
     showToast(msg: 'ログアウトしました');
   }
 
