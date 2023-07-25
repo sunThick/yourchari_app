@@ -60,13 +60,14 @@ class LoginController extends ChangeNotifier {
     }
   }
 
-  Future<void> logout(
-      {required context, required MainController mainController}) async {
+  Future<void> logout({
+    required context,
+    required MainController mainController,
+  }) async {
     await FirebaseAuth.instance.signOut();
     currentUser = FirebaseAuth.instance.currentUser;
-    // main();
     notifyListeners();
-    showToast(msg: 'ログアウトしました');
+    routes.toFinishedage(context: context, msg: 'ログアウトしました');
   }
 
   void toggleIsObscure() {

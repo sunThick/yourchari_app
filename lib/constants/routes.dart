@@ -3,6 +3,7 @@ import 'package:yourchari_app/viewModels/auth/account_controller.dart';
 import 'package:yourchari_app/views/auth/account_page.dart';
 import 'package:yourchari_app/views/auth/create_profile_page.dart';
 import 'package:yourchari_app/views/edit_profile_page.dart';
+import 'package:yourchari_app/views/finish_page.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
 import 'package:yourchari_app/views/like_chari_list_page.dart';
 import 'package:yourchari_app/views/mute_users_page.dart';
@@ -119,3 +120,11 @@ void toVerifyPasswordResetPage({required BuildContext context}) =>
         context,
         MaterialPageRoute(
             builder: ((context) => const VerifyPasswordResetPage())));
+
+void toFinishedage({required BuildContext context, required String msg}) =>
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: ((context) => FinishedPage(
+                  msg: msg,
+                ))));
