@@ -15,7 +15,8 @@ class MuteUsersPage extends ConsumerWidget {
     final UserMuteController userMuteController = ref.watch(userMuteProvider);
     final MainController mainController = ref.watch(mainProvider);
     return muteUserDocs.when(
-      loading: () => const CircularProgressIndicator(),
+      loading: () =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (err, stack) => Text('Error: $err'),
       data: (muteUserDocs) {
         return Scaffold(
@@ -31,10 +32,13 @@ class MuteUsersPage extends ConsumerWidget {
                 return ListTile(
                   leading: muteUser.userImageURL.isNotEmpty
                       ? CircleAvatar(
-                          child: Image.network(muteUser.userImageURL),
+                          backgroundImage: NetworkImage(muteUser.userImageURL),
                         )
                       : const CircleAvatar(
-                          child: Icon(Icons.person),
+                          backgroundColor: Colors.blueGrey,
+                          child: Icon(
+                            Icons.person,
+                          ),
                         ),
                   title: Text(muteUser.userName),
                   trailing: ElevatedButton(
