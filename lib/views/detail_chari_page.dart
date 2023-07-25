@@ -62,6 +62,12 @@ class ChariDetailPage extends ConsumerWidget {
                             fit: BoxFit.cover, width: 1000.0)),
               ))
           .toList();
+      if (mainController.muteUids.contains(passiveUser.uid)) {
+        return Scaffold(
+          appBar: AppBar(title: const Text('投稿')),
+          body: const Center(child: Text('このユーザーの投稿は現在ミュートしています')),
+        );
+      }
 
       return Stack(
         children: [
@@ -80,9 +86,6 @@ class ChariDetailPage extends ConsumerWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
-                      if (mainController.muteUids.contains(passiveUser.uid))
-                        const Text('このユーザーは現在ミュートしています。'),
-
                       //----------------------ユーザー情報-----------------------------------------------
                       StickyHeader(
                         header: Padding(
