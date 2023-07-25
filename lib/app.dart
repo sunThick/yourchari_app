@@ -24,7 +24,13 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'yourchari',
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      theme: ThemeData(
+        useMaterial3: false,
+        colorScheme: ColorScheme.fromSwatch(
+          brightness: Brightness.light,
+          primarySwatch: Colors.blueGrey,
+        ),
+      ),
       // home: onceUser == null
       //     ? const LoginPage()
       //     : // ユーザーが存在していない
