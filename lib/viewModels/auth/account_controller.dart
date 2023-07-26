@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/constants/othes.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 
 import '../../constants/enums.dart';
-import '../../constants/routes.dart';
+import '../../constants/routes.dart' as routes;
 import '../../constants/string.dart';
 import '../../constants/void.dart';
 
@@ -17,7 +19,7 @@ class AccountController extends ChangeNotifier {
       ReauthenticationState.initialValue;
 
   Future<void> reauthenticateWithCredential(
-      {required BuildContext context}) async {
+      {required BuildContext context, required BuildContext homeContext}) async {
     // まず再認証をする
     currentUser = returnAuthUser();
     final String email = currentUser!.email!;
@@ -30,10 +32,13 @@ class AccountController extends ChangeNotifier {
         case ReauthenticationState.initialValue:
           break;
         case ReauthenticationState.updatePassword:
-          toUpdatePasswordPage(context: context);
+          routes.toUpdatePasswordPage(context: context);
           break;
         case ReauthenticationState.updateEmail:
-          toUpdateEmailPage(context: context);
+          routes.toUpdateEmailPage(context: context);
+          break;
+        case ReauthenticationState.deleteUser:
+          routes.toDeleteUserPage(context: context, homeContext: homeContext);
           break;
       }
     } on FirebaseAuthException catch (e) {
@@ -56,6 +61,27 @@ class AccountController extends ChangeNotifier {
           break;
       }
       showToast(msg: msg);
+    }
+  }
+
+  Future<void> deleteUser(
+      {required BuildContext context,
+      required FirestoreUser firestoreUser}) async {
+    routes.toFinishedage(context: context, msg: 'アカウントを削除しました');
+
+    // ユーザーの削除にはReauthenticationが必要
+    // ユーザーの削除はFirebaseAuthのトークンがないといけない
+    // Documentの方を削除 -> FirebaseAuthのユーザーを削除
+    final User currentUser = returnAuthUser()!;
+    // deleteUserを作成する
+    try {
+      await FirebaseFirestore.instance
+          .collection("deleteUsers")
+          .doc(currentUser.uid)
+          .set(firestoreUser.toJson())
+          .then((_) => currentUser.delete());
+    } on FirebaseException catch (e) {
+      showToast(msg: e.code);
     }
   }
 }

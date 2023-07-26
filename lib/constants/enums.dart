@@ -27,4 +27,4 @@ TokenType mapToTokenType({required Map<String, dynamic> tokenMap}) {
   }
 }
 
-enum ReauthenticationState { initialValue, updatePassword, updateEmail }
+enum ReauthenticationState { initialValue, updatePassword, updateEmail, deleteUser }

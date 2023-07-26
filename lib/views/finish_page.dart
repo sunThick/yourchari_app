@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
  
 class FinishedPage extends StatelessWidget {
-  // Logout後のメッセージと削除のメッセージを受け取りたい
+
   const FinishedPage({
     Key? key,
     required this.msg

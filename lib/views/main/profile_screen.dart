@@ -79,7 +79,7 @@ class ProfileScreen extends ConsumerWidget {
             ),
             InkWell(
               onTap: () {
-                toAccountPage(context: context);
+                toAccountPage(context: context, homeContext: homeContext);
               },
               child: const ListTile(
                 title: Text("アカウント設定"),

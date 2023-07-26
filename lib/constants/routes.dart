@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourchari_app/viewModels/auth/account_controller.dart';
 import 'package:yourchari_app/views/auth/account_page.dart';
 import 'package:yourchari_app/views/auth/create_profile_page.dart';
+import 'package:yourchari_app/views/auth/delete_user_page.dart';
 import 'package:yourchari_app/views/edit_profile_page.dart';
 import 'package:yourchari_app/views/finish_page.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
@@ -97,23 +98,31 @@ void toEditProfilePage({required BuildContext context}) =>
 
 void toReauthenticationPage(
         {required BuildContext context,
-        required AccountController accountController}) =>
+        required AccountController accountController,
+        required BuildContext homeContext}) =>
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: ((context) =>
-                ReauthenticationPage(accountController: accountController))));
+                ReauthenticationPage(accountController: accountController, homeContext: homeContext,))));
 
 void toUpdatePasswordPage({required BuildContext context}) => Navigator.push(
     context,
     MaterialPageRoute(builder: ((context) => const UpdatePasswordPage())));
 
-void toAccountPage({required BuildContext context}) => Navigator.push(
-    context, MaterialPageRoute(builder: ((context) => const AccountPage())));
+void toAccountPage(
+        {required BuildContext context, required BuildContext homeContext}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: ((context) => AccountPage(homeContext: homeContext))));
 
 void toUpdateEmailPage({required BuildContext context}) => Navigator.push(
     context,
     MaterialPageRoute(builder: ((context) => const UpdateEmailPage())));
+
+void toDeleteUserPage({required BuildContext context, required BuildContext homeContext}) => Navigator.push(
+    context, MaterialPageRoute(builder: ((context) =>  DeleteUserPage(homeContext: homeContext,))));
 
 void toVerifyPasswordResetPage({required BuildContext context}) =>
     Navigator.push(
@@ -122,9 +131,9 @@ void toVerifyPasswordResetPage({required BuildContext context}) =>
             builder: ((context) => const VerifyPasswordResetPage())));
 
 void toFinishedage({required BuildContext context, required String msg}) =>
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: ((context) => FinishedPage(
-                  msg: msg,
-                ))));
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(
+        builder: ((context) => FinishedPage(
+              msg: msg,
+            ))));

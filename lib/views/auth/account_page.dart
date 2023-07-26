@@ -9,10 +9,9 @@ import '../../constants/void.dart';
 import '../../viewModels/auth/account_controller.dart';
 
 class AccountPage extends ConsumerWidget {
-  const AccountPage({
-    Key? key,
-  }) : super(key: key);
+  const AccountPage({Key? key, required this.homeContext}) : super(key: key);
 
+  final BuildContext homeContext;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final MainController mainController = ref.watch(mainProvider);
@@ -30,7 +29,9 @@ class AccountPage extends ConsumerWidget {
                 accountController.reauthenticationState =
                     ReauthenticationState.updatePassword;
                 toReauthenticationPage(
-                    context: context, accountController: accountController);
+                    context: context,
+                    accountController: accountController,
+                    homeContext: homeContext);
               }),
           ListTile(
               title: Text(updateEmailLagMsg(email: returnAuthUser()!.email!)),
@@ -40,12 +41,21 @@ class AccountPage extends ConsumerWidget {
                 accountController.reauthenticationState =
                     ReauthenticationState.updateEmail;
                 toReauthenticationPage(
-                    context: context, accountController: accountController);
+                    context: context,
+                    accountController: accountController,
+                    homeContext: homeContext);
               }),
-          // ListTile(
-          //   title: const Text(logoutText),
-          //   onTap: () async => await .logout(context: context),
-          // )
+          ListTile(
+              title: const Text('アカウントを削除'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                accountController.reauthenticationState =
+                    ReauthenticationState.deleteUser;
+                toReauthenticationPage(
+                    context: context,
+                    accountController: accountController,
+                    homeContext: homeContext);
+              })
         ],
       ),
     );

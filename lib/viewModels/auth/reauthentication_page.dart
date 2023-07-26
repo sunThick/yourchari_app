@@ -7,22 +7,33 @@ import '../../constants/enums.dart';
 import '../../views/auth/components/password_field_and_button_scrreen.dart';
 
 class ReauthenticationPage extends ConsumerWidget {
-  const ReauthenticationPage({
-    Key? key,
-    required this.accountController,
-  }) : super(key: key);
+  const ReauthenticationPage(
+      {Key? key, required this.accountController, required this.homeContext})
+      : super(key: key);
   final AccountController accountController;
+  final BuildContext homeContext;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final TextEditingController textEditingController =
         TextEditingController(text: accountController.password);
+    ReauthenticationState reauthenticationState =
+        accountController.reauthenticationState;
+
     String title = "";
-    if (accountController.reauthenticationState ==
-        ReauthenticationState.updatePassword) {
-      title = 'パスワードを更新';
-    } else if ((accountController.reauthenticationState ==
-        ReauthenticationState.updateEmail)) {
-      title = 'メールアドレスを更新';
+
+    switch (reauthenticationState) {
+      case ReauthenticationState.initialValue:
+        title = "sss";
+        break;
+      case ReauthenticationState.updatePassword:
+        title = "パスワードを変更";
+        break;
+      case ReauthenticationState.updateEmail:
+        title = "メールアドレスを変更";
+        break;
+      case ReauthenticationState.deleteUser:
+        title = "アカウントを削除";
+        break;
     }
 
     return PasswordFieldAndButtonScreen(
@@ -31,8 +42,9 @@ class ReauthenticationPage extends ConsumerWidget {
       buttonText: '続ける',
       textEditingController: textEditingController,
       onChanged: (value) => accountController.password = value,
-      onPressed: () async => await accountController
-          .reauthenticateWithCredential(context: context),
+      onPressed: () async =>
+          await accountController.reauthenticateWithCredential(
+              context: context, homeContext: homeContext),
     );
   }
 }
