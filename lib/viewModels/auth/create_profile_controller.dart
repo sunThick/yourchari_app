@@ -28,6 +28,8 @@ class CreateProfileController extends ChangeNotifier {
       TextEditingController();
   final TextEditingController displayNameEditingController =
       TextEditingController();
+  final TextEditingController introductionEdtitingController =
+      TextEditingController();
 
   Future<void> selectImage() async {
     // デバイスから画像を取得
@@ -49,6 +51,27 @@ class CreateProfileController extends ChangeNotifier {
 
   Future<void> createFirestoreUser(
       {required context, required WidgetRef ref}) async {
+    final userName = userNameEditingController.text.trim().toLowerCase();
+
+    ///usernameのバリデーション
+    if (userName.length > 10) {
+      if (userName == "") {
+        showToast(msg: 'userNameは10文字までです');
+        return;
+      }
+    }
+    if (userName == "") {
+      showToast(msg: 'userNameは必須です');
+      return;
+    }
+    if (userName.contains(' ')) {
+      showToast(msg: 'userNameに空白は含めません');
+      return;
+    }
+    if (!RegExp(r'^[a-z0-9_\-\.]+$').hasMatch(userName)) {
+      showToast(msg: 'userNameに使用できるのは英数字、_ - . のみです。');
+      return;
+    }
     final Timestamp now = Timestamp.now();
     final MainController mainController = ref.watch(mainProvider);
     User? user = FirebaseAuth.instance.currentUser;
@@ -58,16 +81,15 @@ class CreateProfileController extends ChangeNotifier {
       uid: uid,
       updatedAt: now,
       userImageURL: userImageURL,
-      userName: userNameEditingController.text.trim().toLowerCase(),
+      userName: userName,
       displayName: displayNameEditingController.text.trim(),
       followerCount: 0,
       followingCount: 0,
-      introduction: '',
+      introduction: introductionEdtitingController.text.trim(),
     );
     final Map<String, dynamic> userData = firestoreUser.toJson();
-    final userNameDocRef = FirebaseFirestore.instance
-        .collection("userNames")
-        .doc(userNameEditingController.text.trim().toLowerCase());
+    final userNameDocRef =
+        FirebaseFirestore.instance.collection("userNames").doc(userName);
     final usersDocRef = FirebaseFirestore.instance.collection("users").doc(uid);
     FirebaseFirestore.instance.runTransaction((transaction) async {
       final snapshot = await transaction.get(userNameDocRef);

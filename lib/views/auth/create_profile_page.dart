@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/viewModels/auth/create_profile_controller.dart';
 
@@ -44,12 +45,12 @@ class CreateProfilePage extends ConsumerWidget {
                         .trim();
                 FocusManager.instance.primaryFocus!.unfocus();
               },
-              maxLength: 15,
+              maxLength: 10,
               controller: createProfileController.userNameEditingController,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   contentPadding: EdgeInsets.only(left: 10),
-                  hintText: "必須。15字まで"),
+                  hintText: "必須。10字まで"),
             ),
             const Row(
               children: [
@@ -78,6 +79,7 @@ class CreateProfilePage extends ConsumerWidget {
             TextFormField(
               maxLength: 100,
               keyboardType: TextInputType.multiline,
+              controller: createProfileController.introductionEdtitingController,
               maxLines: 3,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
