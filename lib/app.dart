@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:yourchari_app/constants/void.dart';
 import 'package:yourchari_app/views/auth/create_profile_page.dart';
 import 'package:yourchari_app/views/auth/login_page.dart';
+import 'package:yourchari_app/views/auth/verify_email_page.dart';
 import 'package:yourchari_app/views/main/home_screen.dart';
 import 'package:yourchari_app/views/main/profile_screen.dart';
 
@@ -15,12 +16,11 @@ import 'viewModels/main_controller.dart';
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // MyAppが起動した最初の時にユーザーがログインしているかどうかの確認
-    // この変数を1回きり
-    final User? onceUser = FirebaseAuth.instance.currentUser;
+
+    final initialUser = returnAuthUser();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'yourchari',
@@ -31,19 +31,11 @@ class MyApp extends ConsumerWidget {
           primarySwatch: Colors.blueGrey,
         ),
       ),
-      // home: onceUser == null
-      //     ? const LoginPage()
-      //     : // ユーザーが存在していない
-      //     onceUser.emailVerified
-      //         ? const MyHomePage() // ユーザーは存在していて、メールアドレスが認証されている
-      //         : const NewsScreen(), // ユーザーは存在しているが、メールアドレスが認証されていない
-      home: onceUser == null
-          ? const LoginPage()
-          : // ユーザーが存在していない
-          onceUser.emailVerified
-              ? const MyHomePage()
-              : const MyHomePage(),
-      // home: NewsScreen(),
+      home: initialUser == null
+          ? const LoginPage() // ユーザーが存在していない
+          : initialUser.emailVerified
+              ? const MyHomePage() // ユーザーは存在していて、メールアドレスが認証されている
+              :  VerifyEmailPage(initialUser: initialUser,), // ユーザーは存在しているが、メールアドレスが認証されていない
     );
   }
 }
