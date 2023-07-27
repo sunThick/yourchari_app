@@ -44,7 +44,9 @@ class SignupPage extends ConsumerWidget {
                   decoration: InputDecoration(
                       labelText: "password, 6文字以上の英数字",
                       suffix: InkWell(
-                        child: const Icon(Icons.visibility_off),
+                        child: signupController.isObscure
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
                         onTap: () => signupController.toggleIsObscure(),
                       )),
                 ),
