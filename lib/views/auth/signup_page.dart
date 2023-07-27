@@ -20,23 +20,13 @@ class SignupPage extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/homeLogo.png',
-                fit: BoxFit.contain,
-                height: 35,
+              const Text(
+                'アカウント新規登録',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
               ),
               const SizedBox(
                 height: 30,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: TextFormField(
-              //     keyboardType: TextInputType.emailAddress,
-              //     // controller: signupController.userNameEditingController,
-              //     decoration: const InputDecoration(labelText: "username"),
-
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -52,13 +42,14 @@ class SignupPage extends ConsumerWidget {
                   controller: signupController.passwordEditingController,
                   obscureText: signupController.isObscure,
                   decoration: InputDecoration(
-                      labelText: "password",
+                      labelText: "password, 6文字以上の英数字",
                       suffix: InkWell(
                         child: const Icon(Icons.visibility_off),
                         onTap: () => signupController.toggleIsObscure(),
                       )),
                 ),
               ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => signupController.createUser(context: context),
                 child: const Text('新規登録'),
