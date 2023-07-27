@@ -100,8 +100,6 @@ Widget profileAndPassiveBody(
         final bool isFollowing =
             mainController.followingUids.contains(passiveUser.uid);
         final int followerCount = passiveUser.followerCount;
-        // final int plusOneFollowerCount = passiveUser.followerCount + 1;
-        // final int minusOneFollowerCount = passiveUser.followerCount - 1;
         return RefreshIndicator(
           onRefresh: () async {
             ref.refresh(passiveUserProvider(userId));
@@ -158,6 +156,7 @@ Widget profileAndPassiveBody(
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
@@ -263,7 +262,7 @@ Widget profileAndPassiveBody(
       }, error: (Object error, StackTrace stackTrace) {
         return null;
       }, loading: () {
-        return Center(child: const CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       }),
     );
   });

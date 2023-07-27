@@ -23,7 +23,7 @@ class ReauthenticationPage extends ConsumerWidget {
 
     switch (reauthenticationState) {
       case ReauthenticationState.initialValue:
-        title = "sss";
+        title = "";
         break;
       case ReauthenticationState.updatePassword:
         title = "パスワードを変更";

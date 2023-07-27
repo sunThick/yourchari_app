@@ -18,7 +18,7 @@ class AccountPage extends ConsumerWidget {
     final AccountController accountController = ref.watch(accountProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(accountTitle),
+        title: const Text('アカウント設定'),
       ),
       body: ListView(
         children: [
@@ -34,7 +34,8 @@ class AccountPage extends ConsumerWidget {
                     homeContext: homeContext);
               }),
           ListTile(
-              title: Text(updateEmailLagMsg(email: returnAuthUser()!.email!)),
+              title: const Text('メールアドレスを変更'),
+              subtitle: Text(returnAuthUser()!.email!),
               trailing: const Icon(Icons.arrow_forward_ios),
               // reauthenticationするページに飛ばす
               onTap: () {
@@ -46,7 +47,10 @@ class AccountPage extends ConsumerWidget {
                     homeContext: homeContext);
               }),
           ListTile(
-              title: const Text('アカウントを削除'),
+              title: const Text(
+                'アカウントを削除',
+                style: TextStyle(color: Colors.red),
+              ),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 accountController.reauthenticationState =
