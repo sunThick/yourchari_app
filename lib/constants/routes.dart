@@ -103,8 +103,10 @@ void toReauthenticationPage(
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: ((context) =>
-                ReauthenticationPage(accountController: accountController, homeContext: homeContext,))));
+            builder: ((context) => ReauthenticationPage(
+                  accountController: accountController,
+                  homeContext: homeContext,
+                ))));
 
 void toUpdatePasswordPage({required BuildContext context}) => Navigator.push(
     context,
@@ -121,8 +123,14 @@ void toUpdateEmailPage({required BuildContext context}) => Navigator.push(
     context,
     MaterialPageRoute(builder: ((context) => const UpdateEmailPage())));
 
-void toDeleteUserPage({required BuildContext context, required BuildContext homeContext}) => Navigator.push(
-    context, MaterialPageRoute(builder: ((context) =>  DeleteUserPage(homeContext: homeContext,))));
+void toDeleteUserPage(
+        {required BuildContext context, required BuildContext homeContext}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: ((context) => DeleteUserPage(
+                  homeContext: homeContext,
+                ))));
 
 void toVerifyPasswordResetPage({required BuildContext context}) =>
     Navigator.push(
