@@ -20,8 +20,7 @@ class UpdateEmailPage extends StatelessWidget {
       onChanged: (value) => newEmail = value,
       onPressed: () async {
         final User user = returnAuthUser()!;
-        // メールアドレスを認証するためにメールが送られる
-        await user.verifyBeforeUpdateEmail(newEmail);
+        await user.updateEmail(newEmail);
         showToast(msg: emailSendedMsg);
         Navigator.pop(context);
         Navigator.pop(context);
