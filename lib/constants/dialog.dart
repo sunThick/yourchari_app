@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/constants/list.dart';
 import 'package:yourchari_app/constants/routes.dart';
+import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
+import 'package:yourchari_app/viewModels/auth/account_controller.dart';
 import 'package:yourchari_app/viewModels/auth/login_controller.dart';
 import 'package:yourchari_app/viewModels/create_chari_controller.dart';
 
@@ -347,6 +349,35 @@ void logoutDialog(BuildContext context,
             Navigator.pop(context);
             loginController.logout(
                 context: homeContext, mainController: mainController);
+          },
+          child: const Text('Yes'),
+        ),
+      ],
+    ),
+  );
+}
+
+void deleteUserDialog(BuildContext context,
+    {required BuildContext homeContext,
+    required AccountController accountController,
+    required FirestoreUser firestoreUser}) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: const Text('削除しますか?'),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('No'),
+        ),
+        CupertinoDialogAction(
+          isDestructiveAction: true,
+          onPressed: () async {
+            Navigator.pop(context);
+            accountController.deleteUser(
+                context: homeContext, firestoreUser: firestoreUser);
           },
           child: const Text('Yes'),
         ),
