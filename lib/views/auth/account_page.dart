@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/enums.dart';
 import '../../constants/routes.dart';
-import '../../constants/string.dart';
 import '../../constants/void.dart';
 import '../../viewModels/auth/account_controller.dart';
 
@@ -23,7 +22,7 @@ class AccountPage extends ConsumerWidget {
       body: ListView(
         children: [
           ListTile(
-              title: const Text(updatePasswordText),
+              title: const Text('パスワードを更新'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 accountController.reauthenticationState =

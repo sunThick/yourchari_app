@@ -7,7 +7,6 @@ import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 
 import '../../constants/enums.dart';
 import '../../constants/routes.dart' as routes;
-import '../../constants/string.dart';
 import '../../constants/void.dart';
 
 final accountProvider = ChangeNotifierProvider(((ref) => AccountController()));
@@ -19,7 +18,8 @@ class AccountController extends ChangeNotifier {
       ReauthenticationState.initialValue;
 
   Future<void> reauthenticateWithCredential(
-      {required BuildContext context, required BuildContext homeContext}) async {
+      {required BuildContext context,
+      required BuildContext homeContext}) async {
     // まず再認証をする
     currentUser = returnAuthUser();
     final String email = currentUser!.email!;
@@ -45,19 +45,19 @@ class AccountController extends ChangeNotifier {
       String msg = e.code;
       switch (e.code) {
         case "wrong-password":
-          msg = wrongPasswordMsg;
+          msg = 'パスワードが違います';
           break;
         case "invalid-email":
-          msg = invalidEmailMsg;
+          msg = 'メールアドレスが正しくありません';
           break;
         case "invalid-credential":
-          msg = invalidCredentialMsg;
+          msg = 'クレデンシャルが無効です';
           break;
         case "user-not-found":
-          msg = userNotFoundMsg;
+          msg = 'ユーザーが見つかりません';
           break;
         case "user-mismatch":
-          msg = userMismatchMsg;
+          msg = 'ユーザーが違います';
           break;
       }
       showToast(msg: msg);
