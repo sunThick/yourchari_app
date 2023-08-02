@@ -101,15 +101,14 @@ class ProfileScreen extends ConsumerWidget {
                 title: Text("ログアウト"),
               ),
             ),
-            // InkWell(
-            //   onTap: () {
-            //     print(mainController.currentFirestoreUser.displayName);
-            //     print(returnAuthUser());
-            //   },
-            //   child: const ListTile(
-            //     title: Text("tomato"),
-            //   ),
-            // ),
+            InkWell(
+              onTap: () {
+                toTermsOfUserPage(context: context);
+              },
+              child: const ListTile(
+                title: Text("利用規約"),
+              ),
+            ),
           ],
         ),
       ),

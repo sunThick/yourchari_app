@@ -52,9 +52,14 @@ class SignupPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 20),
+              TextButton(
+                  onPressed: () {
+                    toTermsOfUserPage(context: context);
+                  },
+                  child: const Text('利用規約')),
               ElevatedButton(
                 onPressed: () => signupController.createUser(context: context),
-                child: const Text('新規登録'),
+                child: const Text('利用規約に同意の上、新規登録する'),
               ),
               TextButton(
                   onPressed: () {
