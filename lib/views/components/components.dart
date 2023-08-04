@@ -285,7 +285,7 @@ Widget chariList(
       data: (data) {
         final chariDocs = data;
         if (chariDocs.isEmpty) {
-          return const Column(
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

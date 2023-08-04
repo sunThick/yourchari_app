@@ -16,3 +16,12 @@ String createTimeAgoString(DateTime postDateTime) {
   final difference = now.difference(postDateTime);
   return timeAgo.format(now.subtract(difference), locale: "ja");
 }
+
+
+String returnReportContentString({ required List<String> selectedReportContents }) {
+  String reportContentString = "";
+  for (final content in selectedReportContents) {
+    reportContentString += '$content,'; // メールにした時見やすいように加工
+  }
+  return reportContentString;
+}

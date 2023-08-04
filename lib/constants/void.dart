@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash/flash.dart';
+import 'package:flutter/material.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
 
@@ -41,4 +43,22 @@ List<DocumentSnapshot<Map<String, dynamic>>> userListWithoutMuteUser(
     }
   }
   return userListWithoutMuteUserDocs;
+}
+
+void showFlashDialog(
+    {required BuildContext context,
+    required Widget content,
+    required Widget Function(BuildContext, FlashController<Object?>,
+            void Function(void Function()))?
+        positiveActionBuilder}) {
+  context.showFlashDialog(
+    content: content,
+    backgroundColor: Color.fromARGB(255, 145, 145, 145),
+    negativeActionBuilder: (_, controller, __) {
+      return TextButton(
+          onPressed: () async => await controller.dismiss(),
+          child: const Text('戻る'));
+    },
+    positiveActionBuilder: positiveActionBuilder,
+  );
 }

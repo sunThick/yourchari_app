@@ -33,9 +33,7 @@ class ChariDetailPage extends ConsumerWidget {
     final CreateChariController createChariController =
         ref.watch(createChariProvider);
     final CarouselController controller = CarouselController();
-
     int current = detailChariPageController.currentIndex;
-
     return Scaffold(
         body: state.when(data: (chariAndPassiveUser) {
       final chariDoc = chariAndPassiveUser.item1;
@@ -118,10 +116,13 @@ class ChariDetailPage extends ConsumerWidget {
                                         muteUsersController:
                                             muteUsersController,
                                         passiveUid: passiveUser.uid,
-                                        chari: chari,
+                                        chariDoc: chariDoc,
                                         createChariController:
                                             createChariController,
-                                        detailChariPageContext: context);
+                                        detailChariPageContext: context,
+                                        detailChariPageController:
+                                            detailChariPageController,
+                                        passiveUser: passiveUser);
                                   })
                             ],
                           ),
@@ -267,7 +268,7 @@ class ChariDetailPage extends ConsumerWidget {
                               width: MediaQuery.of(context).size.width * 0.9,
                               child: Column(
                                 children: [
-                                  const Row(
+                                  Row(
                                     children: [
                                       Text(
                                         'caption',
@@ -287,7 +288,7 @@ class ChariDetailPage extends ConsumerWidget {
                             ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Text(
                                   'parts list',

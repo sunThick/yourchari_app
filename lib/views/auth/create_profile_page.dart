@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/viewModels/auth/create_profile_controller.dart';
 
 class CreateProfilePage extends ConsumerWidget {
-  const CreateProfilePage({Key? key}) : super(key: key);
+   const CreateProfilePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final CreateProfileController createProfileController =
@@ -33,7 +32,7 @@ class CreateProfilePage extends ConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               children: [
                 Text('ユーザーネーム（必須・英数字のみ）'),
               ],
@@ -52,7 +51,7 @@ class CreateProfilePage extends ConsumerWidget {
                   contentPadding: EdgeInsets.only(left: 10),
                   hintText: "必須。10字まで"),
             ),
-            const Row(
+           Row(
               children: [
                 Text('名前'),
               ],
@@ -71,7 +70,7 @@ class CreateProfilePage extends ConsumerWidget {
                   contentPadding: EdgeInsets.only(left: 10),
                   hintText: "名前を追加する"),
             ),
-            const Row(
+            Row(
               children: [
                 Text("自己紹介"),
               ],

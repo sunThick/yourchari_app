@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/constants/list.dart';
@@ -6,6 +7,7 @@ import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/auth/account_controller.dart';
 import 'package:yourchari_app/viewModels/auth/login_controller.dart';
 import 'package:yourchari_app/viewModels/create_chari_controller.dart';
+import 'package:yourchari_app/viewModels/detail_chari_page_controller.dart';
 
 import '../domain/chari/chari.dart';
 import '../viewModels/main_controller.dart';
@@ -14,11 +16,14 @@ import '../viewModels/mute_users_controller.dart';
 // chari詳細ページのsheet
 void chariPassiveSheet(BuildContext context,
     {required MainController mainController,
+    required DetailChariPageController detailChariPageController,
     required UserMuteController muteUsersController,
     required String passiveUid,
     required CreateChariController createChariController,
-    required Chari chari,
-    required BuildContext detailChariPageContext}) {
+    required BuildContext detailChariPageContext,
+    required DocumentSnapshot<Map<String, dynamic>> chariDoc,
+    required FirestoreUser passiveUser}) {
+  final Chari chari = Chari.fromJson(chariDoc.data()!);
   showCupertinoModalPopup<void>(
     context: context,
     builder: (BuildContext context) => CupertinoActionSheet(
@@ -40,13 +45,18 @@ void chariPassiveSheet(BuildContext context,
                   child: const Text('このユーザーをミュートする')),
               CupertinoActionSheetAction(
                 isDestructiveAction: true,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                  detailChariPageController.reportPost(
+                      context: context,
+                      chari: chari,
+                      passiveuser: passiveUser,
+                      postDoc: chariDoc);
+                },
                 child: const Text('この投稿を通報する'),
               ),
             ]
           : <CupertinoActionSheetAction>[
-              // CupertinoActionSheetAction(
-              //     onPressed: () {}, child: const Text('編集')),
               CupertinoActionSheetAction(
                 isDestructiveAction: true,
                 onPressed: () {

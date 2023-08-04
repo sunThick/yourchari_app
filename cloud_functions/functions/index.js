@@ -8,6 +8,45 @@ const minusOne = -1;
 const fireStore = admin.firestore();
 const batchLimit = 500;
 
+// sendgrid
+const sgMail = require("@sendgrid/mail");
+const SENDGRID_API_KEY = config.sendgrid.api_key;
+
+
+function sendMail(text, subject) {
+  sgMail.setApiKey(SENDGRID_API_KEY); // 関数の度にAPIをセットしなければならない
+  const msg = {
+    to: "sunthick63@gmail.com",
+    from: "sunthick63@gmail.com",
+    subject: subject,
+    text: text,
+  };
+  sgMail.send(msg)
+      .then((ref) => {
+        console.log(ref); // resを出力
+      }).catch((e) => {
+        console.log(e);// errorを出力
+      });
+}
+
+function sendReport(data, contentType) {
+  const stringData = JSON.stringify(data);
+  const result = stringData.replace(/,/g, ",\n");
+  sendMail(result, `${contentType}を報告`);
+}
+
+exports.onPostReportCreate =
+functions.firestore.document("chari/{postId}/postReports/{postReport}")
+    .onCreate(
+        async (snap, _) => {
+          const newValue = snap.data();
+          await newValue.postDocRef.update({
+            "reportCount": admin.firestore.FieldValue.increment(plusOne),
+          });
+          sendReport(newValue, "投稿");
+        },
+    );
+
 exports.onFollowerCreate =
 functions.firestore.document("users/{uid}/followers/{followerUid}").onCreate(
     async (snap, _) => {
