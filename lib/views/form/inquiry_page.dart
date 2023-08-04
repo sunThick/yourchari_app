@@ -55,7 +55,7 @@ class InquiryPage extends ConsumerWidget {
                 ElevatedButton(
                     onPressed: () {
                       inquiryPageController.createInquiry(
-                          firestoreUser: firestoreUser);
+                          firestoreUser: firestoreUser, context: context);
                     },
                     child: const Text('送信'))
               ]),

@@ -53,7 +53,7 @@ void showFlashDialog(
         positiveActionBuilder}) {
   context.showFlashDialog(
     content: content,
-    backgroundColor: Color.fromARGB(255, 145, 145, 145),
+    backgroundColor: Colors.white,
     negativeActionBuilder: (_, controller, __) {
       return TextButton(
           onPressed: () async => await controller.dismiss(),

@@ -3,6 +3,7 @@ import 'package:yourchari_app/viewModels/auth/account_controller.dart';
 import 'package:yourchari_app/views/auth/account_page.dart';
 import 'package:yourchari_app/views/auth/create_profile_page.dart';
 import 'package:yourchari_app/views/auth/delete_user_page.dart';
+import 'package:yourchari_app/views/complete_inquiry_page.dart';
 import 'package:yourchari_app/views/edit_profile_page.dart';
 import 'package:yourchari_app/views/finish_page.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
@@ -155,3 +156,7 @@ void toTermsOfUserPage({required BuildContext context}) => Navigator.push(
 void toInquiryPage({required BuildContext context}) => Navigator.push(
     context,
     MaterialPageRoute(builder: ((context) => const InquiryPage())));
+
+void toCompleteInquiryPage({required BuildContext context, required String content}) => Navigator.push(
+    context,
+    MaterialPageRoute(builder: ((context) =>  CompleteInquilyPage(content: content,))));
