@@ -64,7 +64,7 @@ class EditProfilePage extends ConsumerWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Row(
+                           Row(
                             children: [
                               Text('名前'),
                             ],
@@ -86,7 +86,7 @@ class EditProfilePage extends ConsumerWidget {
                                 contentPadding: EdgeInsets.only(left: 10),
                                 hintText: "名前を追加する"),
                           ),
-                          const Row(
+                           Row(
                             children: [
                               Text("自己紹介"),
                             ],

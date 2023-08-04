@@ -181,7 +181,7 @@ class CreateChariPage extends ConsumerWidget {
                         ),
                         divider(),
                         //------------------------自転車の詳細-----------------=---------------------
-                        const Row(
+                        Row(
                           children: [
                             Text(
                               "自転車の詳細",
@@ -319,7 +319,7 @@ class CreateChariPage extends ConsumerWidget {
                               return bottomSheet(context: context);
                             },
                           ),
-                          child: const Row(
+                          child: Row(
                             children: [
                               Text(
                                 "構成パーツを追加",
