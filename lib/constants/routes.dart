@@ -6,6 +6,7 @@ import 'package:yourchari_app/views/auth/delete_user_page.dart';
 import 'package:yourchari_app/views/edit_profile_page.dart';
 import 'package:yourchari_app/views/finish_page.dart';
 import 'package:yourchari_app/views/form/create_chari_page.dart';
+import 'package:yourchari_app/views/form/inquiry_page.dart';
 import 'package:yourchari_app/views/like_chari_list_page.dart';
 import 'package:yourchari_app/views/mute_users_page.dart';
 import 'package:yourchari_app/views/passive_user_profile_page.dart';
@@ -150,3 +151,7 @@ void toFinishedage({required BuildContext context, required String msg}) =>
 void toTermsOfUserPage({required BuildContext context}) => Navigator.push(
     context,
     MaterialPageRoute(builder: ((context) => const TermsOfUserPage())));
+
+void toInquiryPage({required BuildContext context}) => Navigator.push(
+    context,
+    MaterialPageRoute(builder: ((context) => const InquiryPage())));

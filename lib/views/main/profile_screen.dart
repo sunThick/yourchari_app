@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yourchari_app/constants/dialog.dart';
@@ -85,7 +84,9 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                toInquiryPage(context: context);
+              },
               child: const ListTile(
                 title: Text("お問い合わせ"),
               ),

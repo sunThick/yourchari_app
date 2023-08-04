@@ -35,6 +35,12 @@ function sendReport(data, contentType) {
   sendMail(result, `${contentType}を報告`);
 }
 
+function sendInquiry(data) {
+  const stringData = JSON.stringify(data);
+  const result = stringData.replace(/,/g, ",\n");
+  sendMail(result, `お問い合わせ`);
+}
+
 exports.onPostReportCreate =
 functions.firestore.document("chari/{postId}/postReports/{postReport}")
     .onCreate(
@@ -44,6 +50,15 @@ functions.firestore.document("chari/{postId}/postReports/{postReport}")
             "reportCount": admin.firestore.FieldValue.increment(plusOne),
           });
           sendReport(newValue, "投稿");
+        },
+    );
+
+exports.onPostReportCreate =
+functions.firestore.document("users/{uid}/inquiries/{inquiryId}")
+    .onCreate(
+        async (snap, _) => {
+          const newValue = snap.data();
+          sendInquiry(newValue);
         },
     );
 
