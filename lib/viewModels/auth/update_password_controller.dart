@@ -16,7 +16,7 @@ class UpdatePasswordModel extends ChangeNotifier {
       await user.updatePassword(newPassword);
       Navigator.pop(context);
       Navigator.pop(context);
-      const String msg = 'メールアドレスを更新しました';
+      const String msg = 'パスワードを変更しました';
       showToast(msg: msg);
     } on FirebaseAuthException catch (e) {
       String msg = "";
