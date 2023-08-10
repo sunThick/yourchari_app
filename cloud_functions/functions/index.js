@@ -53,7 +53,7 @@ functions.firestore.document("chari/{postId}/postReports/{postReport}")
         },
     );
 
-exports.onPostReportCreate =
+exports.onInquiryCreate =
 functions.firestore.document("users/{uid}/inquiries/{inquiryId}")
     .onCreate(
         async (snap, _) => {
