@@ -110,7 +110,7 @@ functions.firestore.document("chari/{postId}/chariLikes/{activeUid}").onDelete(
 
 exports.onChariDelete =
 functions.firestore.document("chari/{postId}").onDelete(
-    async (snap, _) => {
+    async (snap, context) => {
       const postId = snap.id;
       const chariLikes =
       await fireStore.collection("chari")
@@ -129,12 +129,18 @@ functions.firestore.document("chari/{postId}").onDelete(
       if (chariLikeCount > 0) {
         await chariLikeBatch.commit();
       }
+
+      const deletedPostId = context.params.postId;
+      const bucket = admin.storage().bucket();
+      bucket.deleteFiles({
+        prefix: "charis/" + deletedPostId + "/",
+      });
     },
 );
 
 exports.onDeleteUserCreate =
 functions.firestore.document("deleteUsers/{uid}").onCreate(
-    async (snap, _) => {
+    async (snap, context) => {
       const uid = snap.id;
       const myRef = fireStore.collection("users").doc(uid);
       // 自分をPostを消す
@@ -171,5 +177,12 @@ functions.firestore.document("deleteUsers/{uid}").onCreate(
         await tokenBatch.commit();
       }
       await myRef.delete(); // 一番最後。
+
+      //  storageからプロフィール写真を削除
+      const deletedUid = context.params.uid;
+      const bucket = admin.storage().bucket();
+      bucket.deleteFiles({
+        prefix: "users/" + deletedUid + "/",
+      });
     },
 );
