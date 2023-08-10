@@ -68,6 +68,13 @@ flutter:
     - assets/
     - assets/images/
   
+flutter_icons:
+  ios: true
+  image_path: "assets/images/launcher/icon_ios.png"
+  remove_alpha_ios: true
+  android: true
+  adaptive_icon_background: "assets/images/launcher/icon_adaptive_background.png"
+  adaptive_icon_foreground: "assets/images/launcher/icon_adaptive_foreground.png"
 
 
 
