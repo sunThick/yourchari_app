@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:644207087062:android:bbb81538de0e0516e76877",
         "android_client_info": {
-          "package_name": "com.example.yourchari_app"
+          "package_name": "app.yourchari.YourChariApp"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.yourchariApp"
+                "bundle_id": "app.yourchari.YourChariApp"
               }
             }
           ]

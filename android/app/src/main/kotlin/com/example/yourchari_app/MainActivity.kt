@@ -1,4 +1,4 @@
-package com.example.yourchari_app
+package app.yourchari.YourChariApp
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -68,7 +68,7 @@ class DefaultFirebaseOptions {
     projectId: 'y-chari',
     storageBucket: 'y-chari.appspot.com',
     iosClientId: '644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com',
-    iosBundleId: 'com.example.yourchariApp',
+    iosBundleId: 'app.yourchari.YourChariApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -78,6 +78,6 @@ class DefaultFirebaseOptions {
     projectId: 'y-chari',
     storageBucket: 'y-chari.appspot.com',
     iosClientId: '644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com',
-    iosBundleId: 'com.example.yourchariApp',
+    iosBundleId: 'app.yourchari.YourChariApp',
   );
 }
