@@ -1,8 +1,11 @@
 # yourchari_app
+自転車を投稿するSNSです。
 
-A new Flutter project.
 
-## Getting Started
+## 作成背景・目的
+
+
+<!-- ## Getting Started
 
 This project is a starting point for a Flutter application.
 
@@ -13,4 +16,4 @@ A few resources to get you started if this is your first Flutter project:
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+samples, guidance on mobile development, and a full API reference. -->
