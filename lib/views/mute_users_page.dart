@@ -27,6 +27,9 @@ class MuteUsersPage extends ConsumerWidget {
               itemCount: muteUserDocs.length,
               itemBuilder: (context, index) {
                 final muteUserDoc = muteUserDocs[index];
+                if (muteUserDoc.data() == null) {
+                  return null;
+                }
                 final FirestoreUser muteUser =
                     FirestoreUser.fromJson(muteUserDoc.data()!);
                 return ListTile(

@@ -54,93 +54,75 @@ class CharisList extends ConsumerWidget {
                       data.item2;
                   return Scaffold(
                       body: chariDocs.isEmpty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.75,
-                                  child: SmartRefresher(
-                                    enablePullDown: true,
-                                    enablePullUp: true,
-                                    controller: categoryChariController
-                                        .refreshController,
-                                    header: const WaterDropHeader(),
-                                    onRefresh: () {
-                                      categoryChariController.startLoading();
-                                      // ignore: unused_result
-                                      ref.refresh(chariListFromCategoryProvider(
-                                          category));
-                                      categoryChariController.refreshController
-                                          .refreshCompleted();
-                                      categoryChariController.endLoading();
-                                    },
-                                    child: const Center(
-                                        child:
-                                            Text('投稿がありません。下に引っ張って更新してください。')),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.75,
-                                  child: SmartRefresher(
-                                    enablePullDown: true,
-                                    enablePullUp: true,
-                                    header: const WaterDropHeader(),
-                                    onRefresh: () {
-                                      categoryChariController.startLoading();
-                                      // ignore: unused_result
-                                      ref.refresh(chariListFromCategoryProvider(
-                                          category));
-                                      categoryChariController.refreshController
-                                          .refreshCompleted();
-                                      categoryChariController.endLoading();
-                                    },
-                                    onLoading: () async => {
-                                      await categoryChariController.onLoading(
-                                          category: category,
-                                          chariDocs: chariDocs,
-                                          userDocs: userDocs,
-                                          ref: ref)
-                                    },
-                                    controller: categoryChariController
-                                        .refreshController,
-                                    child: MasonryGridView.count(
-                                        crossAxisCount: 2,
-                                        itemCount: chariDocs.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          final chariDoc = chariDocs[index];
-                                          final userDoc = userDocs[index];
-                                          final Chari chari =
-                                              Chari.fromJson(chariDoc.data()!);
-                                          final FirestoreUser passiveUser =
-                                              FirestoreUser.fromJson(
-                                                  userDoc.data()!);
-                                          return InkWell(
-                                              onTap: () {
-                                                toChariDetailPage(
-                                                    context: context,
-                                                    chariUid: chari.postId);
-                                              },
-                                              onDoubleTap: () {},
-                                              child: homeCard(
-                                                  chari: chari,
-                                                  passiveUser: passiveUser,
-                                                  mainController:
-                                                      mainController,
-                                                  profileController:
-                                                      profileController));
-                                        }),
-                                  ),
-                                ),
-                              ],
-                            ));
+                          ? SmartRefresher(
+                            enablePullDown: true,
+                            enablePullUp: true,
+                            controller: categoryChariController
+                                .refreshController,
+                            header: const WaterDropHeader(),
+                            onRefresh: () {
+                              categoryChariController.startLoading();
+                              // ignore: unused_result
+                              ref.refresh(chariListFromCategoryProvider(
+                                  category));
+                              categoryChariController.refreshController
+                                  .refreshCompleted();
+                              categoryChariController.endLoading();
+                            },
+                            child: const Center(
+                                child:
+                                    Text('投稿がありません。下に引っ張って更新してください。')),
+                          )
+                          : SmartRefresher(
+                            enablePullDown: true,
+                            enablePullUp: true,
+                            header: const WaterDropHeader(),
+                            onRefresh: () {
+                              categoryChariController.startLoading();
+                              // ignore: unused_result
+                              ref.refresh(chariListFromCategoryProvider(
+                                  category));
+                              categoryChariController.refreshController
+                                  .refreshCompleted();
+                              categoryChariController.endLoading();
+                            },
+                            onLoading: () async => {
+                              await categoryChariController.onLoading(
+                                  category: category,
+                                  chariDocs: chariDocs,
+                                  userDocs: userDocs,
+                                  ref: ref)
+                            },
+                            controller: categoryChariController
+                                .refreshController,
+                            child: MasonryGridView.count(
+                                crossAxisCount: 2,
+                                itemCount: chariDocs.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  final chariDoc = chariDocs[index];
+                                  final userDoc = userDocs[index];
+                                  final Chari chari =
+                                      Chari.fromJson(chariDoc.data()!);
+                                  final FirestoreUser passiveUser =
+                                      FirestoreUser.fromJson(
+                                          userDoc.data()!);
+                                  return InkWell(
+                                      onTap: () {
+                                        toChariDetailPage(
+                                            context: context,
+                                            chariUid: chari.postId);
+                                      },
+                                      onDoubleTap: () {},
+                                      child: homeCard(
+                                          chari: chari,
+                                          passiveUser: passiveUser,
+                                          mainController:
+                                              mainController,
+                                          profileController:
+                                              profileController));
+                                }),
+                          ));
                 })));
   }
 
