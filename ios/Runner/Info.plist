@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>アプリに表示・使用するための写真や動画を撮影する目的でリクエストします。</string>
+	<string>自転車の写真やプロフィール写真を取得する目的でリクエストしています。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>アプリに表示・使用するための写真や動画をライブラリから選択する目的でリクエストします。</string>
+	<string>自転車の写真やプロフィール写真を撮影する目的でリクエストしています。</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
