@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBHKqKOMHiFY-PphOnUKprbwRWKPJEq9dM',
-    appId: '1:644207087062:android:bbb81538de0e0516e76877',
+    appId: '1:644207087062:android:dd383666ff8ddda0e76877',
     messagingSenderId: '644207087062',
     projectId: 'y-chari',
     storageBucket: 'y-chari.appspot.com',
@@ -63,21 +63,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAIJSCeVzuCGFoW16HSdD0PdnvwvBoWQPI',
-    appId: '1:644207087062:ios:ca4f3bb7a415205ee76877',
+    appId: '1:644207087062:ios:edcf5702a4263ff2e76877',
     messagingSenderId: '644207087062',
     projectId: 'y-chari',
     storageBucket: 'y-chari.appspot.com',
-    iosClientId: '644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com',
+    iosClientId: '644207087062-h6s8ji265oaajh39n3peje08a97g0277.apps.googleusercontent.com',
     iosBundleId: 'app.yourchari.YourChariApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAIJSCeVzuCGFoW16HSdD0PdnvwvBoWQPI',
-    appId: '1:644207087062:ios:ca4f3bb7a415205ee76877',
+    appId: '1:644207087062:ios:edcf5702a4263ff2e76877',
     messagingSenderId: '644207087062',
     projectId: 'y-chari',
     storageBucket: 'y-chari.appspot.com',
-    iosClientId: '644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com',
+    iosClientId: '644207087062-h6s8ji265oaajh39n3peje08a97g0277.apps.googleusercontent.com',
     iosBundleId: 'app.yourchari.YourChariApp',
   );
 }

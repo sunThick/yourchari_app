@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:644207087062:android:bbb81538de0e0516e76877",
+        "mobilesdk_app_id": "1:644207087062:android:dd383666ff8ddda0e76877",
         "android_client_info": {
           "package_name": "app.yourchari.YourChariApp"
         }
@@ -34,7 +34,43 @@
               "client_id": "644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "app.yourchari.YourChariApp"
+                "bundle_id": "com.example.yourchariApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644207087062:android:bbb81538de0e0516e76877",
+        "android_client_info": {
+          "package_name": "com.example.yourchari_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644207087062-n3oo4ibon2hv5b5g3l8r2vsa4ah2o79s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHKqKOMHiFY-PphOnUKprbwRWKPJEq9dM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644207087062-n3oo4ibon2hv5b5g3l8r2vsa4ah2o79s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "644207087062-v2d7acfa0uegjeg6pboqqt1unk3fjqe1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yourchariApp"
               }
             }
           ]
