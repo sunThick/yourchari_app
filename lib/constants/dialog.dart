@@ -46,12 +46,11 @@ void chariPassiveSheet(BuildContext context,
               CupertinoActionSheetAction(
                 isDestructiveAction: true,
                 onPressed: () {
-                  Navigator.pop(context);
-                  detailChariPageController.reportPost(
-                      context: context,
+                  _reportPostDialog(context,
+                      detailChariPageController: detailChariPageController,
                       chari: chari,
-                      passiveuser: passiveUser,
-                      postDoc: chariDoc);
+                      passiveUser: passiveUser,
+                      chariDoc: chariDoc);
                 },
                 child: const Text('この投稿を通報する'),
               ),
@@ -107,6 +106,39 @@ void passiveUserSheet(BuildContext context,
           Navigator.pop(context);
         },
       ),
+    ),
+  );
+}
+
+void _reportPostDialog(BuildContext context,
+    {required DetailChariPageController detailChariPageController,
+    required Chari chari,
+    required FirestoreUser passiveUser,
+    required DocumentSnapshot<Map<String, dynamic>> chariDoc}) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: const Text('この投稿を通報しますか？'),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('No'),
+        ),
+        CupertinoDialogAction(
+          isDestructiveAction: true,
+          onPressed: () async {
+            Navigator.pop(context);
+            detailChariPageController.reportPost(
+                context: context,
+                chari: chari,
+                passiveuser: passiveUser,
+                postDoc: chariDoc);
+          },
+          child: const Text('Yes'),
+        ),
+      ],
     ),
   );
 }

@@ -20,35 +20,59 @@ class DetailChariPageController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void reportPost({required BuildContext context,required Chari chari,required FirestoreUser passiveuser,required DocumentSnapshot<Map<String,dynamic>> postDoc}) {
-    // 選ばれたものを表示
-    // valueNotifierは変更をすぐに検知
-    final selectedReportContentsNotifier = ValueNotifier<List<String>>([]);
+  Future<void> reportPost(
+      {required BuildContext context,
+      required Chari chari,
+      required FirestoreUser passiveuser,
+      required DocumentSnapshot<Map<String, dynamic>> postDoc}) async {
     final String postReportId = returnUuidV4();
-    showFlashDialog(
-      context: context, 
-      content: ReportContentsListView(selectedReportContentsNotifier: selectedReportContentsNotifier,),
-      positiveActionBuilder: (_,controller,__) {
-        final postDocRef = postDoc.reference;
-        return TextButton(
-          onPressed: () async {
-            final PostReport postReport = PostReport(
-              acitiveUid: returnAuthUser()!.uid,
-              createdAt: Timestamp.now(),
-              reportContent: returnReportContentString(selectedReportContents: selectedReportContentsNotifier.value),
-              postCreatorUid: chari.uid,
-              passiveUserName: passiveuser.userName,
-              postDocRef: postDocRef,
-              postId: chari.postId,
-              postReportId: postReportId,
-            );
-            await controller.dismiss();
-            await showToast(msg: "投稿を報告しました");
-            await postDocRef.collection("postReports").doc(postReportId).set(postReport.toJson());
-          },
-          child: const Text("送信",style: TextStyle(color: Colors.red), )
-        );
-      }
+    final postDocRef = postDoc.reference;
+    final PostReport postReport = PostReport(
+      acitiveUid: returnAuthUser()!.uid,
+      createdAt: Timestamp.now(),
+      reportContent: '',
+      postCreatorUid: chari.uid,
+      passiveUserName: passiveuser.userName,
+      postDocRef: postDocRef,
+      postId: chari.postId,
+      postReportId: postReportId,
     );
+    await showToast(msg: "投稿を報告しました");
+    await postDocRef
+        .collection("postReports")
+        .doc(postReportId)
+        .set(postReport.toJson());
   }
+
+  // void reportPost({required BuildContext context,required Chari chari,required FirestoreUser passiveuser,required DocumentSnapshot<Map<String,dynamic>> postDoc}) {
+  //   // 選ばれたものを表示
+  //   // valueNotifierは変更をすぐに検知
+  //   final selectedReportContentsNotifier = ValueNotifier<List<String>>([]);
+  //   final String postReportId = returnUuidV4();
+  //   showFlashDialog(
+  //     context: context,
+  //     content: ReportContentsListView(selectedReportContentsNotifier: selectedReportContentsNotifier,),
+  //     positiveActionBuilder: (_,controller,__) {
+  //       final postDocRef = postDoc.reference;
+  //       return TextButton(
+  //         onPressed: () async {
+  //           final PostReport postReport = PostReport(
+  //             acitiveUid: returnAuthUser()!.uid,
+  //             createdAt: Timestamp.now(),
+  //             reportContent: returnReportContentString(selectedReportContents: selectedReportContentsNotifier.value),
+  //             postCreatorUid: chari.uid,
+  //             passiveUserName: passiveuser.userName,
+  //             postDocRef: postDocRef,
+  //             postId: chari.postId,
+  //             postReportId: postReportId,
+  //           );
+  //           await controller.dismiss();
+  //           await showToast(msg: "投稿を報告しました");
+  //           await postDocRef.collection("postReports").doc(postReportId).set(postReport.toJson());
+  //         },
+  //         child: const Text("送信",style: TextStyle(color: Colors.red), )
+  //       );
+  //     }
+  //   );
+  // }
 }

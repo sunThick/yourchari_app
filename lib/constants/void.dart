@@ -4,6 +4,7 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:yourchari_app/domain/firestore_user/firestore_user.dart';
 import 'package:yourchari_app/viewModels/main_controller.dart';
+import 'package:yourchari_app/views/components/report_contents_list_view.dart';
 
 import '../domain/chari/chari.dart';
 
@@ -45,20 +46,30 @@ List<DocumentSnapshot<Map<String, dynamic>>> userListWithoutMuteUser(
   return userListWithoutMuteUserDocs;
 }
 
-void showFlashDialog(
-    {required BuildContext context,
-    required Widget content,
-    required Widget Function(BuildContext, FlashController<Object?>,
-            void Function(void Function()))?
-        positiveActionBuilder}) {
-  context.showFlashDialog(
-    content: content,
-    backgroundColor: Colors.white,
-    negativeActionBuilder: (_, controller, __) {
-      return TextButton(
-          onPressed: () async => await controller.dismiss(),
-          child: const Text('戻る'));
-    },
-    positiveActionBuilder: positiveActionBuilder,
-  );
-}
+// void showFlashDialog(
+//     {required BuildContext context,
+//     required Widget content,
+//     required Widget Function(BuildContext, FlashController<Object?>,
+//             void Function(void Function()))?
+//         positiveActionBuilder}) {
+//   showFlash(
+//       context: context,
+//       duration: const Duration(seconds: 10),
+//       builder: (_, controller) {
+//         return Flash(
+//             controller: controller,
+//             forwardAnimationCurve: Curves.easeInCirc,
+//             reverseAnimationCurve: Curves.bounceIn,
+//             child: Align(
+//               alignment: Alignment.bottomCenter,
+//               child: Flash(
+//                 controller: controller,
+//                 dismissDirections: [FlashDismissDirection.startToEnd],
+//                 child: SizedBox(
+//                   width: double.infinity,
+//                   child: ReportContentsListView(selectedReportContentsNotifier: selectedReportContentsNotifier)
+//                 ),
+//               ),
+//             ));
+//       });
+// }
