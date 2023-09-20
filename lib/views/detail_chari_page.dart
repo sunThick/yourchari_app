@@ -171,24 +171,22 @@ class ChariDetailPage extends ConsumerWidget {
                             children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.9,
-                                child: Flexible(
-                                  child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '"${chari.brand}"',
-                                          style: const TextStyle(fontSize: 25),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          chari.frame,
-                                          style: const TextStyle(fontSize: 20),
-                                        ),
-                                      ]),
-                                ),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '"${chari.brand}"',
+                                        style: const TextStyle(fontSize: 25),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        chari.frame,
+                                        style: const TextStyle(fontSize: 20),
+                                      ),
+                                    ]),
                               ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.9,
@@ -268,7 +266,7 @@ class ChariDetailPage extends ConsumerWidget {
                               width: MediaQuery.of(context).size.width * 0.9,
                               child: Column(
                                 children: [
-                                  Row(
+                                  const Row(
                                     children: [
                                       Text(
                                         'caption',
@@ -279,7 +277,7 @@ class ChariDetailPage extends ConsumerWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Flexible(child: Text(chari.caption)),
+                                      Text(chari.caption),
                                     ],
                                   ),
                                   const Divider(height: 30),
@@ -288,7 +286,7 @@ class ChariDetailPage extends ConsumerWidget {
                             ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   'parts list',

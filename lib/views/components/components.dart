@@ -144,11 +144,9 @@ Widget profileAndPassiveBody(
                               Text(passiveUser.userName),
                               Container(
                                   alignment: Alignment.center,
-                                  child: Flexible(
-                                    child: Text(
-                                      passiveUser.introduction,
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
+                                  child: Text(
+                                    passiveUser.introduction,
+                                    style: const TextStyle(fontSize: 12),
                                   ))
                             ],
                           )
