@@ -1,19 +1,29 @@
 # yourchari_app
 自転車を投稿するSNSです。
 
-
 ## 作成背景・目的
+カスタムされたオリジナル自転車のプラットフォームを作成しました。
+このアプリを通してもっと人々に自転車を楽しんで欲しいと思います。
 
+## 機能一覧
+- ユーザー認証
+- ログイン・ログアウト
+- アカウント削除
+- 自転車投稿・削除
+- 画像投稿
+- いいね
+- ユーザーミュート
+- プロフィール編集
 
-<!-- ## Getting Started
+## 使用技術一覧
+- flutter
+- firebase
+- riverpod
+- cloud functions
 
-This project is a starting point for a Flutter application.
+## アプリURL
+https://apps.apple.com/jp/app/your-chari/id6462018603
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference. -->
+## テストログイン
+- email: 	yourchari+test@yourchari.app
+- password: yourchari
