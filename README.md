@@ -10,6 +10,7 @@
 - ログイン・ログアウト
 - アカウント削除
 - 自転車投稿・削除
+- 投稿通報機能
 - 画像投稿
 - いいね
 - ユーザーミュート
@@ -20,6 +21,9 @@
 - firebase
 - riverpod
 - cloud functions
+
+## 使用API
+- SendGrid
 
 ## アプリURL
 https://apps.apple.com/jp/app/your-chari/id6462018603
