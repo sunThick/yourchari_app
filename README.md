@@ -1,5 +1,6 @@
 # yourchari_app
 自転車を投稿するSNSです。
+クローン後、flutter pub run build_runner buildを実行してください。
 
 ## 作成背景・目的
 カスタムされたオリジナル自転車のプラットフォームを作成しました。
